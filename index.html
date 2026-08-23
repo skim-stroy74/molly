@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Irish Pub Molly — ирландский паб в Магнитогорске | Завенягина, 8а</title>
+<meta name="description" content="Ирландский паб «Молли» в Магнитогорске: живая музыка, караоке, танцпол, более 10 сортов пива, европейская, японская и ирландская кухня. Банкеты и корпоративы. Бронь столов: 45-37-37.">
+<link rel="canonical" href="https://molly-mgn.com/">
+<meta name="theme-color" content="#0d1a12">
+<script>document.documentElement.className+=' js';</script>
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Irish Pub Molly">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:url" content="https://molly-mgn.com/">
+<meta property="og:title" content="Irish Pub Molly — ирландский паб в Магнитогорске">
+<meta property="og:description" content="Живая музыка каждый вечер, караоке, танцпол до утра и более 10 сортов пива. Завенягина, 8а. Бронь столов: 45-37-37.">
+<!-- ЗАМЕНИТЬ: og-image.png 1200x630 — соберём, когда будут фото зала -->
+<meta property="og:image" content="https://molly-mgn.com/images/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BarOrPub",
+  "name": "Irish Pub Molly",
+  "alternateName": "Паб Молли",
+  "description": "Ирландский паб в Магнитогорске: живая музыка, караоке, танцпол, более 10 сортов пива, европейская, японская и ирландская кухня.",
+  "url": "https://molly-mgn.com/",
+  "telephone": "+7-3519-45-37-37",
+  "priceRange": "₽₽",
+  "servesCuisine": ["Ирландская", "Европейская", "Японская"],
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "улица Завенягина, 8а",
+    "addressLocality": "Магнитогорск",
+    "addressRegion": "Челябинская область",
+    "addressCountry": "RU"
+  },
+  "sameAs": ["https://vk.com/molly174"],
+  "acceptsReservations": "https://416936.restoplace.ws"
+}
+</script>
+<style>
+:root{
+  --ink:#0a1209;
+  --bg:#0d1a12;
+  --bg-2:#122318;
+  --panel:#16281c;
+  --line:rgba(200,164,90,.22);
+  --line-soft:rgba(242,234,216,.10);
+  --cream:#f2ead8;
+  --muted:#a3b09f;
+  --brass:#c8a45a;
+  --brass-bright:#e0bc74;
+  --amber:#d98b2b;
+  --shadow:0 18px 50px rgba(0,0,0,.45);
+  --serif:Georgia,"Times New Roman",'Iowan Old Style',serif;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+  --wrap:1180px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:96px}
+body{
+  background:var(--bg);color:var(--cream);font-family:var(--sans);
+  font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+.wrap{width:100%;max-width:var(--wrap);margin:0 auto;padding:0 24px}
+
+/* ---------- типографика ---------- */
+h1,h2,h3,.serif{font-family:var(--serif);font-weight:400;letter-spacing:.01em}
+h2{font-size:clamp(30px,4.4vw,50px);line-height:1.12}
+h3{font-size:22px;line-height:1.25}
+.eyebrow{
+  font-family:var(--sans);font-size:12px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--brass);font-weight:600;margin-bottom:14px;display:flex;align-items:center;gap:12px;
+}
+.eyebrow::before{content:"";width:26px;height:1px;background:var(--brass);flex:none}
+.lead{color:var(--muted);font-size:18px;max-width:62ch}
+.sec{padding:96px 0;position:relative}
+.sec-head{margin-bottom:52px;max-width:760px}
+.sec-head h2{margin-bottom:18px}
+
+/* ---------- фактура дерева ---------- */
+.wood{
+  background-color:#0f1c13;
+  background-image:
+    repeating-linear-gradient(90deg,rgba(0,0,0,.16) 0 2px,transparent 2px 7px),
+    repeating-linear-gradient(90deg,rgba(200,164,90,.030) 0 1px,transparent 1px 23px),
+    linear-gradient(180deg,#14261a,#0c1710);
+}
+
+/* ---------- переключатель заведений ---------- */
+.venues{background:var(--ink);border-bottom:1px solid var(--line-soft);font-size:13px}
+.venues .wrap{display:flex;align-items:center;gap:4px;height:42px;overflow-x:auto;scrollbar-width:none}
+.venues .wrap::-webkit-scrollbar{display:none}
+.venues .label{color:#6f7d6c;letter-spacing:.14em;text-transform:uppercase;font-size:11px;margin-right:12px;white-space:nowrap}
+.venues a{
+  padding:5px 14px;border-radius:999px;color:var(--muted);white-space:nowrap;
+  transition:color .2s,background .2s;
+}
+.venues a:hover{color:var(--cream);background:rgba(242,234,216,.06)}
+.venues a.on{background:var(--brass);color:#14100a;font-weight:600}
+
+/* ---------- шапка ---------- */
+.hdr{
+  position:sticky;top:0;z-index:70;background:rgba(10,18,9,.82);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line-soft);transition:background .3s;
+}
+.hdr .wrap{display:flex;align-items:center;gap:28px;height:74px}
+.logo{display:flex;align-items:baseline;gap:9px;font-family:var(--serif);font-size:27px;letter-spacing:.03em;flex:none}
+.logo b{font-weight:400;color:var(--cream)}
+.logo span{font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--brass);font-family:var(--sans);font-weight:600}
+.nav{display:flex;gap:26px;margin-left:auto;font-size:15px}
+.nav a{color:var(--muted);position:relative;padding:4px 0;transition:color .2s}
+.nav a::after{content:"";position:absolute;left:0;right:100%;bottom:0;height:1px;background:var(--brass);transition:right .25s}
+.nav a:hover{color:var(--cream)}
+.nav a:hover::after{right:0}
+.hdr-phone{font-family:var(--serif);font-size:19px;white-space:nowrap;transition:color .2s}
+.hdr-phone:hover{color:var(--brass-bright)}
+.burger{display:none;margin-left:auto;width:44px;height:44px;background:none;border:1px solid var(--line);border-radius:10px;cursor:pointer;position:relative}
+.burger i{position:absolute;left:12px;right:12px;height:1.5px;background:var(--cream);transition:.28s}
+.burger i:nth-child(1){top:15px}
+.burger i:nth-child(2){top:21px}
+.burger i:nth-child(3){top:27px}
+.burger.on i:nth-child(1){transform:translateY(6px) rotate(45deg)}
+.burger.on i:nth-child(2){opacity:0}
+.burger.on i:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+
+/* ---------- кнопки ---------- */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:9px;
+  padding:15px 30px;border-radius:2px;font-size:15px;font-weight:600;
+  letter-spacing:.04em;cursor:pointer;border:1px solid transparent;
+  transition:transform .18s,box-shadow .25s,background .25s,color .25s;white-space:nowrap;
+}
+.btn-gold{background:var(--brass);color:#14100a;box-shadow:0 8px 26px rgba(200,164,90,.22)}
+.btn-gold:hover{background:var(--brass-bright);transform:translateY(-2px);box-shadow:0 14px 34px rgba(200,164,90,.34)}
+.btn-ghost{border-color:var(--line);color:var(--cream);background:rgba(242,234,216,.03)}
+.btn-ghost:hover{border-color:var(--brass);color:var(--brass-bright);transform:translateY(-2px)}
+.btn-sm{padding:11px 20px;font-size:14px}
+
+/* ---------- герой ---------- */
+.hero{position:relative;min-height:calc(100vh - 116px);display:flex;align-items:center;overflow:hidden;padding:80px 0}
+.hero-bg{position:absolute;inset:0;z-index:0}
+/* ЗАМЕНИТЬ: сюда ляжет фото зала — images/hero.jpg */
+.hero-bg::before{
+  content:"";position:absolute;inset:0;
+  background:
+    radial-gradient(900px 520px at 72% 28%,rgba(217,139,43,.20),transparent 62%),
+    radial-gradient(700px 480px at 12% 78%,rgba(200,164,90,.13),transparent 60%),
+    repeating-linear-gradient(94deg,rgba(0,0,0,.20) 0 3px,transparent 3px 9px),
+    linear-gradient(165deg,#16291c 0%,#0c1710 55%,#070f09 100%);
+}
+.hero-bg::after{
+  content:"";position:absolute;inset:0;
+  background:radial-gradient(120% 90% at 50% 40%,transparent 30%,rgba(5,10,5,.75) 100%);
+}
+.hero .wrap{position:relative;z-index:2}
+.hero-in{max-width:800px}
+.hero h1{font-size:clamp(42px,7.6vw,86px);line-height:1.03;margin:18px 0 22px}
+.hero h1 em{font-style:italic;color:var(--brass-bright)}
+.hero p{font-size:clamp(17px,2vw,21px);color:var(--muted);max-width:56ch;margin-bottom:34px}
+.hero-cta{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:52px}
+.chips{display:flex;gap:10px;flex-wrap:wrap}
+.chip{
+  border:1px solid var(--line);border-radius:999px;padding:8px 17px;font-size:13.5px;
+  color:var(--cream);background:rgba(10,18,9,.4);display:flex;align-items:center;gap:8px;
+}
+.chip::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--brass);flex:none}
+.scroll-hint{
+  position:absolute;left:50%;bottom:26px;transform:translateX(-50%);z-index:2;
+  font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:#6f7d6c;
+  display:flex;flex-direction:column;align-items:center;gap:9px;
+}
+.scroll-hint span{width:1px;height:36px;background:linear-gradient(var(--brass),transparent);animation:drop 2.1s infinite}
+@keyframes drop{0%{opacity:0;transform:scaleY(.2)}45%{opacity:1}100%{opacity:0;transform:scaleY(1)}}
+
+/* ---------- программа ---------- */
+.prog{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.card{
+  background:var(--panel);border:1px solid var(--line-soft);border-radius:3px;padding:34px 30px;
+  position:relative;overflow:hidden;transition:transform .3s,border-color .3s;
+}
+.card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--brass);transform:scaleY(0);transform-origin:top;transition:transform .35s}
+.card:hover{transform:translateY(-5px);border-color:var(--line)}
+.card:hover::before{transform:scaleY(1)}
+.card .when{font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--amber);font-weight:700;margin-bottom:13px}
+.card h3{margin-bottom:12px}
+.card p{color:var(--muted);font-size:15.5px}
+
+/* ---------- афиша (заполним, когда придут даты) ---------- */
+.bill{
+  border:1px dashed var(--line);border-radius:3px;padding:44px 36px;margin-top:26px;
+  display:flex;align-items:center;gap:30px;flex-wrap:wrap;background:rgba(200,164,90,.035);
+}
+.bill h3{margin-bottom:8px}
+.bill p{color:var(--muted);font-size:15.5px;max-width:52ch}
+.bill .btn{margin-left:auto}
+
+/* ---------- о пабе ---------- */
+.about{display:grid;grid-template-columns:1.05fr .95fr;gap:64px;align-items:center}
+.about p+p{margin-top:17px}
+.about p{color:var(--muted)}
+.facts{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line-soft);margin-top:36px;border:1px solid var(--line-soft)}
+.fact{background:var(--bg-2);padding:24px 22px}
+.fact b{display:block;font-family:var(--serif);font-size:34px;color:var(--brass-bright);line-height:1;margin-bottom:8px}
+.fact span{font-size:13.5px;color:var(--muted)}
+
+/* ---------- слоты под фото ---------- */
+.ph{
+  position:relative;border:1px solid var(--line-soft);border-radius:3px;overflow:hidden;
+  background:
+    repeating-linear-gradient(45deg,rgba(200,164,90,.045) 0 12px,transparent 12px 24px),
+    linear-gradient(150deg,#1a2e20,#0e1a12);
+  display:flex;align-items:center;justify-content:center;
+}
+.ph::after{
+  content:attr(data-label);position:absolute;bottom:14px;left:16px;
+  font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:rgba(163,176,159,.55);
+}
+.ph-tall{aspect-ratio:4/5}
+.ph-wide{aspect-ratio:16/10}
+.ph-sq{aspect-ratio:1}
+.ph i{
+  width:52px;height:52px;border:1px solid var(--line);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;color:var(--brass);font-style:normal;font-size:22px;
+}
+
+/* ---------- меню ---------- */
+.menu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.mcard{
+  background:var(--bg-2);border:1px solid var(--line-soft);border-radius:3px;padding:30px 28px;
+  transition:border-color .3s,transform .3s;
+}
+.mcard:hover{border-color:var(--line);transform:translateY(-4px)}
+.mcard .num{font-family:var(--serif);font-size:13px;color:var(--brass);letter-spacing:.2em;margin-bottom:16px}
+.mcard h3{margin-bottom:10px;font-size:20px}
+.mcard p{color:var(--muted);font-size:15px}
+.menu-note{
+  margin-top:34px;padding:26px 30px;background:var(--panel);border-left:2px solid var(--brass);
+  display:flex;align-items:center;gap:26px;flex-wrap:wrap;border-radius:0 3px 3px 0;
+}
+.menu-note p{color:var(--muted);font-size:15.5px;max-width:56ch}
+.menu-note .btn{margin-left:auto}
+
+/* ---------- банкеты ---------- */
+.banq{display:grid;grid-template-columns:.95fr 1.05fr;gap:60px;align-items:center}
+.blist{list-style:none;margin-top:30px}
+.blist li{padding:15px 0 15px 34px;border-bottom:1px solid var(--line-soft);position:relative;color:var(--muted);font-size:16px}
+.blist li::before{
+  content:"";position:absolute;left:4px;top:22px;width:10px;height:10px;
+  border-left:1.5px solid var(--brass);border-bottom:1.5px solid var(--brass);transform:rotate(-45deg);
+}
+.blist li b{color:var(--cream);font-weight:600}
+
+/* ---------- акции ---------- */
+.promo{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
+.pcard{
+  background:linear-gradient(150deg,var(--panel),var(--bg-2));border:1px solid var(--line);
+  border-radius:3px;padding:36px 32px;position:relative;overflow:hidden;
+}
+.pcard::after{
+  content:"";position:absolute;right:-52px;top:-52px;width:150px;height:150px;border-radius:50%;
+  background:radial-gradient(circle,rgba(217,139,43,.16),transparent 70%);
+}
+.pcard h3{margin-bottom:12px;color:var(--brass-bright)}
+.pcard p{color:var(--muted);font-size:15.5px;position:relative;z-index:1}
+
+/* ---------- фотоотчёты ---------- */
+.gal{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.gal .ph:nth-child(1){grid-column:span 2;grid-row:span 2;aspect-ratio:auto}
+
+/* ---------- другие заведения ---------- */
+.places{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.place{
+  position:relative;border:1px solid var(--line-soft);border-radius:3px;overflow:hidden;
+  padding:44px 38px;min-height:290px;display:flex;flex-direction:column;justify-content:flex-end;
+  transition:transform .3s,border-color .3s;
+}
+.place:hover{transform:translateY(-5px);border-color:var(--line)}
+.place-grill{background:linear-gradient(160deg,#2a1508 0%,#150a04 100%)}
+.place-grill::before{content:"";position:absolute;inset:0;background:radial-gradient(600px 300px at 78% 15%,rgba(217,90,25,.28),transparent 65%)}
+.place-lounge{background:linear-gradient(160deg,#181229 0%,#0b0814 100%)}
+.place-lounge::before{content:"";position:absolute;inset:0;background:radial-gradient(600px 300px at 78% 15%,rgba(120,110,220,.24),transparent 65%)}
+.place>*{position:relative;z-index:1}
+.place .kind{font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--brass);margin-bottom:12px;font-weight:600}
+.place h3{font-size:30px;margin-bottom:12px}
+.place p{color:var(--muted);font-size:15.5px;max-width:44ch;margin-bottom:20px}
+.place .soon{font-size:13px;color:#7d8a7a;letter-spacing:.04em}
+
+/* ---------- бронь ---------- */
+.book{
+  background:var(--panel);border:1px solid var(--line);border-radius:3px;
+  padding:56px 48px;display:grid;grid-template-columns:1.1fr .9fr;gap:52px;align-items:center;
+}
+.book h2{margin-bottom:16px}
+.book p{color:var(--muted);margin-bottom:28px}
+.book-ways{display:flex;flex-direction:column;gap:14px}
+.way{display:flex;align-items:center;gap:16px;padding:18px 22px;background:var(--bg);border:1px solid var(--line-soft);border-radius:3px;transition:border-color .25s,transform .25s}
+.way:hover{border-color:var(--brass);transform:translateX(4px)}
+.way .ic{width:42px;height:42px;border-radius:50%;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--brass);flex:none;font-size:19px}
+.way b{display:block;font-size:16px;font-weight:600}
+.way span{font-size:13.5px;color:var(--muted)}
+
+/* ---------- контакты ---------- */
+.cont{display:grid;grid-template-columns:.85fr 1.15fr;gap:52px;align-items:start}
+.cinfo dl{display:grid;gap:26px}
+.cinfo dt{font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--brass);margin-bottom:7px}
+.cinfo dd{font-size:17px}
+.cinfo dd a:hover{color:var(--brass-bright)}
+.hours{font-size:15.5px;color:var(--muted)}
+.hours div{display:flex;justify-content:space-between;gap:20px;padding:7px 0;border-bottom:1px solid var(--line-soft);max-width:320px}
+.hours div b{color:var(--cream);font-weight:600}
+.socials{display:flex;gap:12px;margin-top:8px}
+.socials a{
+  width:46px;height:46px;border:1px solid var(--line);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;color:var(--brass);
+  transition:background .25s,color .25s,transform .25s;font-size:15px;font-weight:700;
+}
+.socials a:hover{background:var(--brass);color:#14100a;transform:translateY(-3px)}
+.map{border:1px solid var(--line-soft);border-radius:3px;overflow:hidden;height:440px;filter:grayscale(.35) contrast(1.05)}
+.map iframe{width:100%;height:100%;border:0;display:block}
+
+/* ---------- подвал ---------- */
+.ftr{background:var(--ink);border-top:1px solid var(--line-soft);padding:56px 0 30px;font-size:14.5px}
+.ftr-top{display:flex;justify-content:space-between;gap:40px;flex-wrap:wrap;padding-bottom:34px;border-bottom:1px solid var(--line-soft)}
+.ftr-nav{display:flex;gap:30px;flex-wrap:wrap;color:var(--muted)}
+.ftr-nav a:hover{color:var(--brass-bright)}
+.ftr-bot{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;padding-top:24px;color:#6f7d6c;font-size:13px}
+.age{border:1px solid var(--line);border-radius:50%;width:38px;height:38px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--brass);flex:none}
+
+/* ---------- появление при скролле ----------
+   Прячем блоки только если JS жив: без него страница
+   должна остаться читаемой, а не пустой. */
+.js .rv{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease}
+.js .rv.in{opacity:1;transform:none}
+
+/* ---------- адаптив ---------- */
+@media(max-width:960px){
+  .prog,.menu-grid{grid-template-columns:1fr 1fr}
+  .about,.banq,.book,.cont{grid-template-columns:1fr;gap:40px}
+  .gal{grid-template-columns:repeat(2,1fr)}
+  .gal .ph:nth-child(1){grid-column:span 2;grid-row:auto;aspect-ratio:16/10}
+  .places{grid-template-columns:1fr}
+  .book{padding:40px 28px}
+}
+/* шапка ужимается ступенями: сначала уходит телефон,
+   потом всё меню прячется в бургер */
+@media(max-width:1120px){
+  .hdr-phone{display:none}
+  .nav{gap:20px}
+  .hdr .wrap{gap:20px}
+}
+@media(max-width:900px){
+  .nav{
+    position:fixed;inset:116px 0 auto 0;background:rgba(10,18,9,.98);backdrop-filter:blur(16px);
+    flex-direction:column;gap:0;padding:12px 24px 26px;margin:0;
+    border-bottom:1px solid var(--line-soft);display:none;
+  }
+  .nav.on{display:flex}
+  .nav a{padding:15px 0;border-bottom:1px solid var(--line-soft);font-size:16.5px}
+  .nav a::after{display:none}
+  .hdr-phone{display:none}
+  .burger{display:block}
+  .hdr .wrap{gap:14px}
+}
+@media(max-width:760px){
+  body{font-size:16px}
+  .sec{padding:70px 0}
+  .prog,.menu-grid,.promo{grid-template-columns:1fr}
+  .facts{grid-template-columns:1fr}
+  /* поджимаем герой, чтобы кнопка брони попадала
+     на первый экран даже на коротких телефонах */
+  .hero{min-height:auto;padding:44px 0 72px}
+  .hero h1{margin:14px 0 18px}
+  .hero p{margin-bottom:26px}
+  .hero-cta{margin-bottom:36px}
+  .scroll-hint{display:none}
+  .bill{padding:32px 24px}
+  .bill .btn,.menu-note .btn{margin-left:0;width:100%}
+  /* на узком экране прячем подпись, чтобы влезли все три заведения */
+  .venues .label{display:none}
+  .venues .wrap{padding:0 16px}
+  .venues a{padding:5px 12px}
+}
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  .rv{opacity:1;transform:none}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+
+<!-- ================= ПЕРЕКЛЮЧАТЕЛЬ ЗАВЕДЕНИЙ ================= -->
+<!-- Гриль Хаус и Дымок получат свои страницы, когда придут данные -->
+<div class="venues">
+  <div class="wrap">
+    <span class="label">Наши заведения</span>
+    <a href="/" class="on">Irish Pub Molly</a>
+    <a href="#places">Гриль Хаус</a>
+    <a href="#places">Дымок</a>
+  </div>
+</div>
+
+<!-- ================= ШАПКА ================= -->
+<header class="hdr">
+  <div class="wrap">
+    <a href="#hero" class="logo"><b>Molly</b><span>Irish Pub</span></a>
+    <nav class="nav" id="nav">
+      <a href="#program">Программа</a>
+      <a href="#about">О пабе</a>
+      <a href="#menu">Меню</a>
+      <a href="#banquet">Банкеты</a>
+      <a href="#photo">Фото</a>
+      <a href="#contacts">Контакты</a>
+    </nav>
+    <a href="tel:+73519453737" class="hdr-phone">45-37-37</a>
+    <a href="#book" class="btn btn-gold btn-sm">Забронировать</a>
+    <button class="burger" id="burger" aria-label="Меню" aria-expanded="false"><i></i><i></i><i></i></button>
+  </div>
+</header>
+
+<!-- ================= ГЕРОЙ ================= -->
+<section class="hero" id="hero">
+  <div class="hero-bg"></div>
+  <div class="wrap">
+    <div class="hero-in">
+      <div class="eyebrow">Магнитогорск · Завенягина, 8а</div>
+      <h1>Ирландский паб,<br>в котором <em>шумно</em><br>по-хорошему</h1>
+      <p>Тёмное дерево, витражи и контактная барная стойка. Живая музыка каждый вечер, караоке до хрипоты и танцпол, который не выключается до утра.</p>
+      <div class="hero-cta">
+        <a href="#book" class="btn btn-gold">Забронировать стол</a>
+        <a href="#program" class="btn btn-ghost">Что у нас происходит</a>
+      </div>
+      <div class="chips">
+        <span class="chip">Более 10 сортов пива</span>
+        <span class="chip">Живая музыка и DJ</span>
+        <span class="chip">Караоке</span>
+        <span class="chip">Танцпол до 05:00</span>
+        <span class="chip">Банкеты и корпоративы</span>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-hint">Листайте<span></span></div>
+</section>
+
+<!-- ================= ПРОГРАММА ================= -->
+<section class="sec wood" id="program">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="eyebrow">Программа</div>
+      <h2>В Молли не бывает тихих вечеров</h2>
+      <p class="lead">Мы работаем как паб и как площадка: сцена, свет, звук и артисты, которые собирают полный зал. Заходите просто поужинать — останетесь на танцы.</p>
+    </div>
+    <div class="prog">
+      <article class="card rv">
+        <div class="when">Каждый вечер</div>
+        <h3>Живая музыка</h3>
+        <p>На нашей сцене играют музыканты и выступают артисты. После — диджей забирает зал до закрытия.</p>
+      </article>
+      <article class="card rv">
+        <div class="when">Пятница и суббота</div>
+        <h3>Вечеринки до 05:00</h3>
+        <p>Резиденты DJ Skimmi, Zarya и MC Rahmat. Танцпол, караоке и ведущий, который не даёт заскучать.</p>
+      </article>
+      <article class="card rv">
+        <div class="when">Каждый месяц</div>
+        <h3>День именинника</h3>
+        <p>Собираем именинников месяца и поздравляем всем залом. С подарком от паба.</p>
+      </article>
+    </div>
+
+    <!-- Сюда подключим ленту ближайших событий, когда получим афишу -->
+    <div class="bill rv">
+      <div>
+        <h3>Ближайшие события</h3>
+        <p>Концерты, тематические вечеринки и шоу-программы. Афиша обновляется — следите за анонсами и бронируйте стол заранее.</p>
+      </div>
+      <a href="https://vk.com/molly174" target="_blank" rel="noopener" class="btn btn-ghost">Афиша во ВКонтакте</a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= О ПАБЕ ================= -->
+<section class="sec" id="about">
+  <div class="wrap">
+    <div class="about">
+      <div class="rv">
+        <div class="eyebrow">О пабе</div>
+        <h2>Настоящий ирландский — без кавычек</h2>
+        <p>Классический интерьер из деревянной мебели, красивые витражи, контактная барная стойка и музыкальная сцена, на которой выступают артисты и музыканты. Для гостей — просторный танцпол и большой выбор сортов пива со всего мира.</p>
+        <p>В меню — европейская и японская кухня, и отдельное внимание мы уделяем ирландской. Каждый день проходят акции на блюда и пиво, каждый вечер играет живая музыка.</p>
+        <p>Приходите компанией, парой или в одиночку — за барной стойкой в Молли одиноким не остаётся никто.</p>
+        <div class="facts">
+          <div class="fact"><b>10+</b><span>сортов пива со всего мира</span></div>
+          <div class="fact"><b>3</b><span>кухни: ирландская, европейская, японская</span></div>
+          <div class="fact"><b>21 000</b><span>гостей в нашем сообществе ВКонтакте</span></div>
+          <div class="fact"><b>05:00</b><span>танцпол по пятницам и субботам</span></div>
+        </div>
+      </div>
+      <div class="rv">
+        <!-- ЗАМЕНИТЬ на фото зала: <img src="images/hall.jpg" alt="Зал ирландского паба Молли"> -->
+        <div class="ph ph-tall" data-label="фото зала"><i>◈</i></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= МЕНЮ ================= -->
+<section class="sec wood" id="menu">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="eyebrow">Кухня и бар</div>
+      <h2>Меню</h2>
+      <p class="lead">Три кухни под одной крышей и бар, ради которого сюда возвращаются. Всё готовится здесь и подаётся горячим — даже в четыре утра.</p>
+    </div>
+    <div class="menu-grid">
+      <article class="mcard rv"><div class="num">01</div><h3>Ирландская кухня</h3><p>То, ради чего заходят в паб: сытно, просто и честно.</p></article>
+      <article class="mcard rv"><div class="num">02</div><h3>Европейская кухня</h3><p>Классика на каждый день — от закусок до горячего.</p></article>
+      <article class="mcard rv"><div class="num">03</div><h3>Японская кухня</h3><p>Роллы и суши для тех, кто пришёл за другим настроением.</p></article>
+      <article class="mcard rv"><div class="num">04</div><h3>Закуски к пиву</h3><p>Всё, что положено к пенному, и в правильных порциях.</p></article>
+      <article class="mcard rv"><div class="num">05</div><h3>Пиво</h3><p>Более 10 сортов со всего мира — от классики до крафта.</p></article>
+      <article class="mcard rv"><div class="num">06</div><h3>Бар и коктейли</h3><p>Крепкое, авторские коктейли и то, что смешает бармен лично для вас.</p></article>
+    </div>
+    <!-- ЗАМЕНИТЬ: когда придёт меню с ценами — раскрываем позиции и кладём PDF -->
+    <div class="menu-note rv">
+      <p>Полное меню с ценами мы обновляем — уточнить блюда, состав и стоимость можно по телефону, наши администраторы подскажут.</p>
+      <a href="tel:+73519453737" class="btn btn-gold">Спросить по телефону</a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= БАНКЕТЫ ================= -->
+<section class="sec" id="banquet">
+  <div class="wrap">
+    <div class="banq">
+      <div class="rv">
+        <!-- ЗАМЕНИТЬ на фото банкетного стола -->
+        <div class="ph ph-wide" data-label="фото банкета"><i>◈</i></div>
+      </div>
+      <div class="rv">
+        <div class="eyebrow">Банкеты и корпоративы</div>
+        <h2>Отмечаем так,<br>чтобы вспоминали год</h2>
+        <p class="lead">Дни рождения, корпоративы, выпускные и встречи выпускников. Берём на себя всё: меню, музыку, ведущего и настроение зала.</p>
+        <ul class="blist">
+          <li><b>Банкетное меню</b> — согласуем под ваш формат и бюджет</li>
+          <li><b>Ведущий и диджей</b> — программа, конкурсы, музыка весь вечер</li>
+          <li><b>Живая музыка</b> — артисты на нашей сцене</li>
+          <li><b>Зал целиком или часть</b> — от компании друзей до большого корпоратива</li>
+          <li><b>Стоимость</b> — рассчитываем индивидуально, звоните</li>
+        </ul>
+        <div style="margin-top:32px;display:flex;gap:14px;flex-wrap:wrap">
+          <a href="tel:+73519453737" class="btn btn-gold">Обсудить банкет</a>
+          <a href="#book" class="btn btn-ghost">Забронировать</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= АКЦИИ ================= -->
+<section class="sec wood" id="promo">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="eyebrow">Выгодно</div>
+      <h2>Постоянные предложения</h2>
+    </div>
+    <div class="promo">
+      <!-- УТОЧНИТЬ у заказчика: действует ли акция «свой алкоголь» сейчас и на каких условиях -->
+      <article class="pcard rv">
+        <h3>Свой алкоголь</h3>
+        <p>Хочется именно своего любимого напитка? Закажите по меню от 1000 ₽ на человека — и приносите с собой. Условия уточняйте у администратора.</p>
+      </article>
+      <article class="pcard rv">
+        <h3>Именинникам</h3>
+        <p>Отмечаете день рождения у нас — готовим подарок от паба и поздравляем всем залом. Предупредите заранее при бронировании.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ФОТООТЧЁТЫ ================= -->
+<section class="sec" id="photo">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="eyebrow">Фотоотчёты</div>
+      <h2>Ищите себя на фото</h2>
+      <p class="lead">После каждой вечеринки выкладываем снимки — забирайте, отмечайте друзей и приходите снова.</p>
+    </div>
+    <div class="gal rv">
+      <div class="ph" data-label="главное фото"><i>◈</i></div>
+      <div class="ph ph-sq" data-label="вечеринка"><i>◈</i></div>
+      <div class="ph ph-sq" data-label="сцена"><i>◈</i></div>
+      <div class="ph ph-sq" data-label="бар"><i>◈</i></div>
+      <div class="ph ph-sq" data-label="гости"><i>◈</i></div>
+    </div>
+    <div style="margin-top:32px;text-align:center">
+      <a href="https://vk.com/molly174" target="_blank" rel="noopener" class="btn btn-ghost">Все фотоотчёты во ВКонтакте</a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ДРУГИЕ ЗАВЕДЕНИЯ ================= -->
+<section class="sec wood" id="places">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="eyebrow">Наши заведения</div>
+      <h2>Молли — не единственные</h2>
+      <p class="lead">Три площадки для трёх разных настроений. Отмечали в пабе — попробуйте остальные.</p>
+    </div>
+    <div class="places">
+      <!-- ЗАМЕНИТЬ: описания, адреса и телефоны — когда придут данные -->
+      <article class="place place-grill rv">
+        <div class="kind">Ресторан</div>
+        <h3>Гриль Хаус</h3>
+        <p>Мясо на открытом огне: стейки, люля-кебаб и овощи с гриля. Место для всей семьи.</p>
+        <div class="soon">Страница заведения готовится</div>
+      </article>
+      <article class="place place-lounge rv">
+        <div class="kind">Лаундж-бар</div>
+        <h3>Дымок</h3>
+        <p>Приглушённый свет, мягкие диваны и спокойная музыка. Для неспешных вечеров и долгих разговоров.</p>
+        <div class="soon">Страница заведения готовится</div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= БРОНИРОВАНИЕ ================= -->
+<section class="sec" id="book">
+  <div class="wrap">
+    <div class="book rv">
+      <div>
+        <div class="eyebrow">Бронирование</div>
+        <h2>Займём вам стол</h2>
+        <p>В выходные зал заполняется быстро, а на концерты и вечеринки места разбирают заранее. Бронируйте онлайн за минуту или позвоните — подберём стол под вашу компанию.</p>
+        <a href="https://416936.restoplace.ws" target="_blank" rel="noopener" class="btn btn-gold">Забронировать онлайн</a>
+      </div>
+      <div class="book-ways">
+        <a href="tel:+73519453737" class="way">
+          <span class="ic">✆</span>
+          <span><b>45-37-37</b><span>Позвонить администратору</span></span>
+        </a>
+        <a href="https://416936.restoplace.ws" target="_blank" rel="noopener" class="way">
+          <span class="ic">▤</span>
+          <span><b>Онлайн-бронирование</b><span>Выбрать стол на схеме зала</span></span>
+        </a>
+        <a href="https://vk.com/molly174" target="_blank" rel="noopener" class="way">
+          <span class="ic">В</span>
+          <span><b>Написать во ВКонтакте</b><span>Ответим в сообщениях сообщества</span></span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= КОНТАКТЫ ================= -->
+<section class="sec wood" id="contacts">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="eyebrow">Контакты</div>
+      <h2>Как нас найти</h2>
+    </div>
+    <div class="cont">
+      <div class="cinfo rv">
+        <dl>
+          <div>
+            <dt>Адрес</dt>
+            <dd>Магнитогорск, улица Завенягина, 8а</dd>
+          </div>
+          <div>
+            <dt>Телефон</dt>
+            <dd><a href="tel:+73519453737">+7 (3519) 45-37-37</a></dd>
+          </div>
+          <div>
+            <dt>По вопросам концертов</dt>
+            <dd><a href="tel:+79227239211">+7 (922) 723-92-11</a> — Виталий Титов</dd>
+          </div>
+          <div>
+            <!-- УТОЧНИТЬ: часы работы в ВК и на старом сайте не совпадают -->
+            <dt>Часы работы</dt>
+            <dd class="hours">
+              <div><span>Понедельник</span><b>выходной</b></div>
+              <div><span>Вторник — четверг</span><b>18:00 — 03:00</b></div>
+              <div><span>Пятница — суббота</span><b>18:00 — 05:00</b></div>
+              <div><span>Воскресенье</span><b>18:00 — 03:00</b></div>
+            </dd>
+          </div>
+          <div>
+            <dt>Мы в соцсетях</dt>
+            <dd>
+              <div class="socials">
+                <a href="https://vk.com/molly174" target="_blank" rel="noopener" aria-label="ВКонтакте">В</a>
+              </div>
+            </dd>
+          </div>
+        </dl>
+      </div>
+      <div class="map rv">
+        <iframe src="https://yandex.ru/map-widget/v1/?text=%D0%9C%D0%B0%D0%B3%D0%BD%D0%B8%D1%82%D0%BE%D0%B3%D0%BE%D1%80%D1%81%D0%BA%2C%20%D1%83%D0%BB%D0%B8%D1%86%D0%B0%20%D0%97%D0%B0%D0%B2%D0%B5%D0%BD%D1%8F%D0%B3%D0%B8%D0%BD%D0%B0%2C%208%D0%B0&z=17" loading="lazy" title="Карта: Магнитогорск, Завенягина, 8а"></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ПОДВАЛ ================= -->
+<footer class="ftr">
+  <div class="wrap">
+    <div class="ftr-top">
+      <a href="#hero" class="logo"><b>Molly</b><span>Irish Pub</span></a>
+      <nav class="ftr-nav">
+        <a href="#program">Программа</a>
+        <a href="#menu">Меню</a>
+        <a href="#banquet">Банкеты</a>
+        <a href="#photo">Фото</a>
+        <a href="#book">Бронирование</a>
+        <a href="#contacts">Контакты</a>
+      </nav>
+    </div>
+    <div class="ftr-bot">
+      <div>Irish Pub Molly · Магнитогорск, Завенягина, 8а · <a href="tel:+73519453737">45-37-37</a></div>
+      <div style="display:flex;align-items:center;gap:14px">
+        <span class="age">18+</span>
+        <span>Чрезмерное употребление алкоголя вредит вашему здоровью</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  // мобильное меню
+  var burger=document.getElementById('burger'), nav=document.getElementById('nav');
+  burger.addEventListener('click',function(){
+    var open=nav.classList.toggle('on');
+    burger.classList.toggle('on',open);
+    burger.setAttribute('aria-expanded',open?'true':'false');
+  });
+  nav.addEventListener('click',function(e){
+    if(e.target.tagName==='A'){nav.classList.remove('on');burger.classList.remove('on');burger.setAttribute('aria-expanded','false');}
+  });
+
+  // появление блоков при скролле
+  var items=document.querySelectorAll('.rv');
+  function showAll(){for(var i=0;i<items.length;i++){items[i].classList.add('in')}}
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(en,i){
+        if(en.isIntersecting){
+          var el=en.target;
+          setTimeout(function(){el.classList.add('in')},(i%3)*90);
+          io.unobserve(el);
+        }
+      });
+    },{threshold:.12,rootMargin:'0px 0px -60px 0px'});
+    items.forEach(function(el){io.observe(el)});
+    // страховка: если наблюдатель почему-то не отработал,
+    // через 2,5 с показываем всё — пустой страницы быть не должно
+    setTimeout(function(){if(!document.querySelector('.rv.in')){showAll()}},2500);
+  }else{
+    showAll();
+  }
+})();
+</script>
+</body>
+</html>
