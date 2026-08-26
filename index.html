@@ -334,6 +334,79 @@ h3{font-size:22px;line-height:1.25}
 .ftr-bot{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;padding-top:24px;color:#6f7d6c;font-size:13px}
 .age{border:1px solid var(--line);border-radius:50%;width:38px;height:38px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--brass);flex:none}
 
+/* ---------- ассистент ---------- */
+.asst{position:fixed;right:22px;bottom:22px;z-index:90;display:flex;flex-direction:column;align-items:flex-end;gap:12px}
+.asst-btn{
+  width:62px;height:62px;border-radius:50%;border:1px solid var(--line);cursor:pointer;
+  background:linear-gradient(150deg,#1c3222,#101d14);color:var(--brass-bright);
+  box-shadow:0 12px 34px rgba(0,0,0,.5);font-size:24px;flex:none;
+  display:flex;align-items:center;justify-content:center;transition:transform .25s,border-color .25s;
+}
+.asst-btn:hover{transform:scale(1.06);border-color:var(--brass)}
+.asst-btn .dot{position:absolute;top:4px;right:4px;width:11px;height:11px;border-radius:50%;background:var(--amber);border:2px solid var(--bg)}
+.asst-btn{position:relative}
+.asst-btn.hide{display:none}
+
+/* приветственное облачко */
+.asst-teaser{
+  max-width:300px;background:var(--cream);color:#1b2419;border-radius:14px;padding:16px 38px 16px 16px;
+  box-shadow:0 16px 40px rgba(0,0,0,.45);display:none;gap:12px;position:relative;
+  animation:pop .45s ease both;
+}
+.asst-teaser.on{display:flex}
+@keyframes pop{from{opacity:0;transform:translateY(10px) scale(.96)}to{opacity:1;transform:none}}
+.asst-teaser .ava{width:42px;height:42px;border-radius:50%;flex:none;background:linear-gradient(150deg,#1c3222,#101d14);color:var(--brass-bright);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:19px}
+.asst-teaser b{display:block;font-size:15px;margin-bottom:3px;font-family:var(--serif);font-weight:400}
+.asst-teaser p{font-size:13.5px;line-height:1.45;color:#3c4a38}
+.asst-teaser .x{position:absolute;top:8px;right:10px;border:0;background:none;font-size:17px;color:#8b978a;cursor:pointer;line-height:1;padding:4px}
+.asst-teaser .x:hover{color:#1b2419}
+
+/* панель диалога */
+.asst-panel{
+  width:min(370px,calc(100vw - 32px));height:min(540px,calc(100vh - 120px));
+  background:var(--bg-2);border:1px solid var(--line);border-radius:14px;overflow:hidden;
+  box-shadow:0 24px 60px rgba(0,0,0,.6);display:none;flex-direction:column;
+  animation:pop .3s ease both;
+}
+.asst-panel.on{display:flex}
+.asst-head{display:flex;align-items:center;gap:12px;padding:16px 18px;background:var(--panel);border-bottom:1px solid var(--line-soft);flex:none}
+.asst-head .ava{width:40px;height:40px;border-radius:50%;flex:none;border:1px solid var(--line);color:var(--brass-bright);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:18px}
+.asst-head b{display:block;font-family:var(--serif);font-weight:400;font-size:17px}
+.asst-head span{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:6px}
+.asst-head span::before{content:"";width:6px;height:6px;border-radius:50%;background:#5fbf6a}
+.asst-head .x{margin-left:auto;background:none;border:0;color:var(--muted);font-size:20px;cursor:pointer;padding:6px;line-height:1}
+.asst-head .x:hover{color:var(--cream)}
+.asst-body{flex:1;overflow-y:auto;padding:18px;display:flex;flex-direction:column;gap:12px;scrollbar-width:thin}
+.asst-body::-webkit-scrollbar{width:6px}
+.asst-body::-webkit-scrollbar-thumb{background:rgba(200,164,90,.25);border-radius:3px}
+.msg{max-width:86%;padding:12px 15px;border-radius:14px;font-size:14.5px;line-height:1.5;animation:pop .3s ease both}
+.msg-bot{background:var(--panel);border:1px solid var(--line-soft);border-bottom-left-radius:4px;align-self:flex-start;color:var(--cream)}
+.msg-user{background:var(--brass);color:#14100a;border-bottom-right-radius:4px;align-self:flex-end;font-weight:600}
+.msg b{color:var(--brass-bright);font-weight:600}
+.msg a{color:var(--brass-bright);text-decoration:underline}
+.msg .rows{margin-top:8px;display:flex;flex-direction:column;gap:5px;font-size:13.5px;color:var(--muted)}
+.msg .rows i{font-style:normal;color:var(--cream)}
+.typing{display:flex;gap:4px;align-items:center;padding:14px 16px}
+.typing i{width:6px;height:6px;border-radius:50%;background:var(--muted);animation:blink 1.2s infinite}
+.typing i:nth-child(2){animation-delay:.2s}
+.typing i:nth-child(3){animation-delay:.4s}
+@keyframes blink{0%,60%,100%{opacity:.25}30%{opacity:1}}
+.asst-foot{flex:none;padding:12px 14px;border-top:1px solid var(--line-soft);background:var(--panel)}
+.asst-chips{display:flex;gap:7px;flex-wrap:wrap}
+.asst-chips button{
+  border:1px solid var(--line);background:rgba(200,164,90,.07);color:var(--cream);
+  padding:8px 13px;border-radius:999px;font-size:13px;cursor:pointer;font-family:inherit;
+  transition:background .2s,border-color .2s;
+}
+.asst-chips button:hover{background:var(--brass);color:#14100a;border-color:var(--brass)}
+.asst-chips button.call{background:var(--brass);color:#14100a;font-weight:600}
+@media(max-width:760px){
+  .asst{right:14px;bottom:14px}
+  .asst-btn{width:56px;height:56px;font-size:22px}
+  .asst-panel{height:min(72vh,520px)}
+  .asst-teaser{max-width:calc(100vw - 40px)}
+}
+
 /* ---------- появление при скролле ----------
    Прячем блоки только если JS жив: без него страница
    должна остаться читаемой, а не пустой. */
@@ -733,6 +806,32 @@ h3{font-size:22px;line-height:1.25}
   </div>
 </footer>
 
+<!-- ================= АССИСТЕНТ ================= -->
+<div class="asst">
+  <div class="asst-teaser" id="teaser">
+    <span class="ava">M</span>
+    <div>
+      <b>Молли</b>
+      <p>Здравствуйте! Подскажу по столикам, меню и банкетам. Спрашивайте.</p>
+    </div>
+    <button class="x" id="teaserX" aria-label="Закрыть">×</button>
+  </div>
+
+  <div class="asst-panel" id="panel" role="dialog" aria-label="Помощник Молли" aria-modal="false">
+    <div class="asst-head">
+      <span class="ava">M</span>
+      <div><b>Молли</b><span>на связи</span></div>
+      <button class="x" id="panelX" aria-label="Закрыть">×</button>
+    </div>
+    <div class="asst-body" id="chat" aria-live="polite"></div>
+    <div class="asst-foot"><div class="asst-chips" id="chips"></div></div>
+  </div>
+
+  <button class="asst-btn" id="asstBtn" aria-label="Задать вопрос">
+    <span>✉</span><span class="dot" id="asstDot"></span>
+  </button>
+</div>
+
 <script>
 (function(){
   // мобильное меню
@@ -765,6 +864,146 @@ h3{font-size:22px;line-height:1.25}
     setTimeout(function(){if(!document.querySelector('.rv.in')){showAll()}},2500);
   }else{
     showAll();
+  }
+
+  /* ---------- ассистент «Молли» ----------
+     Сценарный помощник: отвечает мгновенно, без оператора
+     и без внешних сервисов. Ответы правятся прямо здесь. */
+  var TEL='+73519453737', BOOK='https://416936.restoplace.ws', VK='https://vk.com/molly174';
+  var MAP='https://yandex.ru/maps/?text=Магнитогорск, Завенягина, 8а';
+
+  var TOPICS={
+    book:{q:'Забронировать стол',a:
+      'Займём вам место — выбирайте, как удобнее:'+
+      '<div class="rows"><i>· Онлайн</i> — <a href="'+BOOK+'" target="_blank" rel="noopener">на схеме зала</a>, займёт минуту'+
+      '<i>· По телефону</i> — <a href="tel:'+TEL+'">45-37-37</a>, администратор подберёт стол'+
+      '<i>· ВКонтакте</i> — <a href="'+VK+'" target="_blank" rel="noopener">напишите в сообщения</a></div>'+
+      'На выходные и концерты лучше бронировать заранее — зал заполняется быстро.',
+      next:['hours','program','banquet']},
+    hours:{q:'Часы работы',a:
+      'Работаем так:'+
+      '<div class="rows"><i>Понедельник</i> — выходной<i>Вторник — четверг</i> — 18:00 до 03:00'+
+      '<i>Пятница — суббота</i> — 18:00 до 05:00<i>Воскресенье</i> — 18:00 до 03:00</div>',
+      next:['book','where','program']},
+    where:{q:'Как добраться',a:
+      'Мы в Магнитогорске, <b>улица Завенягина, 8а</b>.<br><a href="'+MAP+'" target="_blank" rel="noopener">Открыть на карте</a><br><br>'+
+      'Если не найдёте вход — звоните <a href="tel:'+TEL+'">45-37-37</a>, подскажем.',
+      next:['hours','book']},
+    menu:{q:'Меню и кухня',a:
+      'У нас три кухни: <b>ирландская</b>, европейская и японская. Плюс закуски к пенному и бар с авторскими коктейлями.<br><br>'+
+      'Пива — <b>более 10 сортов</b> со всего мира, от классики до крафта.<br><br>'+
+      'Точный состав блюд и цены подскажут по телефону — меню обновляется: <a href="tel:'+TEL+'">45-37-37</a>.',
+      next:['alcohol','book','banquet']},
+    banquet:{q:'Банкет и день рождения',a:
+      'Проводим дни рождения, корпоративы, выпускные и встречи выпускников.<br><br>'+
+      'Берём на себя меню, ведущего, диджея и живую музыку. Можно забронировать часть зала или весь целиком.<br><br>'+
+      'Стоимость считаем под ваш формат — позвоните, всё рассчитаем: <a href="tel:'+TEL+'">45-37-37</a>.',
+      next:['birthday','book','hours']},
+    program:{q:'Что у вас происходит',a:
+      'Живая музыка — <b>каждый вечер</b>. На сцене выступают музыканты и артисты, после играет диджей.<br><br>'+
+      'По пятницам и субботам — вечеринки до 05:00: DJ Skimmi, Zarya и MC Rahmat, караоке и танцпол.<br><br>'+
+      'Афиша ближайших событий — <a href="'+VK+'" target="_blank" rel="noopener">в нашей группе ВКонтакте</a>.',
+      next:['book','birthday','menu']},
+    alcohol:{q:'Можно со своим алкоголем?',a:
+      'Да. Закажите по меню <b>от 1000 ₽ на человека</b> — и приносите свой крепкий напиток.<br><br>'+
+      'Условия лучше уточнить у администратора при бронировании: <a href="tel:'+TEL+'">45-37-37</a>.',
+      next:['book','menu']},
+    birthday:{q:'Я именинник',a:
+      'Тогда вам к нам! Отмечаете день рождения в Молли — готовим подарок от паба и поздравляем всем залом.<br><br>'+
+      'Предупредите заранее при бронировании, чтобы всё успели подготовить.',
+      next:['banquet','book']},
+    places:{q:'Другие заведения',a:
+      'Кроме паба у нас есть ещё два места:'+
+      '<div class="rows"><i>· Гриль Хаус</i> — мясо на открытом огне, для всей семьи'+
+      '<i>· Дымок</i> — лаундж-бар для спокойных вечеров</div>'+
+      'Страницы этих заведений скоро появятся на сайте.',
+      next:['book','hours']}
+  };
+  var MAIN=['book','hours','menu','banquet','program','where','alcohol','places'];
+
+  var panel=document.getElementById('panel'), chat=document.getElementById('chat'),
+      chips=document.getElementById('chips'), teaser=document.getElementById('teaser'),
+      asstBtn=document.getElementById('asstBtn'), asstDot=document.getElementById('asstDot'),
+      started=false;
+
+  function store(k,v){try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v)}catch(e){return null}}
+
+  // крутим вниз и сразу, и после отрисовки: высота нового
+  // сообщения известна не в тот же момент, когда его добавили
+  function toBottom(){
+    chat.scrollTop=chat.scrollHeight;
+    if(window.requestAnimationFrame)requestAnimationFrame(function(){chat.scrollTop=chat.scrollHeight});
+    setTimeout(function(){chat.scrollTop=chat.scrollHeight},60);
+  }
+  function add(cls,html){
+    var m=document.createElement('div');
+    m.className='msg '+cls;m.innerHTML=html;
+    chat.appendChild(m);toBottom();
+    return m;
+  }
+  function typing(){
+    var t=document.createElement('div');
+    t.className='msg msg-bot typing';t.innerHTML='<i></i><i></i><i></i>';
+    chat.appendChild(t);toBottom();
+    return t;
+  }
+  function setChips(keys){
+    chips.innerHTML='';
+    keys.forEach(function(k){
+      var b=document.createElement('button');
+      b.textContent=TOPICS[k].q;
+      b.addEventListener('click',function(){ask(k)});
+      chips.appendChild(b);
+    });
+    var cb=document.createElement('button');
+    cb.className='call';cb.textContent='Позвонить 45-37-37';
+    cb.addEventListener('click',function(){window.location.href='tel:'+TEL});
+    chips.appendChild(cb);
+  }
+  function ask(key){
+    var t=TOPICS[key];
+    add('msg-user',t.q);
+    setChips([]);
+    var dots=typing();
+    setTimeout(function(){
+      dots.remove();
+      add('msg-bot',t.a);
+      setChips(t.next||MAIN.slice(0,4));
+    },520);
+  }
+  function start(){
+    if(started)return;started=true;
+    var dots=typing();
+    setTimeout(function(){
+      dots.remove();
+      add('msg-bot','Здравствуйте! Я Молли — помогу забронировать стол, расскажу про меню, банкеты и программу.<br><br>О чём рассказать?');
+      setChips(MAIN.slice(0,4));
+    },450);
+  }
+  function openPanel(){
+    hideTeaser();
+    panel.classList.add('on');
+    asstBtn.classList.add('hide');
+    asstDot.style.display='none';
+    start();
+  }
+  function closePanel(){
+    panel.classList.remove('on');
+    asstBtn.classList.remove('hide');
+  }
+  function hideTeaser(){teaser.classList.remove('on');store('molly_teaser','1')}
+
+  asstBtn.addEventListener('click',openPanel);
+  document.getElementById('panelX').addEventListener('click',closePanel);
+  document.getElementById('teaserX').addEventListener('click',function(e){e.stopPropagation();hideTeaser()});
+  teaser.addEventListener('click',openPanel);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&panel.classList.contains('on'))closePanel()});
+
+  // приветствие показываем один раз и не сразу, чтобы не мешать
+  if(!store('molly_teaser')){
+    setTimeout(function(){if(!panel.classList.contains('on'))teaser.classList.add('on')},6000);
+  }else{
+    asstDot.style.display='none';
   }
 })();
 </script>
