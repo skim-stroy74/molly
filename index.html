@@ -337,6 +337,65 @@ h3{font-size:22px;line-height:1.25}
 .ftr-bot{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;padding-top:24px;color:#6f7d6c;font-size:13px}
 .age{border:1px solid var(--line);border-radius:50%;width:38px;height:38px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--brass);flex:none}
 
+/* ---------- режим черновика: чего не хватает ---------- */
+.draft-bar{
+  background:linear-gradient(90deg,rgba(217,139,43,.16),rgba(217,139,43,.05));
+  border-bottom:1px solid rgba(217,139,43,.35);padding:14px 0;
+}
+.draft-bar .wrap{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.draft-bar .mark{
+  background:var(--amber);color:#1a1006;font-size:11px;font-weight:700;letter-spacing:.16em;
+  text-transform:uppercase;padding:5px 11px;border-radius:2px;flex:none;
+}
+.draft-bar p{font-size:14.5px;color:var(--cream);flex:1;min-width:240px}
+.draft-bar p b{color:#f0b463}
+
+.need{
+  border:1px dashed rgba(217,139,43,.55);background:rgba(217,139,43,.07);
+  border-radius:3px;padding:18px 22px;margin-top:20px;
+}
+.need .tag{
+  font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:#eda85f;
+  font-weight:700;display:block;margin-bottom:8px;
+}
+.need b{display:block;font-size:15.5px;color:var(--cream);margin-bottom:6px;font-weight:600}
+.need p{font-size:14.5px;color:var(--muted);line-height:1.55}
+.need p+p{margin-top:6px}
+.need .spec{
+  display:inline-block;margin-top:10px;font-size:12.5px;color:#eda85f;
+  border:1px solid rgba(217,139,43,.4);border-radius:999px;padding:4px 12px;
+}
+
+/* подсказка внутри слота под фото */
+.ph-need{
+  display:none;flex-direction:column;align-items:center;gap:9px;text-align:center;
+  padding:28px 24px;max-width:34ch;
+}
+.ph-need .tag{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:#eda85f;font-weight:700}
+.ph-need b{font-size:16px;color:var(--cream);font-weight:600;line-height:1.35}
+.ph-need span{font-size:13px;color:var(--muted);line-height:1.5}
+body.hints .ph{border-color:rgba(217,139,43,.4);border-style:dashed}
+body.hints .ph-need{display:flex}
+body.hints .ph i{display:none}
+body.hints .ph::after{content:none}
+body:not(.hints) .need,body:not(.hints) .draft-bar{display:none}
+
+/* переключатель подсказок */
+.hints-toggle{
+  position:fixed;left:20px;bottom:22px;z-index:90;
+  border:1px solid rgba(217,139,43,.5);background:rgba(26,16,6,.92);color:#eda85f;
+  padding:11px 18px;border-radius:999px;font-size:13px;font-family:inherit;cursor:pointer;
+  box-shadow:0 10px 30px rgba(0,0,0,.45);transition:background .25s,color .25s;
+}
+.hints-toggle:hover{background:var(--amber);color:#1a1006}
+@media(max-width:760px){
+  .hints-toggle{left:14px;bottom:14px;padding:9px 14px;font-size:12px}
+  /* в маленьких квадратах галереи текста немного, но и места мало */
+  .ph-sq .ph-need{padding:12px 10px;gap:5px}
+  .ph-sq .ph-need b{font-size:13.5px}
+  .ph-sq .ph-need span{font-size:11.5px}
+}
+
 /* ---------- ассистент ---------- */
 .asst{position:fixed;right:22px;bottom:22px;z-index:90;display:flex;flex-direction:column;align-items:flex-end;gap:12px}
 .asst-btn{
@@ -433,8 +492,10 @@ h3{font-size:22px;line-height:1.25}
   .hdr .wrap{gap:20px}
 }
 @media(max-width:900px){
+  /* меню крепим к самой шапке, а не к фиксированной высоте:
+     шапка липкая и при прокрутке поднимается наверх */
   .nav{
-    position:fixed;inset:116px 0 auto 0;background:rgba(10,18,9,.98);backdrop-filter:blur(16px);
+    position:absolute;top:100%;left:0;right:0;background:rgba(10,18,9,.98);backdrop-filter:blur(16px);
     flex-direction:column;gap:0;padding:12px 24px 26px;margin:0;
     border-bottom:1px solid var(--line-soft);display:none;
   }
@@ -472,6 +533,15 @@ h3{font-size:22px;line-height:1.25}
 </style>
 </head>
 <body>
+
+<!-- ================= ПОЛОСА ЧЕРНОВИКА =================
+     Виден только в режиме подсказок, снимается кнопкой слева внизу -->
+<div class="draft-bar">
+  <div class="wrap">
+    <span class="mark">Черновик</span>
+    <p>Это каркас сайта. <b>Жёлтым отмечено то, чего не хватает</b> — посмотрите, где что должно стоять, и пришлите материалы. Подсказки можно скрыть кнопкой слева внизу.</p>
+  </div>
+</div>
 
 <!-- ================= ПЕРЕКЛЮЧАТЕЛЬ ЗАВЕДЕНИЙ ================= -->
 <!-- Гриль Хаус и Дымок получат свои страницы, когда придут данные -->
@@ -521,6 +591,13 @@ h3{font-size:22px;line-height:1.25}
         <span class="chip">Танцпол до 05:00</span>
         <span class="chip">Банкеты и корпоративы</span>
       </div>
+      <div class="need">
+        <span class="tag">Нужно от вас</span>
+        <b>Главное фото или короткое видео зала</b>
+        <p>Сейчас здесь нарисованный фон. На его месте должен быть ваш зал: общий план с барной стойкой, витражами и сценой — то, что сразу объясняет, куда человек попал.</p>
+        <p>Если есть видео на 10–15 секунд (зал вечером, гости, музыка) — возьмём его, это работает сильнее фото.</p>
+        <span class="spec">Горизонтальное, от 1920 пикселей по ширине, из исходников фотографа</span>
+      </div>
     </div>
   </div>
   <div class="scroll-hint">Листайте<span></span></div>
@@ -560,6 +637,13 @@ h3{font-size:22px;line-height:1.25}
       </div>
       <a href="https://vk.com/molly174" target="_blank" rel="noopener" class="btn btn-ghost">Афиша во ВКонтакте</a>
     </div>
+    <div class="need">
+      <span class="tag">Нужно от вас</span>
+      <b>Афиша ближайших событий</b>
+      <p>Здесь встанут карточки конкретных вечеринок и концертов — как у «Максимилианса» на главной. Это самый посещаемый блок на сайтах заведений: люди заходят посмотреть, что будет в выходные.</p>
+      <p>По каждому событию нужно: дата, название, что в программе, стоимость входа или билета, афиша-картинка.</p>
+      <span class="spec">Пришлите 3–5 ближайших — дальше покажу, как добавлять их самим</span>
+    </div>
   </div>
 </section>
 
@@ -582,7 +666,15 @@ h3{font-size:22px;line-height:1.25}
       </div>
       <div class="rv">
         <!-- ЗАМЕНИТЬ на фото зала: <img src="images/hall.jpg" alt="Зал ирландского паба Молли"> -->
-        <div class="ph ph-tall" data-label="фото зала"><i>◈</i></div>
+        <div class="ph ph-tall" data-label="фото зала">
+          <i>◈</i>
+          <div class="ph-need">
+            <span class="tag">Нужно фото</span>
+            <b>Интерьер паба</b>
+            <span>Вертикальный кадр: деревянная мебель, витражи, барная стойка. Без людей или с парой гостей — чтобы читалась атмосфера, а не толпа.</span>
+            <span>Одно хорошее фото, от 1200 пикселей по ширине.</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -609,6 +701,14 @@ h3{font-size:22px;line-height:1.25}
       <p>Полное меню с ценами мы обновляем — уточнить блюда, состав и стоимость можно по телефону, наши администраторы подскажут.</p>
       <a href="tel:+73519453737" class="btn btn-gold">Спросить по телефону</a>
     </div>
+    <div class="need">
+      <span class="tag">Нужно от вас · без этого не собрать</span>
+      <b>Меню с актуальными ценами</b>
+      <p>Сейчас здесь только названия разделов. Вместо них должны раскрываться блюда: название, состав, вес, цена. Плюс отдельно карта бара и список сортов пива.</p>
+      <p>Подойдёт в любом виде — файл из программы учёта, PDF, вордовский документ, хоть фотографии страниц печатного меню. Разберу и оформлю сам.</p>
+      <p>И то же самое по «Гриль Хаусу» и «Дымку» — у каждого заведения будет своё меню.</p>
+      <span class="spec">Это первое, что нужно: без меню раздел собрать невозможно</span>
+    </div>
   </div>
 </section>
 
@@ -618,7 +718,15 @@ h3{font-size:22px;line-height:1.25}
     <div class="banq">
       <div class="rv">
         <!-- ЗАМЕНИТЬ на фото банкетного стола -->
-        <div class="ph ph-wide" data-label="фото банкета"><i>◈</i></div>
+        <div class="ph ph-wide" data-label="фото банкета">
+          <i>◈</i>
+          <div class="ph-need">
+            <span class="tag">Нужно фото</span>
+            <b>Накрытый банкетный стол</b>
+            <span>Стол с закусками, зал под мероприятие, компания за столом. Именно то, что человек хочет увидеть, прежде чем заказать корпоратив.</span>
+            <span>2–3 кадра на выбор.</span>
+          </div>
+        </div>
       </div>
       <div class="rv">
         <div class="eyebrow">Банкеты и корпоративы</div>
@@ -634,6 +742,12 @@ h3{font-size:22px;line-height:1.25}
         <div style="margin-top:32px;display:flex;gap:14px;flex-wrap:wrap">
           <a href="tel:+73519453737" class="btn btn-gold">Обсудить банкет</a>
           <a href="#book" class="btn btn-ghost">Забронировать</a>
+        </div>
+        <div class="need">
+          <span class="tag">Нужно подтвердить</span>
+          <b>Условия и цены банкетов</b>
+          <p>Цены я намеренно не проставил. В постах ВКонтакте нашёл 3000–3500 ₽ с человека и 4500 ₽ за новогоднюю ночь, но это были <b>новогодние</b> банкеты. Ставить их как обычные нельзя — гость приедет с этой цифрой и будет неприятный разговор.</p>
+          <p>Напишите реальную вилку на сегодня, минимальный заказ и вместимость зала — поставлю.</p>
         </div>
       </div>
     </div>
@@ -658,6 +772,12 @@ h3{font-size:22px;line-height:1.25}
         <p>Отмечаете день рождения у нас — готовим подарок от паба и поздравляем всем залом. Предупредите заранее при бронировании.</p>
       </article>
     </div>
+    <div class="need">
+      <span class="tag">Нужно подтвердить</span>
+      <b>Действуют ли эти акции сейчас</b>
+      <p>Обе я собрал из ваших постов ВКонтакте за разные месяцы. Условие «свой алкоголь при заказе от 1000 ₽ с человека» встречалось и в марте, и в декабре — но могло поменяться.</p>
+      <p>Подтвердите формулировки или пришлите свои. И добавьте остальные постоянные акции, если они есть — бизнес-ланчи, скидки в будни, программа лояльности.</p>
+    </div>
   </div>
 </section>
 
@@ -670,11 +790,38 @@ h3{font-size:22px;line-height:1.25}
       <p class="lead">После каждой вечеринки выкладываем снимки — забирайте, отмечайте друзей и приходите снова.</p>
     </div>
     <div class="gal rv">
-      <div class="ph" data-label="главное фото"><i>◈</i></div>
-      <div class="ph ph-sq" data-label="вечеринка"><i>◈</i></div>
-      <div class="ph ph-sq" data-label="сцена"><i>◈</i></div>
-      <div class="ph ph-sq" data-label="бар"><i>◈</i></div>
-      <div class="ph ph-sq" data-label="гости"><i>◈</i></div>
+      <div class="ph" data-label="главное фото">
+        <i>◈</i>
+        <div class="ph-need">
+          <span class="tag">Нужно фото</span>
+          <b>Полный зал вечером</b>
+          <span>Самый живой кадр, какой есть: танцпол, гости, свет. Это фото будет отвечать за всё настроение раздела.</span>
+        </div>
+      </div>
+      <div class="ph ph-sq" data-label="вечеринка">
+        <i>◈</i>
+        <div class="ph-need"><b>Вечеринка</b><span>Гости, танцы, эмоции</span></div>
+      </div>
+      <div class="ph ph-sq" data-label="сцена">
+        <i>◈</i>
+        <div class="ph-need"><b>Сцена</b><span>Музыканты или диджей за работой</span></div>
+      </div>
+      <div class="ph ph-sq" data-label="бар">
+        <i>◈</i>
+        <div class="ph-need"><b>Бар</b><span>Стойка, пиво, коктейли, бармен</span></div>
+      </div>
+      <div class="ph ph-sq" data-label="гости">
+        <i>◈</i>
+        <div class="ph-need"><b>Еда</b><span>Пара фирменных блюд крупным планом</span></div>
+      </div>
+    </div>
+    <div class="need">
+      <span class="tag">Нужно от вас · самое важное после меню</span>
+      <b>Фотографии в исходном качестве</b>
+      <p>В группе ВКонтакте у вас 59 тысяч фотографий — материала море. Но скачанные из ВК не подойдут: соцсеть их сжимает, и на большом экране будет мутно и в квадратиках.</p>
+      <p>Нужны оригиналы — те, что отдавал фотограф, до загрузки в ВК. Если снимал на телефон администратор, подойдут и они, главное чтобы файлы были исходные.</p>
+      <p>Для начала хватит 10–12 штук: зал, гости, сцена, бар, блюда, банкетный стол.</p>
+      <span class="spec">Скидывайте как файлы, а не картинками в сообщении — иначе мессенджер их тоже сожмёт</span>
     </div>
     <div style="margin-top:32px;text-align:center">
       <a href="https://vk.com/molly174" target="_blank" rel="noopener" class="btn btn-ghost">Все фотоотчёты во ВКонтакте</a>
@@ -705,6 +852,13 @@ h3{font-size:22px;line-height:1.25}
         <div class="soon">Страница заведения готовится</div>
       </article>
     </div>
+    <div class="need">
+      <span class="tag">Нужно от вас</span>
+      <b>Всё по «Гриль Хаусу» и «Дымку»</b>
+      <p>Про эти два заведения у меня нет почти ничего — только то, что нашёл в ваших постах. По каждому нужно: адрес, телефон, часы работы, ссылки на соцсети, меню с ценами и фотографии.</p>
+      <p>И короткое описание своими словами: для кого это место, чем отличается от паба, зачем туда идти.</p>
+      <p>Отдельно по «Дымку»: рекламировать кальяны на сайте по закону нельзя. Сделаю раздел как лаундж-бар — интерьер, напитки, музыка, атмосфера. Заведение будет представлено полноценно, просто без акцента на кальянах.</p>
+    </div>
   </div>
 </section>
 
@@ -731,6 +885,12 @@ h3{font-size:22px;line-height:1.25}
           <span class="ic">В</span>
           <span><b>Написать во ВКонтакте</b><span>Ответим в сообщениях сообщества</span></span>
         </a>
+      </div>
+      <div class="need" style="grid-column:1/-1">
+        <span class="tag">Нужен доступ</span>
+        <b>Система бронирования RestoPlace</b>
+        <p>Вы уже пользуетесь RestoPlace — сейчас кнопки просто уводят на неё в новом окне. Правильнее встроить схему зала прямо в сайт: человек выбирает стол, не уходя со страницы, и меньше отваливается по дороге.</p>
+        <p>Для этого нужен доступ к вашему кабинету RestoPlace или помощь того, кто его настраивал.</p>
       </div>
     </div>
   </div>
@@ -777,6 +937,12 @@ h3{font-size:22px;line-height:1.25}
             </dd>
           </div>
         </dl>
+        <div class="need">
+          <span class="tag">Нужно подтвердить</span>
+          <b>Часы работы — данные расходятся</b>
+          <p>ВКонтакте указано: понедельник выходной, остальные дни с 18:00. На старом сайте — открытие в 12:00 и работа без выходных. Разница принципиальная, я поставил версию из ВК как более свежую.</p>
+          <p>Скажите, как на самом деле. Заодно пришлите логотип в хорошем качестве и ссылки на другие соцсети, если есть — Telegram, Одноклассники, 2ГИС.</p>
+        </div>
       </div>
       <div class="map rv">
         <iframe src="https://yandex.ru/map-widget/v1/?text=%D0%9C%D0%B0%D0%B3%D0%BD%D0%B8%D1%82%D0%BE%D0%B3%D0%BE%D1%80%D1%81%D0%BA%2C%20%D1%83%D0%BB%D0%B8%D1%86%D0%B0%20%D0%97%D0%B0%D0%B2%D0%B5%D0%BD%D1%8F%D0%B3%D0%B8%D0%BD%D0%B0%2C%208%D0%B0&z=17" loading="lazy" title="Карта: Магнитогорск, Завенягина, 8а"></iframe>
@@ -808,6 +974,8 @@ h3{font-size:22px;line-height:1.25}
     </div>
   </div>
 </footer>
+
+<button class="hints-toggle" id="hintsToggle">Скрыть подсказки</button>
 
 <!-- ================= АССИСТЕНТ ================= -->
 <div class="asst">
@@ -846,6 +1014,22 @@ h3{font-size:22px;line-height:1.25}
   });
   nav.addEventListener('click',function(e){
     if(e.target.tagName==='A'){nav.classList.remove('on');burger.classList.remove('on');burger.setAttribute('aria-expanded','false');}
+  });
+
+  /* ---------- режим черновика ----------
+     Подсказки о недостающих материалах. Включены по умолчанию,
+     выбор запоминается. Когда сайт будет готов — удалить блок
+     .need, .draft-bar и эту кнопку. */
+  var hintsBtn=document.getElementById('hintsToggle');
+  function hintsStore(v){try{if(v===undefined)return localStorage.getItem('molly_hints');localStorage.setItem('molly_hints',v)}catch(e){return null}}
+  function applyHints(on){
+    document.body.classList.toggle('hints',on);
+    hintsBtn.textContent=on?'Скрыть подсказки':'Показать, чего не хватает';
+  }
+  applyHints(hintsStore()!=='off');
+  hintsBtn.addEventListener('click',function(){
+    var on=!document.body.classList.contains('hints');
+    applyHints(on);hintsStore(on?'on':'off');
   });
 
   // появление блоков при скролле
