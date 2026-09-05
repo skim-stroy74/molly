@@ -114,18 +114,6 @@ h3{font-size:22px;line-height:1.25}
     linear-gradient(180deg,#14261a,#0c1710);
 }
 
-/* ---------- переключатель заведений ---------- */
-.venues{background:var(--ink);border-bottom:1px solid var(--line-soft);font-size:13px}
-.venues .wrap{display:flex;align-items:center;gap:4px;height:42px;overflow-x:auto;scrollbar-width:none}
-.venues .wrap::-webkit-scrollbar{display:none}
-.venues .label{color:#6f7d6c;letter-spacing:.14em;text-transform:uppercase;font-size:11px;margin-right:12px;white-space:nowrap}
-.venues a{
-  padding:5px 14px;border-radius:999px;color:var(--muted);white-space:nowrap;
-  transition:color .2s,background .2s;
-}
-.venues a:hover{color:var(--cream);background:rgba(242,234,216,.06)}
-.venues a.on{background:var(--brass);color:#14100a;font-weight:600}
-
 /* ---------- шапка ---------- */
 .hdr{
   position:sticky;top:0;z-index:70;background:rgba(10,18,9,.82);
@@ -133,9 +121,20 @@ h3{font-size:22px;line-height:1.25}
   border-bottom:1px solid var(--line-soft);transition:background .3s;
 }
 .hdr .wrap{display:flex;align-items:center;gap:28px;height:74px}
-.logo{display:flex;align-items:center;flex:none}
+.logo{display:flex;align-items:center;gap:13px;flex:none}
 .logo img{height:54px;width:auto;display:block}
 .ftr .logo img{height:64px}
+/* подпись рядом с эмблемой — только на широких экранах:
+   на телефоне её вытесняют кнопка брони и бургер */
+.logo-txt{display:block;line-height:1.15}
+.logo-txt b{
+  display:block;font-family:var(--serif);font-weight:400;font-size:23px;
+  color:var(--cream);letter-spacing:.02em;
+}
+.logo-txt span{
+  display:block;font-size:10px;letter-spacing:.24em;text-transform:uppercase;
+  color:var(--brass);font-weight:600;margin-top:3px;
+}
 .nav{display:flex;gap:26px;margin-left:auto;font-size:15px}
 .nav a{color:var(--muted);position:relative;padding:4px 0;transition:color .2s}
 .nav a::after{content:"";position:absolute;left:0;right:100%;bottom:0;height:1px;background:var(--brass);transition:right .25s}
@@ -166,7 +165,8 @@ h3{font-size:22px;line-height:1.25}
 .btn-sm{padding:11px 20px;font-size:14px}
 
 /* ---------- герой ---------- */
-.hero{position:relative;min-height:calc(100vh - 116px);display:flex;align-items:center;overflow:hidden;padding:80px 0}
+/* 74px — высота липкой шапки; полосы заведений над ней больше нет */
+.hero{position:relative;min-height:calc(100vh - 74px);display:flex;align-items:center;overflow:hidden;padding:80px 0}
 .hero-bg{
   position:absolute;inset:0;z-index:0;
   background:#0c1710 url("images/hero.jpg") center/cover no-repeat;
@@ -390,29 +390,6 @@ h3{font-size:22px;line-height:1.25}
 .gal{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
 .gal>*:first-child{grid-column:span 2;grid-row:span 2;aspect-ratio:auto}
 
-/* ---------- другие заведения ---------- */
-.places{display:grid;grid-template-columns:1fr 1fr;gap:24px}
-.place{
-  position:relative;border:1px solid var(--line-soft);border-radius:3px;overflow:hidden;
-  padding:44px 38px;min-height:290px;display:flex;flex-direction:column;justify-content:flex-end;
-  transition:transform .3s,border-color .3s;
-}
-.place:hover{transform:translateY(-5px);border-color:var(--line)}
-.place-grill{background:linear-gradient(160deg,#2a1508 0%,#150a04 100%)}
-.place-grill::before{content:"";position:absolute;inset:0;background:radial-gradient(600px 300px at 78% 15%,rgba(217,90,25,.28),transparent 65%)}
-.place-lounge{background:linear-gradient(160deg,#181229 0%,#0b0814 100%)}
-.place-lounge::before{content:"";position:absolute;inset:0;background:radial-gradient(600px 300px at 78% 15%,rgba(120,110,220,.24),transparent 65%)}
-.place>*{position:relative;z-index:1}
-.place .kind{font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--brass);margin-bottom:12px;font-weight:600}
-.place h3{font-size:30px;margin-bottom:12px}
-.place p{color:var(--muted);font-size:15.5px;max-width:44ch;margin-bottom:20px}
-.place .soon{font-size:13px;color:#7d8a7a;letter-spacing:.04em}
-.place-tel{
-  display:inline-block;font-family:var(--serif);font-size:22px;color:var(--brass-bright);
-  margin-bottom:14px;transition:color .2s;
-}
-.place-tel:hover{color:var(--cream)}
-
 /* ---------- бронь ---------- */
 .book{
   background:var(--panel);border:1px solid var(--line);border-radius:3px;
@@ -598,12 +575,11 @@ body:not(.hints) .need,body:not(.hints) .draft-bar{display:none}
   .about,.banq,.book,.cont{grid-template-columns:1fr;gap:40px}
   .gal{grid-template-columns:repeat(2,1fr)}
   .gal>*:first-child{grid-column:span 2;grid-row:auto;aspect-ratio:16/10}
-  .places{grid-template-columns:1fr}
   .book{padding:40px 28px}
 }
 /* шапка ужимается ступенями: сначала уходит телефон,
    потом всё меню прячется в бургер */
-@media(max-width:1120px){
+@media(max-width:1240px){
   .hdr-phone{display:none}
   .nav{gap:20px}
   .hdr .wrap{gap:20px}
@@ -630,6 +606,7 @@ body:not(.hints) .need,body:not(.hints) .draft-bar{display:none}
      убираем подпись под названием и поджимаем кнопку */
   .logo img{height:44px}
   .ftr .logo img{height:56px}
+  .logo-txt{display:none}
   .hdr .btn{padding:10px 15px;font-size:13.5px}
   .prog,.menu-grid,.promo{grid-template-columns:1fr}
   .facts{grid-template-columns:1fr}
@@ -642,10 +619,6 @@ body:not(.hints) .need,body:not(.hints) .draft-bar{display:none}
   .scroll-hint{display:none}
   .bill{padding:32px 24px}
   .bill .btn,.menu-note .btn{margin-left:0;width:100%}
-  /* на узком экране прячем подпись, чтобы влезли все три заведения */
-  .venues .label{display:none}
-  .venues .wrap{padding:0 16px}
-  .venues a{padding:5px 12px}
 }
 @media(prefers-reduced-motion:reduce){
   *{animation:none!important;transition:none!important}
@@ -666,21 +639,13 @@ body:not(.hints) .need,body:not(.hints) .draft-bar{display:none}
   </div>
 </div>
 
-<!-- ================= ПЕРЕКЛЮЧАТЕЛЬ ЗАВЕДЕНИЙ ================= -->
-<!-- Гриль Хаус и Дымок получат свои страницы, когда придут данные -->
-<div class="venues">
-  <div class="wrap">
-    <span class="label">Наши заведения</span>
-    <a href="/" class="on">Irish Pub Molly</a>
-    <a href="#places">Гриль Хаус</a>
-    <a href="#places">Дымок</a>
-  </div>
-</div>
-
 <!-- ================= ШАПКА ================= -->
 <header class="hdr">
   <div class="wrap">
-    <a href="#hero" class="logo"><img src="images/logo.png" alt="Паб Молли — ирландский паб в Магнитогорске" width="600" height="541"></a>
+    <a href="#hero" class="logo">
+      <img src="images/logo.png" alt="Паб Молли — ирландский паб в Магнитогорске" width="600" height="541">
+      <span class="logo-txt"><b>Паб Молли</b><span>Ирландский паб</span></span>
+    </a>
     <nav class="nav" id="nav">
       <a href="#program">Программа</a>
       <a href="#about">О пабе</a>
@@ -1123,10 +1088,10 @@ body:not(.hints) .need,body:not(.hints) .draft-bar{display:none}
     </div>
 
     <div class="need">
-      <span class="tag">Нужно от вас</span>
-      <b>Меню «Гриль Хауса» и «Дымка»</b>
-      <p>Меню паба и карта бара получены и разложены по разделам — этот блок готов. Осталось то же самое по двум другим заведениям: у каждого будет своя страница со своим меню.</p>
-      <p>И пара вопросов по этому меню: есть ли <b>бизнес-ланчи</b> и <b>детское меню</b>? Их в списке нет, а спрашивают о них часто.</p>
+      <span class="tag">Нужно уточнить</span>
+      <b>Бизнес-ланчи и детское меню</b>
+      <p>Меню кухни и карта бара получены и разложены по разделам — блок готов. Осталась пара вопросов: есть ли <b>бизнес-ланчи</b> и <b>детское меню</b>? В списке их нет, а спрашивают о них часто.</p>
+      <p>И про кухню: в описании ВКонтакте заявлены японская и ирландская, но в меню нет ни суши с роллами, ни ирландских блюд. Я убрал эти кухни с сайта, чтобы гость не приехал за роллами напрасно. Если суши есть отдельным меню — пришлите, верну раздел.</p>
     </div>
   </div>
 </section>
@@ -1261,39 +1226,6 @@ body:not(.hints) .need,body:not(.hints) .draft-bar{display:none}
   </div>
 </section>
 
-<!-- ================= ДРУГИЕ ЗАВЕДЕНИЯ ================= -->
-<section class="sec wood" id="places">
-  <div class="wrap">
-    <div class="sec-head rv">
-      <div class="eyebrow">Наши заведения</div>
-      <h2>Молли — не единственные</h2>
-      <p class="lead">Три площадки для трёх разных настроений. Отмечали в пабе — попробуйте остальные.</p>
-    </div>
-    <div class="places">
-      <!-- ЗАМЕНИТЬ: описания, адреса и телефоны — когда придут данные -->
-      <article class="place place-grill rv">
-        <div class="kind">Ресторан</div>
-        <h3>Гриль Хаус</h3>
-        <p>Мясо на открытом огне: стейки, люля-кебаб и овощи с гриля. Место для всей семьи.</p>
-        <a href="tel:+73519471177" class="place-tel">47-11-77</a>
-        <div class="soon">Страница заведения готовится</div>
-      </article>
-      <article class="place place-lounge rv">
-        <div class="kind">Лаундж-бар</div>
-        <h3>Дымок</h3>
-        <p>Приглушённый свет, мягкие диваны и спокойная музыка. Для неспешных вечеров и долгих разговоров.</p>
-        <div class="soon">Страница заведения готовится</div>
-      </article>
-    </div>
-    <div class="need">
-      <span class="tag">Нужно от вас</span>
-      <b>Всё по «Гриль Хаусу» и «Дымку»</b>
-      <p>Про эти два заведения у меня нет почти ничего — только то, что нашёл в ваших постах. По каждому нужно: адрес, телефон, часы работы, ссылки на соцсети, меню с ценами и фотографии.</p>
-      <p>И короткое описание своими словами: для кого это место, чем отличается от паба, зачем туда идти.</p>
-      <p>Отдельно по «Дымку»: рекламировать кальяны на сайте по закону нельзя. Сделаю раздел как лаундж-бар — интерьер, напитки, музыка, атмосфера. Заведение будет представлено полноценно, просто без акцента на кальянах.</p>
-    </div>
-  </div>
-</section>
 
 <!-- ================= БРОНИРОВАНИЕ ================= -->
 <section class="sec" id="book">
@@ -1372,7 +1304,6 @@ body:not(.hints) .need,body:not(.hints) .draft-bar{display:none}
           <span class="tag">Нужно от вас</span>
           <b>Ссылки на другие соцсети</b>
           <p>Часы работы и логотип получены, поставил. Осталось добавить остальные площадки, если они есть: Telegram, Одноклассники, карточка в 2ГИС или Яндекс.Картах.</p>
-          <p>И вопрос по кухне: в описании ВКонтакте заявлены <b>японская и ирландская</b>, но в присланном меню нет ни суши с роллами, ни ирландских блюд — есть гриль, паста, пицца и азиатский раздел с том-ямом и поке. Я убрал эти кухни с сайта, чтобы гость не приехал за роллами и не уехал ни с чем. Если суши всё-таки есть отдельным меню — пришлите, верну раздел.</p>
         </div>
       </div>
       <div class="map rv">
@@ -1562,22 +1493,16 @@ body:not(.hints) .need,body:not(.hints) .draft-bar{display:none}
       'Афиша ближайших событий — <a href="'+VK+'" target="_blank" rel="noopener">в нашей группе ВКонтакте</a>.',
       next:['book','birthday','menu']},
     alcohol:{q:'Можно со своим алкоголем?',a:
-      'Да. Закажите по меню <b>от 1000 ₽ на человека</b> — и приносите свой крепкий напиток.<br><br>'+
+      'Да. Закажите по меню <b>на 1000 ₽ на человека</b> — и приносите свой крепкий напиток.<br><br>'+
       'Условия лучше уточнить у администратора при бронировании: <a href="tel:'+TEL+'">45-37-37</a>.',
       next:['book','menu']},
     birthday:{q:'Я именинник',a:
       'Тогда вам к нам — <b>скидка на меню</b> имениннику и компаниям от 10 человек: 10% наличными или 5% по карте.<br><br>'+
       'Если хотите отметить с размахом, есть банкетное меню за 2500 ₽ с человека — с той же скидкой выйдет 2250 ₽.<br><br>'+
       'Предупредите заранее при бронировании, чтобы всё успели подготовить.',
-      next:['banquet','book']},
-    places:{q:'Другие заведения',a:
-      'Кроме паба у нас есть ещё два места:'+
-      '<div class="rows"><i>· Гриль Хаус</i> — мясо на открытом огне, для всей семьи. Телефон <a href="tel:+73519471177">47-11-77</a>'+
-      '<i>· Дымок</i> — лаундж-бар для спокойных вечеров</div>'+
-      'Страницы этих заведений скоро появятся на сайте.',
-      next:['book','hours']}
+      next:['banquet','book']}
   };
-  var MAIN=['book','hours','menu','banquet','program','where','alcohol','places'];
+  var MAIN=['book','hours','menu','banquet','program','where','alcohol','birthday'];
 
   var panel=document.getElementById('panel'), chat=document.getElementById('chat'),
       chips=document.getElementById('chips'), teaser=document.getElementById('teaser'),
