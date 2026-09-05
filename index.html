@@ -18,7 +18,6 @@
 <meta property="og:url" content="https://molly-mgn.com/">
 <meta property="og:title" content="Irish Pub Molly — ирландский паб в Магнитогорске">
 <meta property="og:description" content="Живая музыка каждый вечер, караоке, танцпол до утра и более 10 сортов пива. Завенягина, 8а. Бронь столов: 45-37-37.">
-<!-- ЗАМЕНИТЬ: og-image.png 1200x630 — соберём, когда будут фото зала -->
 <meta property="og:image" content="https://molly-mgn.com/images/og-image.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -118,6 +117,8 @@ h3{font-size:22px;line-height:1.25}
 .logo{display:flex;align-items:baseline;gap:9px;font-family:var(--serif);font-size:27px;letter-spacing:.03em;flex:none}
 .logo b{font-weight:400;color:var(--cream)}
 .logo span{font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--brass);font-family:var(--sans);font-weight:600}
+/* временная марка: настоящий логотип поставим, когда придёт исходник */
+.logo .clover{font-size:20px;letter-spacing:0;color:#5f9e63;text-transform:none;position:relative;top:1px}
 .nav{display:flex;gap:26px;margin-left:auto;font-size:15px}
 .nav a{color:var(--muted);position:relative;padding:4px 0;transition:color .2s}
 .nav a::after{content:"";position:absolute;left:0;right:100%;bottom:0;height:1px;background:var(--brass);transition:right .25s}
@@ -125,7 +126,7 @@ h3{font-size:22px;line-height:1.25}
 .nav a:hover::after{right:0}
 .hdr-phone{font-family:var(--serif);font-size:19px;white-space:nowrap;transition:color .2s}
 .hdr-phone:hover{color:var(--brass-bright)}
-.burger{display:none;margin-left:auto;width:44px;height:44px;background:none;border:1px solid var(--line);border-radius:10px;cursor:pointer;position:relative}
+.burger{display:none;flex:none;margin-left:auto;width:44px;height:44px;background:none;border:1px solid var(--line);border-radius:10px;cursor:pointer;position:relative}
 .burger i{position:absolute;left:12px;right:12px;height:1.5px;background:var(--cream);transition:.28s}
 .burger i:nth-child(1){top:15px}
 .burger i:nth-child(2){top:21px}
@@ -149,19 +150,19 @@ h3{font-size:22px;line-height:1.25}
 
 /* ---------- герой ---------- */
 .hero{position:relative;min-height:calc(100vh - 116px);display:flex;align-items:center;overflow:hidden;padding:80px 0}
-.hero-bg{position:absolute;inset:0;z-index:0}
-/* ЗАМЕНИТЬ: сюда ляжет фото зала — images/hero.jpg */
+.hero-bg{
+  position:absolute;inset:0;z-index:0;
+  background:#0c1710 url("images/hero.jpg") center/cover no-repeat;
+}
+/* затемнение: фото живое и пёстрое, без него текст не читается */
 .hero-bg::before{
   content:"";position:absolute;inset:0;
   background:
-    radial-gradient(900px 520px at 72% 28%,rgba(217,139,43,.20),transparent 62%),
-    radial-gradient(700px 480px at 12% 78%,rgba(200,164,90,.13),transparent 60%),
-    repeating-linear-gradient(94deg,rgba(0,0,0,.20) 0 3px,transparent 3px 9px),
-    linear-gradient(165deg,#16291c 0%,#0c1710 55%,#070f09 100%);
+    linear-gradient(100deg,rgba(6,12,7,.94) 0%,rgba(6,12,7,.82) 38%,rgba(6,12,7,.42) 68%,rgba(6,12,7,.55) 100%);
 }
 .hero-bg::after{
   content:"";position:absolute;inset:0;
-  background:radial-gradient(120% 90% at 50% 40%,transparent 30%,rgba(5,10,5,.75) 100%);
+  background:radial-gradient(130% 95% at 45% 45%,transparent 25%,rgba(4,8,4,.8) 100%);
 }
 .hero .wrap{position:relative;z-index:2}
 .hero-in{max-width:800px}
@@ -213,6 +214,16 @@ h3{font-size:22px;line-height:1.25}
 .fact{background:var(--bg-2);padding:24px 22px}
 .fact b{display:block;font-family:var(--serif);font-size:34px;color:var(--brass-bright);line-height:1;margin-bottom:8px}
 .fact span{font-size:13.5px;color:var(--muted)}
+
+/* ---------- фотографии ---------- */
+.shot{
+  position:relative;border:1px solid var(--line-soft);border-radius:3px;overflow:hidden;
+  background:linear-gradient(150deg,#1a2e20,#0e1a12);
+}
+.shot img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s ease}
+.shot-wide{aspect-ratio:3/2}
+.shot-sq{aspect-ratio:1}
+.gal .shot:hover img{transform:scale(1.04)}
 
 /* ---------- слоты под фото ---------- */
 .ph{
@@ -276,7 +287,7 @@ h3{font-size:22px;line-height:1.25}
 
 /* ---------- фотоотчёты ---------- */
 .gal{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
-.gal .ph:nth-child(1){grid-column:span 2;grid-row:span 2;aspect-ratio:auto}
+.gal>*:first-child{grid-column:span 2;grid-row:span 2;aspect-ratio:auto}
 
 /* ---------- другие заведения ---------- */
 .places{display:grid;grid-template-columns:1fr 1fr;gap:24px}
@@ -480,7 +491,7 @@ body:not(.hints) .need,body:not(.hints) .draft-bar{display:none}
   .prog,.menu-grid{grid-template-columns:1fr 1fr}
   .about,.banq,.book,.cont{grid-template-columns:1fr;gap:40px}
   .gal{grid-template-columns:repeat(2,1fr)}
-  .gal .ph:nth-child(1){grid-column:span 2;grid-row:auto;aspect-ratio:16/10}
+  .gal>*:first-child{grid-column:span 2;grid-row:auto;aspect-ratio:16/10}
   .places{grid-template-columns:1fr}
   .book{padding:40px 28px}
 }
@@ -509,6 +520,10 @@ body:not(.hints) .need,body:not(.hints) .draft-bar{display:none}
 @media(max-width:760px){
   body{font-size:16px}
   .sec{padding:70px 0}
+  /* в строку 375px не помещались логотип, кнопка и бургер —
+     убираем подпись под названием и поджимаем кнопку */
+  .logo span:not(.clover){display:none}
+  .hdr .btn{padding:10px 15px;font-size:13.5px}
   .prog,.menu-grid,.promo{grid-template-columns:1fr}
   .facts{grid-template-columns:1fr}
   /* поджимаем герой, чтобы кнопка брони попадала
@@ -557,7 +572,7 @@ body:not(.hints) .need,body:not(.hints) .draft-bar{display:none}
 <!-- ================= ШАПКА ================= -->
 <header class="hdr">
   <div class="wrap">
-    <a href="#hero" class="logo"><b>Molly</b><span>Irish Pub</span></a>
+    <a href="#hero" class="logo"><span class="clover">☘</span><b>Molly</b><span>Irish Pub</span></a>
     <nav class="nav" id="nav">
       <a href="#program">Программа</a>
       <a href="#about">О пабе</a>
@@ -592,11 +607,10 @@ body:not(.hints) .need,body:not(.hints) .draft-bar{display:none}
         <span class="chip">Банкеты и корпоративы</span>
       </div>
       <div class="need">
-        <span class="tag">Нужно от вас</span>
-        <b>Главное фото или короткое видео зала</b>
-        <p>Сейчас здесь нарисованный фон. На его месте должен быть ваш зал: общий план с барной стойкой, витражами и сценой — то, что сразу объясняет, куда человек попал.</p>
-        <p>Если есть видео на 10–15 секунд (зал вечером, гости, музыка) — возьмём его, это работает сильнее фото.</p>
-        <span class="spec">Горизонтальное, от 1920 пикселей по ширине, из исходников фотографа</span>
+        <span class="tag">Можно улучшить</span>
+        <b>Видео вместо фото на первом экране</b>
+        <p>Фото зала уже стоит. Но если есть ролик на 10–15 секунд — зал вечером, музыка, гости — он работает сильнее статичной картинки. Первый экран оживает, человек сразу видит атмосферу.</p>
+        <span class="spec">Не обязательно, но заметно усилит главную страницу</span>
       </div>
     </div>
   </div>
@@ -666,14 +680,9 @@ body:not(.hints) .need,body:not(.hints) .draft-bar{display:none}
       </div>
       <div class="rv">
         <!-- ЗАМЕНИТЬ на фото зала: <img src="images/hall.jpg" alt="Зал ирландского паба Молли"> -->
-        <div class="ph ph-tall" data-label="фото зала">
-          <i>◈</i>
-          <div class="ph-need">
-            <span class="tag">Нужно фото</span>
-            <b>Интерьер паба</b>
-            <span>Вертикальный кадр: деревянная мебель, витражи, барная стойка. Без людей или с парой гостей — чтобы читалась атмосфера, а не толпа.</span>
-            <span>Одно хорошее фото, от 1200 пикселей по ширине.</span>
-          </div>
+        <div class="shot shot-wide">
+          <img src="images/interior.jpg" loading="lazy" width="1400" height="933"
+               alt="Зал ирландского паба Молли: зелёные кожаные диваны, витражи, деревянная отделка">
         </div>
       </div>
     </div>
@@ -695,6 +704,10 @@ body:not(.hints) .need,body:not(.hints) .draft-bar{display:none}
       <article class="mcard rv"><div class="num">04</div><h3>Закуски к пиву</h3><p>Всё, что положено к пенному, и в правильных порциях.</p></article>
       <article class="mcard rv"><div class="num">05</div><h3>Пиво</h3><p>Более 10 сортов со всего мира — от классики до крафта.</p></article>
       <article class="mcard rv"><div class="num">06</div><h3>Бар и коктейли</h3><p>Крепкое, авторские коктейли и то, что смешает бармен лично для вас.</p></article>
+    </div>
+    <div class="shot shot-wide rv" style="margin-top:24px;aspect-ratio:3/1">
+      <img src="images/bar.jpg" loading="lazy" width="1400" height="933"
+           alt="Коктейли на барной стойке ирландского паба Молли">
     </div>
     <!-- ЗАМЕНИТЬ: когда придёт меню с ценами — раскрываем позиции и кладём PDF -->
     <div class="menu-note rv">
@@ -718,14 +731,9 @@ body:not(.hints) .need,body:not(.hints) .draft-bar{display:none}
     <div class="banq">
       <div class="rv">
         <!-- ЗАМЕНИТЬ на фото банкетного стола -->
-        <div class="ph ph-wide" data-label="фото банкета">
-          <i>◈</i>
-          <div class="ph-need">
-            <span class="tag">Нужно фото</span>
-            <b>Накрытый банкетный стол</b>
-            <span>Стол с закусками, зал под мероприятие, компания за столом. Именно то, что человек хочет увидеть, прежде чем заказать корпоратив.</span>
-            <span>2–3 кадра на выбор.</span>
-          </div>
+        <div class="shot shot-wide">
+          <img src="images/banquet.jpg" loading="lazy" width="1400" height="933"
+               alt="Ведущий на празднике в пабе Молли">
         </div>
       </div>
       <div class="rv">
@@ -744,8 +752,9 @@ body:not(.hints) .need,body:not(.hints) .draft-bar{display:none}
           <a href="#book" class="btn btn-ghost">Забронировать</a>
         </div>
         <div class="need">
-          <span class="tag">Нужно подтвердить</span>
-          <b>Условия и цены банкетов</b>
+          <span class="tag">Нужно подтвердить · и нужно фото</span>
+          <b>Условия, цены и накрытый стол</b>
+          <p>Сейчас в этом блоке фото с ведущим — банкетного стола среди присланных снимков не нашлось. Нужны 2–3 кадра накрытого стола: закуски, сервировка, зал под мероприятие. Это то, что человек хочет увидеть, прежде чем заказать корпоратив.</p>
           <p>Цены я намеренно не проставил. В постах ВКонтакте нашёл 3000–3500 ₽ с человека и 4500 ₽ за новогоднюю ночь, но это были <b>новогодние</b> банкеты. Ставить их как обычные нельзя — гость приедет с этой цифрой и будет неприятный разговор.</p>
           <p>Напишите реальную вилку на сегодня, минимальный заказ и вместимость зала — поставлю.</p>
         </div>
@@ -790,38 +799,33 @@ body:not(.hints) .need,body:not(.hints) .draft-bar{display:none}
       <p class="lead">После каждой вечеринки выкладываем снимки — забирайте, отмечайте друзей и приходите снова.</p>
     </div>
     <div class="gal rv">
-      <div class="ph" data-label="главное фото">
-        <i>◈</i>
-        <div class="ph-need">
-          <span class="tag">Нужно фото</span>
-          <b>Полный зал вечером</b>
-          <span>Самый живой кадр, какой есть: танцпол, гости, свет. Это фото будет отвечать за всё настроение раздела.</span>
-        </div>
+      <div class="shot">
+        <img src="images/gal-1.jpg" loading="lazy" width="1000" height="1000"
+             alt="Танцпол в пабе Молли: гости танцуют под диджея">
       </div>
-      <div class="ph ph-sq" data-label="вечеринка">
-        <i>◈</i>
-        <div class="ph-need"><b>Вечеринка</b><span>Гости, танцы, эмоции</span></div>
+      <div class="shot shot-sq">
+        <img src="images/gal-2.jpg" loading="lazy" width="700" height="1050"
+             alt="Артист выступает на сцене паба Молли">
       </div>
-      <div class="ph ph-sq" data-label="сцена">
-        <i>◈</i>
-        <div class="ph-need"><b>Сцена</b><span>Музыканты или диджей за работой</span></div>
+      <div class="shot shot-sq">
+        <img src="images/gal-3.jpg" loading="lazy" width="700" height="467"
+             alt="Бармен готовит коктейли в пабе Молли">
       </div>
-      <div class="ph ph-sq" data-label="бар">
-        <i>◈</i>
-        <div class="ph-need"><b>Бар</b><span>Стойка, пиво, коктейли, бармен</span></div>
+      <div class="shot shot-sq">
+        <img src="images/gal-4.jpg" loading="lazy" width="700" height="467"
+             alt="Зал паба Молли с гостями за столиками">
       </div>
-      <div class="ph ph-sq" data-label="гости">
-        <i>◈</i>
-        <div class="ph-need"><b>Еда</b><span>Пара фирменных блюд крупным планом</span></div>
+      <div class="shot shot-sq">
+        <img src="images/gal-5.jpg" loading="lazy" width="700" height="467"
+             alt="Интерьер паба Молли: кирпичная стена и бочки">
       </div>
     </div>
     <div class="need">
-      <span class="tag">Нужно от вас · самое важное после меню</span>
-      <b>Фотографии в исходном качестве</b>
-      <p>В группе ВКонтакте у вас 59 тысяч фотографий — материала море. Но скачанные из ВК не подойдут: соцсеть их сжимает, и на большом экране будет мутно и в квадратиках.</p>
-      <p>Нужны оригиналы — те, что отдавал фотограф, до загрузки в ВК. Если снимал на телефон администратор, подойдут и они, главное чтобы файлы были исходные.</p>
-      <p>Для начала хватит 10–12 штук: зал, гости, сцена, бар, блюда, банкетный стол.</p>
-      <span class="spec">Скидывайте как файлы, а не картинками в сообщении — иначе мессенджер их тоже сожмёт</span>
+      <span class="tag">Чего не хватает в фотографиях</span>
+      <b>Блюда и накрытый стол</b>
+      <p>Присланные 46 снимков — отличные, взял из них лучшее. Но во всей папке нет двух вещей: <b>еды крупным планом</b> и <b>накрытого банкетного стола</b>.</p>
+      <p>Для паба это важно: человек выбирает, куда пойти поужинать, и хочет увидеть, что ему принесут. Нужно 4–6 кадров фирменных блюд и пивных закусок.</p>
+      <span class="spec">Скидывайте как файлы, а не картинками в сообщении — иначе мессенджер их сожмёт</span>
     </div>
     <div style="margin-top:32px;text-align:center">
       <a href="https://vk.com/molly174" target="_blank" rel="noopener" class="btn btn-ghost">Все фотоотчёты во ВКонтакте</a>
@@ -941,7 +945,8 @@ body:not(.hints) .need,body:not(.hints) .draft-bar{display:none}
           <span class="tag">Нужно подтвердить</span>
           <b>Часы работы — данные расходятся</b>
           <p>ВКонтакте указано: понедельник выходной, остальные дни с 18:00. На старом сайте — открытие в 12:00 и работа без выходных. Разница принципиальная, я поставил версию из ВК как более свежую.</p>
-          <p>Скажите, как на самом деле. Заодно пришлите логотип в хорошем качестве и ссылки на другие соцсети, если есть — Telegram, Одноклассники, 2ГИС.</p>
+          <p>Скажите, как на самом деле. И пришлите ссылки на другие соцсети, если есть — Telegram, Одноклассники, 2ГИС.</p>
+          <p><b>Отдельно про логотип.</b> Ваш клевер с надписью «Irish Pub Molly» я разглядел на фотографии, но вырезать его оттуда для сайта нельзя — разрешения не хватит, будет размытым. Нужен исходный файл: тот, с которого печатают вывески и меню. Обычно он в формате AI, EPS, PDF или CDR и лежит у дизайнера, который его рисовал.</p>
         </div>
       </div>
       <div class="map rv">
@@ -955,7 +960,7 @@ body:not(.hints) .need,body:not(.hints) .draft-bar{display:none}
 <footer class="ftr">
   <div class="wrap">
     <div class="ftr-top">
-      <a href="#hero" class="logo"><b>Molly</b><span>Irish Pub</span></a>
+      <a href="#hero" class="logo"><span class="clover">☘</span><b>Molly</b><span>Irish Pub</span></a>
       <nav class="ftr-nav">
         <a href="#program">Программа</a>
         <a href="#menu">Меню</a>
