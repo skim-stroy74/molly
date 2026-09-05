@@ -4,12 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Irish Pub Molly — ирландский паб в Магнитогорске | Завенягина, 8а</title>
-<meta name="description" content="Ирландский паб «Молли» в Магнитогорске: живая музыка, караоке, танцпол, более 10 сортов пива, европейская, японская и ирландская кухня. Банкеты и корпоративы. Бронь столов: 45-37-37.">
+<meta name="description" content="Ирландский паб «Молли» в Магнитогорске: живая музыка по выходным, зал караоке, танцпол до 05:00, VIP-комнаты и пиво со всего мира. Банкеты и корпоративы. Бронь столов: 45-37-37.">
 <link rel="canonical" href="https://molly-mgn.com/">
 <!-- ЧЕРНОВИК: закрыт от поисковиков, чтобы превью не попало в выдачу
      и не мешало будущему molly-mgn.com. Снять перед сдачей. -->
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#0d1a12">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="apple-touch-icon" href="images/icon-192.png">
 <script>document.documentElement.className+=' js';</script>
 
 <meta property="og:type" content="website">
@@ -17,7 +19,7 @@
 <meta property="og:locale" content="ru_RU">
 <meta property="og:url" content="https://molly-mgn.com/">
 <meta property="og:title" content="Irish Pub Molly — ирландский паб в Магнитогорске">
-<meta property="og:description" content="Живая музыка каждый вечер, караоке, танцпол до утра и более 10 сортов пива. Завенягина, 8а. Бронь столов: 45-37-37.">
+<meta property="og:description" content="Живая музыка по выходным, караоке, танцпол до утра и более 10 сортов пива. Завенягина, 8а. Бронь столов: 45-37-37.">
 <meta property="og:image" content="https://molly-mgn.com/images/og-image.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -40,6 +42,22 @@
     "addressRegion": "Челябинская область",
     "addressCountry": "RU"
   },
+  "logo": "https://molly-mgn.com/images/logo.png",
+  "image": "https://molly-mgn.com/images/og-image.jpg",
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Sunday"],
+      "opens": "18:00",
+      "closes": "02:00"
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Friday","Saturday"],
+      "opens": "18:00",
+      "closes": "05:00"
+    }
+  ],
   "sameAs": ["https://vk.com/molly174"],
   "acceptsReservations": "https://416936.restoplace.ws"
 }
@@ -114,11 +132,9 @@ h3{font-size:22px;line-height:1.25}
   border-bottom:1px solid var(--line-soft);transition:background .3s;
 }
 .hdr .wrap{display:flex;align-items:center;gap:28px;height:74px}
-.logo{display:flex;align-items:baseline;gap:9px;font-family:var(--serif);font-size:27px;letter-spacing:.03em;flex:none}
-.logo b{font-weight:400;color:var(--cream)}
-.logo span{font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--brass);font-family:var(--sans);font-weight:600}
-/* временная марка: настоящий логотип поставим, когда придёт исходник */
-.logo .clover{font-size:20px;letter-spacing:0;color:#5f9e63;text-transform:none;position:relative;top:1px}
+.logo{display:flex;align-items:center;flex:none}
+.logo img{height:54px;width:auto;display:block}
+.ftr .logo img{height:64px}
 .nav{display:flex;gap:26px;margin-left:auto;font-size:15px}
 .nav a{color:var(--muted);position:relative;padding:4px 0;transition:color .2s}
 .nav a::after{content:"";position:absolute;left:0;right:100%;bottom:0;height:1px;background:var(--brass);transition:right .25s}
@@ -522,7 +538,8 @@ body:not(.hints) .need,body:not(.hints) .draft-bar{display:none}
   .sec{padding:70px 0}
   /* в строку 375px не помещались логотип, кнопка и бургер —
      убираем подпись под названием и поджимаем кнопку */
-  .logo span:not(.clover){display:none}
+  .logo img{height:44px}
+  .ftr .logo img{height:56px}
   .hdr .btn{padding:10px 15px;font-size:13.5px}
   .prog,.menu-grid,.promo{grid-template-columns:1fr}
   .facts{grid-template-columns:1fr}
@@ -554,6 +571,7 @@ body:not(.hints) .need,body:not(.hints) .draft-bar{display:none}
 <div class="draft-bar">
   <div class="wrap">
     <span class="mark">Черновик</span>
+
     <p>Это каркас сайта. <b>Жёлтым отмечено то, чего не хватает</b> — посмотрите, где что должно стоять, и пришлите материалы. Подсказки можно скрыть кнопкой слева внизу.</p>
   </div>
 </div>
@@ -572,7 +590,7 @@ body:not(.hints) .need,body:not(.hints) .draft-bar{display:none}
 <!-- ================= ШАПКА ================= -->
 <header class="hdr">
   <div class="wrap">
-    <a href="#hero" class="logo"><span class="clover">☘</span><b>Molly</b><span>Irish Pub</span></a>
+    <a href="#hero" class="logo"><img src="images/logo.png" alt="Паб Молли — ирландский паб в Магнитогорске" width="600" height="541"></a>
     <nav class="nav" id="nav">
       <a href="#program">Программа</a>
       <a href="#about">О пабе</a>
@@ -594,7 +612,7 @@ body:not(.hints) .need,body:not(.hints) .draft-bar{display:none}
     <div class="hero-in">
       <div class="eyebrow">Магнитогорск · Завенягина, 8а</div>
       <h1>Ирландский паб,<br>в котором <em>шумно</em><br>по-хорошему</h1>
-      <p>Тёмное дерево, витражи и контактная барная стойка. Живая музыка каждый вечер, караоке до хрипоты и танцпол, который не выключается до утра.</p>
+      <p>Тёмное дерево, витражи и контактная барная стойка. Живая музыка по выходным, караоке до хрипоты и танцпол, который не выключается до утра.</p>
       <div class="hero-cta">
         <a href="#book" class="btn btn-gold">Забронировать стол</a>
         <a href="#program" class="btn btn-ghost">Что у нас происходит</a>
@@ -602,7 +620,8 @@ body:not(.hints) .need,body:not(.hints) .draft-bar{display:none}
       <div class="chips">
         <span class="chip">Более 10 сортов пива</span>
         <span class="chip">Живая музыка и DJ</span>
-        <span class="chip">Караоке</span>
+        <span class="chip">Зал караоке</span>
+        <span class="chip">VIP-комнаты</span>
         <span class="chip">Танцпол до 05:00</span>
         <span class="chip">Банкеты и корпоративы</span>
       </div>
@@ -627,7 +646,7 @@ body:not(.hints) .need,body:not(.hints) .draft-bar{display:none}
     </div>
     <div class="prog">
       <article class="card rv">
-        <div class="when">Каждый вечер</div>
+        <div class="when">Каждые выходные</div>
         <h3>Живая музыка</h3>
         <p>На нашей сцене играют музыканты и выступают артисты. После — диджей забирает зал до закрытия.</p>
       </article>
@@ -668,12 +687,12 @@ body:not(.hints) .need,body:not(.hints) .draft-bar{display:none}
       <div class="rv">
         <div class="eyebrow">О пабе</div>
         <h2>Настоящий ирландский — без кавычек</h2>
-        <p>Классический интерьер из деревянной мебели, красивые витражи, контактная барная стойка и музыкальная сцена, на которой выступают артисты и музыканты. Для гостей — просторный танцпол и большой выбор сортов пива со всего мира.</p>
-        <p>В меню — европейская и японская кухня, и отдельное внимание мы уделяем ирландской. Каждый день проходят акции на блюда и пиво, каждый вечер играет живая музыка.</p>
-        <p>Приходите компанией, парой или в одиночку — за барной стойкой в Молли одиноким не остаётся никто.</p>
+        <p>Классический интерьер из деревянной мебели, красивые витражи, контактная барная стойка и музыкальная сцена, на которой выступают артисты и музыканты. Для гостей — просторный танцпол, зал караоке и отдельные VIP-комнаты.</p>
+        <p>В баре большой выбор напитков и пиво со всего мира. В меню собраны любимые блюда наших гостей, а каждый день проходят акции на блюда и пенное.</p>
+        <p>Каждые выходные выступают музыканты и играет диджей. Приходите компанией, парой или в одиночку — за барной стойкой в Молли одиноким не остаётся никто.</p>
         <div class="facts">
           <div class="fact"><b>10+</b><span>сортов пива со всего мира</span></div>
-          <div class="fact"><b>3</b><span>кухни: ирландская, европейская, японская</span></div>
+          <div class="fact"><b>VIP</b><span>отдельные комнаты и зал караоке</span></div>
           <div class="fact"><b>21 000</b><span>гостей в нашем сообществе ВКонтакте</span></div>
           <div class="fact"><b>05:00</b><span>танцпол по пятницам и субботам</span></div>
         </div>
@@ -743,6 +762,7 @@ body:not(.hints) .need,body:not(.hints) .draft-bar{display:none}
           <li><b>Банкетное меню</b> — согласуем под ваш формат и бюджет</li>
           <li><b>Ведущий и диджей</b> — программа, конкурсы, музыка весь вечер</li>
           <li><b>Живая музыка</b> — артисты на нашей сцене</li>
+          <li><b>VIP-комнаты и зал караоке</b> — для своей компании, отдельно от общего зала</li>
           <li><b>Зал целиком или часть</b> — от компании друзей до большого корпоратива</li>
           <li><b>Стоимость</b> — рассчитываем индивидуально, звоните</li>
         </ul>
@@ -922,13 +942,11 @@ body:not(.hints) .need,body:not(.hints) .draft-bar{display:none}
             <dd><a href="tel:+79227239211">+7 (922) 723-92-11</a> — Виталий Титов</dd>
           </div>
           <div>
-            <!-- УТОЧНИТЬ: часы работы в ВК и на старом сайте не совпадают -->
             <dt>Часы работы</dt>
             <dd class="hours">
-              <div><span>Понедельник</span><b>выходной</b></div>
-              <div><span>Вторник — четверг</span><b>18:00 — 03:00</b></div>
+              <div><span>Понедельник — четверг</span><b>18:00 — 02:00</b></div>
               <div><span>Пятница — суббота</span><b>18:00 — 05:00</b></div>
-              <div><span>Воскресенье</span><b>18:00 — 03:00</b></div>
+              <div><span>Воскресенье</span><b>18:00 — 02:00</b></div>
             </dd>
           </div>
           <div>
@@ -941,11 +959,10 @@ body:not(.hints) .need,body:not(.hints) .draft-bar{display:none}
           </div>
         </dl>
         <div class="need">
-          <span class="tag">Нужно подтвердить</span>
-          <b>Часы работы — данные расходятся</b>
-          <p>ВКонтакте указано: понедельник выходной, остальные дни с 18:00. На старом сайте — открытие в 12:00 и работа без выходных. Разница принципиальная, я поставил версию из ВК как более свежую.</p>
-          <p>Скажите, как на самом деле. И пришлите ссылки на другие соцсети, если есть — Telegram, Одноклассники, 2ГИС.</p>
-          <p><b>Отдельно про логотип.</b> Ваш клевер с надписью «Irish Pub Molly» я разглядел на фотографии, но вырезать его оттуда для сайта нельзя — разрешения не хватит, будет размытым. Нужен исходный файл: тот, с которого печатают вывески и меню. Обычно он в формате AI, EPS, PDF или CDR и лежит у дизайнера, который его рисовал.</p>
+          <span class="tag">Нужно от вас</span>
+          <b>Ссылки на другие соцсети</b>
+          <p>Часы работы и логотип получены, поставил. Осталось добавить остальные площадки, если они есть: Telegram, Одноклассники, карточка в 2ГИС или Яндекс.Картах.</p>
+          <p>Заодно уточните: <b>какие кухни писать в меню?</b> В описании ВКонтакте были европейская, японская и ирландская, в новом тексте — просто «любимые блюда». Если японскую кухню убрали, скажите, поправлю.</p>
         </div>
       </div>
       <div class="map rv">
@@ -959,7 +976,7 @@ body:not(.hints) .need,body:not(.hints) .draft-bar{display:none}
 <footer class="ftr">
   <div class="wrap">
     <div class="ftr-top">
-      <a href="#hero" class="logo"><span class="clover">☘</span><b>Molly</b><span>Irish Pub</span></a>
+      <a href="#hero" class="logo"><img src="images/logo.png" alt="Паб Молли — ирландский паб в Магнитогорске" width="600" height="541"></a>
       <nav class="ftr-nav">
         <a href="#program">Программа</a>
         <a href="#menu">Меню</a>
@@ -1072,9 +1089,9 @@ body:not(.hints) .need,body:not(.hints) .draft-bar{display:none}
       'На выходные и концерты лучше бронировать заранее — зал заполняется быстро.',
       next:['hours','program','banquet']},
     hours:{q:'Часы работы',a:
-      'Работаем так:'+
-      '<div class="rows"><i>Понедельник</i> — выходной<i>Вторник — четверг</i> — 18:00 до 03:00'+
-      '<i>Пятница — суббота</i> — 18:00 до 05:00<i>Воскресенье</i> — 18:00 до 03:00</div>',
+      'Работаем каждый день:'+
+      '<div class="rows"><i>Понедельник — четверг</i> — с 18:00 до 02:00'+
+      '<i>Пятница — суббота</i> — с 18:00 до 05:00<i>Воскресенье</i> — с 18:00 до 02:00</div>',
       next:['book','where','program']},
     where:{q:'Как добраться',a:
       'Мы в Магнитогорске, <b>улица Завенягина, 8а</b>.<br><a href="'+MAP+'" target="_blank" rel="noopener">Открыть на карте</a><br><br>'+
@@ -1091,8 +1108,8 @@ body:not(.hints) .need,body:not(.hints) .draft-bar{display:none}
       'Стоимость считаем под ваш формат — позвоните, всё рассчитаем: <a href="tel:'+TEL+'">45-37-37</a>.',
       next:['birthday','book','hours']},
     program:{q:'Что у вас происходит',a:
-      'Живая музыка — <b>каждый вечер</b>. На сцене выступают музыканты и артисты, после играет диджей.<br><br>'+
-      'По пятницам и субботам — вечеринки до 05:00: DJ Skimmi, Zarya и MC Rahmat, караоке и танцпол.<br><br>'+
+      '<b>Каждые выходные</b> у нас выступают музыканты и играет диджей. Вечеринки идут до 05:00: DJ Skimmi, Zarya и MC Rahmat, танцпол и караоке.<br><br>'+
+      'В будни — спокойнее: кухня, бар, караоке-зал и отдельные VIP-комнаты, если хочется своей компанией.<br><br>'+
       'Афиша ближайших событий — <a href="'+VK+'" target="_blank" rel="noopener">в нашей группе ВКонтакте</a>.',
       next:['book','birthday','menu']},
     alcohol:{q:'Можно со своим алкоголем?',a:
