@@ -164,35 +164,35 @@
     <!-- data-until — последний день события. Прошедшие скрываются сами,
          чтобы на сайте никогда не висели протухшие даты. -->
     <div class="afisha rv" id="afisha">
-      <article class="ev" data-until="2026-09-11">
+      <article class="ev" data-from="2026-09-11" data-until="2026-09-11">
         <div class="ev-pic"><img src="images/afisha-1.jpg" loading="lazy" width="620" height="868" alt="Афиша: группа «Мечта» в пабе Молли, 11 сентября"></div>
         <div class="ev-txt"><span class="ev-date">11 сентября</span><h4>Группа «Мечта»</h4><p>Живая музыка</p></div>
       </article>
-      <article class="ev" data-until="2026-09-19">
+      <article class="ev" data-from="2026-09-18" data-until="2026-09-19">
         <div class="ev-pic"><img src="images/afisha-2.jpg" loading="lazy" width="620" height="868" alt="Афиша: «Караочные танцы» в пабе Молли, 18–19 сентября"></div>
         <div class="ev-txt"><span class="ev-date">18–19 сентября</span><h4>Караочные танцы</h4><p>Караоке и танцпол</p></div>
       </article>
-      <article class="ev" data-until="2026-09-26">
+      <article class="ev" data-from="2026-09-25" data-until="2026-09-26">
         <div class="ev-pic"><img src="images/afisha-3.jpg" loading="lazy" width="620" height="868" alt="Афиша: «Октоберфест» в пабе Молли, 25–26 сентября"></div>
         <div class="ev-txt"><span class="ev-date">25–26 сентября</span><h4>Октоберфест</h4><p>Баварская вечеринка</p></div>
       </article>
-      <article class="ev" data-until="2026-10-03">
+      <article class="ev" data-from="2026-10-02" data-until="2026-10-03">
         <div class="ev-pic"><img src="images/afisha-4.jpg" loading="lazy" width="620" height="868" alt="Афиша: «День учителя» в пабе Молли, 2–3 октября"></div>
         <div class="ev-txt"><span class="ev-date">2–3 октября</span><h4>День учителя</h4><p>Праздничная программа</p></div>
       </article>
-      <article class="ev" data-until="2026-10-10">
+      <article class="ev" data-from="2026-10-09" data-until="2026-10-10">
         <div class="ev-pic"><img src="images/afisha-5.jpg" loading="lazy" width="620" height="868" alt="Афиша: «Ретро пати» в пабе Молли, 9–10 октября"></div>
         <div class="ev-txt"><span class="ev-date">9–10 октября</span><h4>Ретро пати</h4><p>Легендарные хиты 80–90-х</p></div>
       </article>
-      <article class="ev" data-until="2026-10-17">
+      <article class="ev" data-from="2026-10-16" data-until="2026-10-17">
         <div class="ev-pic"><img src="images/afisha-6.jpg" loading="lazy" width="620" height="868" alt="Афиша: день рождения паба Молли, 16–17 октября"></div>
         <div class="ev-txt"><span class="ev-date">16–17 октября</span><h4>День рождения Молли</h4><p>Принимаем поздравления</p></div>
       </article>
-      <article class="ev" data-until="2026-10-24">
+      <article class="ev" data-from="2026-10-23" data-until="2026-10-24">
         <div class="ev-pic"><img src="images/afisha-7.jpg" loading="lazy" width="620" height="868" alt="Афиша: «Пати в леопарде» в пабе Молли, 23–24 октября"></div>
         <div class="ev-txt"><span class="ev-date">23–24 октября</span><h4>Пати в леопарде</h4><p>Живая музыка: группа «Рэдхэдбэнд»</p></div>
       </article>
-      <article class="ev" data-until="2026-10-31">
+      <article class="ev" data-from="2026-10-30" data-until="2026-10-31">
         <div class="ev-pic"><img src="images/afisha-8.jpg" loading="lazy" width="620" height="868" alt="Афиша: Хэллоуин в пабе Молли, 30–31 октября"></div>
         <div class="ev-txt"><span class="ev-date">30–31 октября</span><h4>Хэллоуин</h4><p>Почувствуй вкус тёмной ночи</p></div>
       </article>
@@ -782,7 +782,7 @@
 <!-- ================= АССИСТЕНТ ================= -->
 <div class="asst">
   <div class="asst-teaser" id="teaser">
-    <span class="ava">M</span>
+    <span class="ava"><img src="images/logo.png" alt="" width="600" height="541"></span>
     <div>
       <b>Молли</b>
       <p>Здравствуйте! Подскажу по столикам, меню и банкетам. Спрашивайте.</p>
@@ -792,12 +792,18 @@
 
   <div class="asst-panel" id="panel" role="dialog" aria-label="Помощник Молли" aria-modal="false">
     <div class="asst-head">
-      <span class="ava">M</span>
+      <span class="ava"><img src="images/logo.png" alt="" width="600" height="541"></span>
       <div><b>Молли</b><span>на связи</span></div>
       <button class="x" id="panelX" aria-label="Закрыть">×</button>
     </div>
     <div class="asst-body" id="chat" aria-live="polite"></div>
-    <div class="asst-foot"><div class="asst-chips" id="chips"></div></div>
+    <div class="asst-foot">
+      <div class="asst-chips" id="chips"></div>
+      <form class="asst-ask" id="asstForm" autocomplete="off">
+        <input id="asstInput" type="text" placeholder="Напишите вопрос…" aria-label="Вопрос помощнику" maxlength="200">
+        <button type="submit" aria-label="Отправить">→</button>
+      </form>
+    </div>
   </div>
 
   <button class="asst-btn" id="asstBtn" aria-label="Задать вопрос">
@@ -893,142 +899,8 @@
     showAll();
   }
 
-  /* ---------- ассистент «Молли» ----------
-     Сценарный помощник: отвечает мгновенно, без оператора
-     и без внешних сервисов. Ответы правятся прямо здесь. */
-  var TEL='+73519453737', BOOK='https://416936.restoplace.ws', VK='https://vk.com/molly174';
-  var MAP='https://yandex.ru/maps/?text=Магнитогорск, Завенягина, 8а';
-
-  var TOPICS={
-    book:{q:'Забронировать стол',a:
-      'Займём вам место — выбирайте, как удобнее:'+
-      '<div class="rows"><i>· Онлайн</i> — <a href="'+BOOK+'" target="_blank" rel="noopener">на схеме зала</a>, займёт минуту'+
-      '<i>· По телефону</i> — <a href="tel:'+TEL+'">45-37-37</a>, администратор подберёт стол'+
-      '<i>· ВКонтакте</i> — <a href="'+VK+'" target="_blank" rel="noopener">напишите в сообщения</a></div>'+
-      'На выходные и концерты лучше бронировать заранее — зал заполняется быстро.',
-      next:['hours','program','banquet']},
-    hours:{q:'Часы работы',a:
-      'Работаем каждый день:'+
-      '<div class="rows"><i>Понедельник — четверг</i> — с 18:00 до 02:00'+
-      '<i>Пятница — суббота</i> — с 18:00 до 05:00<i>Воскресенье</i> — с 18:00 до 02:00</div>',
-      next:['book','where','program']},
-    where:{q:'Как добраться',a:
-      'Мы в Магнитогорске, <b>улица Завенягина, 8а</b>.<br><a href="'+MAP+'" target="_blank" rel="noopener">Открыть на карте</a><br><br>'+
-      'Если не найдёте вход — звоните <a href="tel:'+TEL+'">45-37-37</a>, подскажем.',
-      next:['hours','book']},
-    menu:{q:'Меню и кухня',a:
-      'Гриль, паста, пицца и азиатская кухня — от закусок к пенному до рамп-стейка и дорадо.'+
-      '<div class="rows"><i>· Закуски</i> — от 450 ₽<i>· Салаты</i> — от 580 ₽<i>· Горячее и гриль</i> — от 600 ₽'+
-      '<i>· Пивная тарелка на компанию</i> — 1200 ₽<i>· Мясной пир на гриле</i> — 3500 ₽</div>'+
-      'Полное меню и карта бара — <a href="#menu">в разделе «Меню»</a> на этой странице.',
-      next:['alcohol','banquet','book']},
-    banquet:{q:'Банкет и день рождения',a:
-      'Банкетное меню — <b>2500 ₽ с человека</b>. Имениннику и компании от 10 человек скидка 10% при оплате наличными (2250 ₽) или 5% по карте.<br><br>'+
-      'В меню входят закуски на компанию и на персону, салат и горячее на выбор. При заказе банкета — 50% на вход в караоке и на танцпол, можно принести свой крепкий алкоголь и свой торт.<br><br>'+
-      'Всё обсудим по телефону: <a href="tel:'+TEL+'">45-37-37</a>.',
-      next:['birthday','book','hours']},
-    program:{q:'Что у вас происходит',a:
-      '<b>Каждые выходные</b> у нас выступают музыканты и играет диджей. Вечеринки идут до 05:00: DJ Skimmi, Zarya и MC Rahmat, танцпол и караоке.<br><br>'+
-      'В будни — спокойнее: кухня, бар, караоке-зал и отдельные VIP-комнаты, если хочется своей компанией.<br><br>'+
-      'Афиша ближайших событий — <a href="'+VK+'" target="_blank" rel="noopener">в нашей группе ВКонтакте</a>.',
-      next:['book','birthday','menu']},
-    alcohol:{q:'Можно со своим алкоголем?',a:
-      'Да. Закажите по меню <b>на 1000 ₽ на человека</b> — и приносите свой крепкий напиток.<br><br>'+
-      'Условия лучше уточнить у администратора при бронировании: <a href="tel:'+TEL+'">45-37-37</a>.',
-      next:['book','menu']},
-    birthday:{q:'Я именинник',a:
-      'Тогда вам к нам — <b>скидка на меню</b> имениннику и компаниям от 10 человек: 10% наличными или 5% по карте.<br><br>'+
-      'Если хотите отметить с размахом, есть банкетное меню за 2500 ₽ с человека — с той же скидкой выйдет 2250 ₽.<br><br>'+
-      'Предупредите заранее при бронировании, чтобы всё успели подготовить.',
-      next:['banquet','book']}
-  };
-  var MAIN=['book','hours','menu','banquet','program','where','alcohol','birthday'];
-
-  var panel=document.getElementById('panel'), chat=document.getElementById('chat'),
-      chips=document.getElementById('chips'), teaser=document.getElementById('teaser'),
-      asstBtn=document.getElementById('asstBtn'), asstDot=document.getElementById('asstDot'),
-      started=false;
-
-  function store(k,v){try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v)}catch(e){return null}}
-
-  // крутим вниз и сразу, и после отрисовки: высота нового
-  // сообщения известна не в тот же момент, когда его добавили
-  function toBottom(){
-    chat.scrollTop=chat.scrollHeight;
-    if(window.requestAnimationFrame)requestAnimationFrame(function(){chat.scrollTop=chat.scrollHeight});
-    setTimeout(function(){chat.scrollTop=chat.scrollHeight},60);
-  }
-  function add(cls,html){
-    var m=document.createElement('div');
-    m.className='msg '+cls;m.innerHTML=html;
-    chat.appendChild(m);toBottom();
-    return m;
-  }
-  function typing(){
-    var t=document.createElement('div');
-    t.className='msg msg-bot typing';t.innerHTML='<i></i><i></i><i></i>';
-    chat.appendChild(t);toBottom();
-    return t;
-  }
-  function setChips(keys){
-    chips.innerHTML='';
-    keys.forEach(function(k){
-      var b=document.createElement('button');
-      b.textContent=TOPICS[k].q;
-      b.addEventListener('click',function(){ask(k)});
-      chips.appendChild(b);
-    });
-    var cb=document.createElement('button');
-    cb.className='call';cb.textContent='Позвонить 45-37-37';
-    cb.addEventListener('click',function(){window.location.href='tel:'+TEL});
-    chips.appendChild(cb);
-  }
-  function ask(key){
-    var t=TOPICS[key];
-    add('msg-user',t.q);
-    setChips([]);
-    var dots=typing();
-    setTimeout(function(){
-      dots.remove();
-      add('msg-bot',t.a);
-      setChips(t.next||MAIN.slice(0,4));
-    },520);
-  }
-  function start(){
-    if(started)return;started=true;
-    var dots=typing();
-    setTimeout(function(){
-      dots.remove();
-      add('msg-bot','Здравствуйте! Я Молли — помогу забронировать стол, расскажу про меню, банкеты и программу.<br><br>О чём рассказать?');
-      setChips(MAIN.slice(0,4));
-    },450);
-  }
-  function openPanel(){
-    hideTeaser();
-    panel.classList.add('on');
-    asstBtn.classList.add('hide');
-    asstDot.style.display='none';
-    start();
-  }
-  function closePanel(){
-    panel.classList.remove('on');
-    asstBtn.classList.remove('hide');
-  }
-  function hideTeaser(){teaser.classList.remove('on');store('molly_teaser','1')}
-
-  asstBtn.addEventListener('click',openPanel);
-  document.getElementById('panelX').addEventListener('click',closePanel);
-  document.getElementById('teaserX').addEventListener('click',function(e){e.stopPropagation();hideTeaser()});
-  teaser.addEventListener('click',openPanel);
-  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&panel.classList.contains('on'))closePanel()});
-
-  // приветствие показываем один раз и не сразу, чтобы не мешать
-  if(!store('molly_teaser')){
-    setTimeout(function(){if(!panel.classList.contains('on'))teaser.classList.add('on')},6000);
-  }else{
-    asstDot.style.display='none';
-  }
 })();
 </script>
+<script src="assistant.js" defer></script>
 </body>
 </html>

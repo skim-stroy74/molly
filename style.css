@@ -620,3 +620,35 @@ body:not(.hints) .need,body:not(.hints) .draft-bar{display:none}
   .viewer .prev{left:8px}
   .viewer .next{right:8px}
 }
+
+/* ---------- помощник: поле ввода, аватар, заявка ---------- */
+.asst-teaser .ava,.asst-head .ava{overflow:hidden;padding:5px;background:rgba(200,164,90,.10)}
+.asst-teaser .ava img,.asst-head .ava img{width:100%;height:100%;object-fit:contain;display:block}
+.asst-head .ava{border:1px solid var(--line)}
+
+.asst-ask{display:flex;gap:8px;margin-top:11px}
+.asst-ask input{
+  flex:1;min-width:0;background:var(--bg);border:1px solid var(--line-soft);border-radius:999px;
+  padding:11px 16px;color:var(--cream);font-family:inherit;font-size:14.5px;
+}
+.asst-ask input::placeholder{color:#6f7d6c}
+.asst-ask input:focus{outline:none;border-color:var(--brass)}
+.asst-ask button{
+  flex:none;width:42px;height:42px;border-radius:50%;border:1px solid var(--brass);
+  background:var(--brass);color:#14100a;font-size:19px;cursor:pointer;line-height:1;
+  transition:background .2s,transform .18s;
+}
+.asst-ask button:hover{background:var(--brass-bright);transform:scale(1.05)}
+
+/* заявка на бронь */
+.req{
+  margin:10px 0;padding:12px 14px;background:var(--bg);border:1px solid var(--line-soft);
+  border-left:2px solid var(--brass);border-radius:0 3px 3px 0;font-size:14px;line-height:1.55;color:var(--cream);
+}
+.req-acts{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
+.req-btn{
+  border:1px solid var(--line);background:rgba(200,164,90,.07);color:var(--cream);
+  padding:8px 13px;border-radius:999px;font-size:13px;cursor:pointer;font-family:inherit;
+  text-decoration:none;transition:background .2s,color .2s;
+}
+.req-btn:hover{background:var(--brass);color:#14100a;border-color:var(--brass)}
