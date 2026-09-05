@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Фотоотчёты — Irish Pub Molly, Магнитогорск</title>
+<meta name="description" content="Фотоотчёты с вечеринок в ирландском пабе «Молли» в Магнитогорске. Ищите себя на фото и приходите снова.">
+<link rel="canonical" href="https://molly-mgn.com/foto.html">
+<!-- ЧЕРНОВИК: снять перед сдачей -->
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0d1a12">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="apple-touch-icon" href="images/icon-192.png">
+<script>document.documentElement.className+=' js';</script>
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="hints">
+
+<header class="hdr">
+  <div class="wrap">
+    <a href="index.html" class="logo">
+      <img src="images/logo.png" alt="Паб Молли — ирландский паб в Магнитогорске" width="600" height="541">
+      <span class="logo-txt"><b>Паб Молли</b><span>Ирландский паб</span></span>
+    </a>
+    <nav class="nav" id="nav">
+      <a href="index.html#program">Программа</a>
+      <a href="index.html#about">О пабе</a>
+      <a href="index.html#menu">Меню</a>
+      <a href="index.html#banquet">Банкеты</a>
+      <a href="foto.html">Фото</a>
+      <a href="index.html#contacts">Контакты</a>
+    </nav>
+    <a href="tel:+73519453737" class="hdr-phone">45-37-37</a>
+    <a href="https://416936.restoplace.ws" target="_blank" rel="noopener" class="btn btn-gold btn-sm">Забронировать</a>
+    <button class="burger" id="burger" aria-label="Меню" aria-expanded="false"><i></i><i></i><i></i></button>
+  </div>
+</header>
+
+<section class="sec wood">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="eyebrow">Фотоотчёты</div>
+      <h2>Ищите себя на фото</h2>
+      <p class="lead">После каждых выходных выкладываем снимки с вечера. Найдите себя, заберите кадр и отправьте друзьям — а лучше приходите вместе в следующий раз.</p>
+    </div>
+
+    <div class="albums rv" id="albums">
+      <button class="album" data-album="vechera" data-count="13">
+        <span class="album-pic">
+          <img src="images/albums/vechera/01-t.jpg" loading="lazy" width="480" height="320" alt="Вечера в пабе Молли">
+          <span class="album-count">13 фото</span>
+        </span>
+        <span class="album-txt">
+          <span class="when">Как это бывает</span>
+          <h3>Вечера в Молли</h3>
+          <p>Танцпол, сцена, бар и гости — снимки с разных вечеров</p>
+        </span>
+      </button>
+    </div>
+
+    <div class="need">
+      <span class="tag">Как это будет работать дальше</span>
+      <b>Новый альбом после каждых выходных</b>
+      <p>Сейчас здесь один общий альбом из тех снимков, что вы прислали. Дальше по каждой вечеринке будет свой: «Хэллоуин, 30–31 октября», «День рождения Молли, 16–17 октября» и так далее.</p>
+      <p>От вас нужно только одно: <b>после выходных скидывать папку со снимками</b> — я буду добавлять альбом. Со временем покажу, как это делать самим, без меня.</p>
+      <p>Зачем это нужно: гость ищет себя на фото, находит, отправляет ссылку друзьям — и каждая такая ссылка ведёт на ваш сайт, где рядом висит афиша и кнопка брони. Это самый дешёвый способ вернуть человека.</p>
+    </div>
+
+    <div style="margin-top:40px;display:flex;gap:14px;flex-wrap:wrap">
+      <a href="https://vk.com/molly174" target="_blank" rel="noopener" class="btn btn-ghost">Все фото во ВКонтакте</a>
+      <a href="index.html#program" class="btn btn-gold">Афиша ближайших событий</a>
+    </div>
+  </div>
+</section>
+
+<!-- сетка снимков открытого альбома -->
+<section class="sec" id="albumView" hidden>
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow"><a href="#" id="backToAlbums" style="color:var(--brass)">← ко всем альбомам</a></div>
+      <h2 id="albumTitle">Вечера в Молли</h2>
+      <p class="lead" id="albumSub">Нажмите на снимок, чтобы открыть его целиком.</p>
+    </div>
+    <div class="shots" id="shots"></div>
+  </div>
+</section>
+
+<footer class="ftr">
+  <div class="wrap">
+    <div class="ftr-top">
+      <a href="index.html" class="logo">
+        <img src="images/logo.png" alt="Паб Молли" width="600" height="541">
+      </a>
+      <nav class="ftr-nav">
+        <a href="index.html#program">Программа</a>
+        <a href="index.html#menu">Меню</a>
+        <a href="index.html#banquet">Банкеты</a>
+        <a href="foto.html">Фото</a>
+        <a href="index.html#book">Бронирование</a>
+        <a href="index.html#contacts">Контакты</a>
+      </nav>
+    </div>
+    <div class="ftr-bot">
+      <div>Irish Pub Molly · Магнитогорск, Завенягина, 8а · <a href="tel:+73519453737">45-37-37</a></div>
+      <div style="display:flex;align-items:center;gap:14px">
+        <span class="age">18+</span>
+        <span>Чрезмерное употребление алкоголя вредит вашему здоровью</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- просмотр снимка -->
+<div class="viewer" id="viewer" role="dialog" aria-label="Просмотр фотографии" aria-modal="true">
+  <button class="close" id="vClose" aria-label="Закрыть">×</button>
+  <button class="prev" id="vPrev" aria-label="Предыдущее фото">‹</button>
+  <img id="vImg" src="" alt="">
+  <button class="next" id="vNext" aria-label="Следующее фото">›</button>
+  <span class="count" id="vCount"></span>
+</div>
+
+<script>
+(function(){
+  /* мобильное меню */
+  var burger=document.getElementById('burger'), nav=document.getElementById('nav');
+  burger.addEventListener('click',function(){
+    var open=nav.classList.toggle('on');
+    burger.classList.toggle('on',open);
+    burger.setAttribute('aria-expanded',open?'true':'false');
+  });
+
+  /* появление блоков */
+  var items=document.querySelectorAll('.rv');
+  function showAll(){for(var i=0;i<items.length;i++){items[i].classList.add('in')}}
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}});
+    },{threshold:.1});
+    items.forEach(function(el){io.observe(el)});
+    setTimeout(function(){if(!document.querySelector('.rv.in'))showAll()},2500);
+  }else{showAll()}
+
+  /* ---------- альбомы ---------- */
+  var albumsBox=document.getElementById('albums'),
+      view=document.getElementById('albumView'),
+      shots=document.getElementById('shots'),
+      current=[], idx=0;
+
+  function pad(n){return n<10?'0'+n:''+n}
+
+  function openAlbum(slug,count,title){
+    current=[];
+    shots.innerHTML='';
+    for(var i=1;i<=count;i++){
+      var base='images/albums/'+slug+'/'+pad(i);
+      current.push(base+'.jpg');
+      var b=document.createElement('button');
+      b.type='button';
+      b.setAttribute('aria-label','Открыть фото '+i);
+      b.innerHTML='<img src="'+base+'-t.jpg" loading="lazy" width="480" height="320" alt="Фото '+i+' из альбома «'+title+'»">';
+      (function(n){b.addEventListener('click',function(){show(n)})})(i-1);
+      shots.appendChild(b);
+    }
+    document.getElementById('albumTitle').textContent=title;
+    view.hidden=false;
+    view.scrollIntoView({behavior:'smooth'});
+  }
+
+  [].forEach.call(albumsBox.querySelectorAll('.album'),function(a){
+    a.addEventListener('click',function(){
+      openAlbum(a.dataset.album, +a.dataset.count, a.querySelector('h3').textContent);
+    });
+  });
+
+  document.getElementById('backToAlbums').addEventListener('click',function(e){
+    e.preventDefault();
+    view.hidden=true;
+    albumsBox.scrollIntoView({behavior:'smooth'});
+  });
+
+  /* ---------- просмотр ---------- */
+  var viewer=document.getElementById('viewer'), vImg=document.getElementById('vImg'), vCount=document.getElementById('vCount');
+  function show(n){
+    if(!current.length)return;
+    idx=(n+current.length)%current.length;
+    vImg.src=current[idx];
+    vImg.alt='Фото '+(idx+1)+' из '+current.length;
+    vCount.textContent=(idx+1)+' / '+current.length;
+    viewer.classList.add('on');
+    document.body.style.overflow='hidden';
+  }
+  function hide(){viewer.classList.remove('on');document.body.style.overflow=''}
+  document.getElementById('vClose').addEventListener('click',hide);
+  document.getElementById('vPrev').addEventListener('click',function(e){e.stopPropagation();show(idx-1)});
+  document.getElementById('vNext').addEventListener('click',function(e){e.stopPropagation();show(idx+1)});
+  viewer.addEventListener('click',function(e){if(e.target===viewer)hide()});
+  document.addEventListener('keydown',function(e){
+    if(!viewer.classList.contains('on'))return;
+    if(e.key==='Escape')hide();
+    if(e.key==='ArrowLeft')show(idx-1);
+    if(e.key==='ArrowRight')show(idx+1);
+  });
+  /* листание пальцем */
+  var x0=null;
+  viewer.addEventListener('touchstart',function(e){x0=e.touches[0].clientX},{passive:true});
+  viewer.addEventListener('touchend',function(e){
+    if(x0===null)return;
+    var dx=e.changedTouches[0].clientX-x0;
+    if(Math.abs(dx)>50)show(idx+(dx<0?1:-1));
+    x0=null;
+  },{passive:true});
+})();
+</script>
+</body>
+</html>

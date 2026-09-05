@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Приглашение — Irish Pub Molly</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0d1a12">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="apple-touch-icon" href="images/icon-192.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Паб Молли">
+<meta property="og:title" content="Приглашение в паб «Молли»">
+<meta property="og:description" content="Вас приглашают отметить праздник в ирландском пабе «Молли». Магнитогорск, Завенягина, 8а.">
+<meta property="og:image" content="https://molly-mgn.com/images/og-image.jpg">
+<style>
+:root{
+  --bg:#0d1a12; --panel:#16281c; --line:rgba(200,164,90,.24);
+  --line-soft:rgba(242,234,216,.10); --cream:#f2ead8; --muted:#a3b09f;
+  --brass:#c8a45a; --brass-bright:#e0bc74; --amber:#d98b2b;
+  --serif:Georgia,"Times New Roman",serif;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:var(--bg);color:var(--cream);font-family:var(--sans);font-size:17px;line-height:1.6;
+  -webkit-font-smoothing:antialiased;min-height:100vh;
+  background-image:
+    repeating-linear-gradient(90deg,rgba(0,0,0,.14) 0 2px,transparent 2px 7px),
+    linear-gradient(180deg,#14261a,#0b160f);
+}
+img{max-width:100%;display:block}
+a{color:inherit}
+.wrap{max-width:660px;margin:0 auto;padding:0 20px}
+
+/* ---------- приглашение ---------- */
+.card{
+  margin:38px auto 46px;background:var(--panel);border:1px solid var(--line);
+  border-radius:4px;overflow:hidden;box-shadow:0 26px 70px rgba(0,0,0,.5);
+}
+.card-top{
+  padding:36px 34px 30px;text-align:center;position:relative;
+  background:radial-gradient(120% 100% at 50% 0%,rgba(200,164,90,.14),transparent 70%);
+  border-bottom:1px solid var(--line-soft);
+}
+.card-top img{width:104px;margin:0 auto 18px}
+.card-top .kicker{
+  font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--brass);font-weight:600;
+}
+.card-body{padding:34px}
+h1{
+  font-family:var(--serif);font-weight:400;font-size:clamp(27px,6vw,38px);
+  line-height:1.18;text-align:center;margin-bottom:10px;text-wrap:balance;
+}
+.host{text-align:center;color:var(--muted);font-size:15.5px;margin-bottom:28px}
+.when{
+  display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:28px;
+}
+.when div{
+  border:1px solid var(--line);border-radius:3px;padding:14px 22px;text-align:center;min-width:132px;
+  background:rgba(200,164,90,.05);
+}
+.when b{display:block;font-family:var(--serif);font-size:23px;color:var(--brass-bright);line-height:1.1}
+.when span{font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-top:5px;display:block}
+.note{
+  border-left:2px solid var(--brass);padding:14px 0 14px 18px;margin-bottom:28px;
+  color:var(--cream);font-size:16px;white-space:pre-wrap;
+}
+.where{border-top:1px solid var(--line-soft);padding-top:26px}
+.where dt{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--brass);margin-bottom:6px}
+.where dd{margin-bottom:20px;font-size:16.5px}
+.where dd small{display:block;color:var(--muted);font-size:14px;margin-top:4px}
+.acts{display:flex;gap:12px;flex-wrap:wrap;margin-top:6px}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;padding:14px 26px;border-radius:2px;
+  font-size:15px;font-weight:600;text-decoration:none;border:1px solid transparent;cursor:pointer;
+  font-family:inherit;transition:background .25s,color .25s,transform .18s;
+}
+.btn-gold{background:var(--brass);color:#14100a}
+.btn-gold:hover{background:var(--brass-bright);transform:translateY(-2px)}
+.btn-ghost{border-color:var(--line);color:var(--cream);background:transparent}
+.btn-ghost:hover{border-color:var(--brass);color:var(--brass-bright)}
+.card-foot{
+  padding:22px 34px;border-top:1px solid var(--line-soft);text-align:center;
+  font-size:13px;color:#7d8a7a;
+}
+
+/* ---------- конструктор ---------- */
+.maker{margin:38px auto 60px}
+.maker h2{font-family:var(--serif);font-weight:400;font-size:30px;margin-bottom:10px}
+.maker>p{color:var(--muted);margin-bottom:26px}
+.field{margin-bottom:16px}
+.field label{display:block;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--brass);margin-bottom:7px}
+.field input,.field textarea{
+  width:100%;background:var(--panel);border:1px solid var(--line-soft);border-radius:3px;
+  padding:13px 15px;color:var(--cream);font-family:inherit;font-size:16px;
+}
+.field input:focus,.field textarea:focus{outline:none;border-color:var(--brass)}
+.field textarea{min-height:92px;resize:vertical}
+.row{display:flex;gap:14px}
+.row .field{flex:1}
+.out{
+  margin-top:22px;background:var(--panel);border:1px solid var(--line);border-radius:3px;padding:18px 20px;
+}
+.out label{display:block;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--brass);margin-bottom:9px}
+.out code{
+  display:block;word-break:break-all;font-size:13.5px;color:var(--muted);
+  background:rgba(0,0,0,.25);padding:12px 14px;border-radius:3px;margin-bottom:14px;line-height:1.5;
+}
+.hint{font-size:14px;color:#7d8a7a;margin-top:18px;line-height:1.6}
+.ok{color:#7ec98a}
+@media(max-width:560px){
+  .card-body{padding:26px 22px}
+  .card-top{padding:30px 22px 26px}
+  .row{flex-direction:column;gap:0}
+  .when div{flex:1}
+}
+</style>
+</head>
+<body>
+
+<!-- ================= ПРИГЛАШЕНИЕ ================= -->
+<div class="wrap">
+  <div class="card" id="card" hidden>
+    <div class="card-top">
+      <img src="images/logo.png" alt="Паб Молли">
+      <div class="kicker">Вы приглашены</div>
+    </div>
+    <div class="card-body">
+      <h1 id="cTitle"></h1>
+      <p class="host" id="cHost" hidden></p>
+
+      <div class="when">
+        <div><b id="cDate"></b><span>Дата</span></div>
+        <div><b id="cTime"></b><span>Начало</span></div>
+      </div>
+
+      <p class="note" id="cNote" hidden></p>
+
+      <dl class="where">
+        <dt>Где</dt>
+        <dd>
+          Ирландский паб «Молли»
+          <small>Магнитогорск, улица Завенягина, 8а</small>
+        </dd>
+        <dt>Что вас ждёт</dt>
+        <dd>
+          Живая музыка, караоке и танцпол
+          <small>Кухня на гриле, бар и отдельные VIP-комнаты</small>
+        </dd>
+      </dl>
+
+      <div class="acts">
+        <a class="btn btn-gold" href="https://yandex.ru/maps/?text=Магнитогорск, Завенягина, 8а" target="_blank" rel="noopener">Как добраться</a>
+        <a class="btn btn-ghost" href="tel:+73519453737">Позвонить в паб</a>
+        <a class="btn btn-ghost" href="index.html">О пабе и меню</a>
+      </div>
+    </div>
+    <div class="card-foot">
+      Паб «Молли» · Завенягина, 8а · 45-37-37 · 18+
+    </div>
+  </div>
+</div>
+
+<!-- ================= КОНСТРУКТОР ================= -->
+<div class="wrap">
+  <div class="maker" id="maker" hidden>
+    <h2>Приглашение для гостей</h2>
+    <p>Заполните поля — получится персональная страница, которую заказчик банкета разошлёт своим гостям. Ссылка живёт сама по себе, ничего сохранять не нужно.</p>
+
+    <div class="field">
+      <label for="fTitle">Повод</label>
+      <input id="fTitle" type="text" placeholder="Юбилей Сергея" maxlength="80">
+    </div>
+    <div class="field">
+      <label for="fHost">От кого приглашение (необязательно)</label>
+      <input id="fHost" type="text" placeholder="Приглашает Сергей Иванов" maxlength="80">
+    </div>
+    <div class="row">
+      <div class="field">
+        <label for="fDate">Дата</label>
+        <input id="fDate" type="text" placeholder="12 октября" maxlength="40">
+      </div>
+      <div class="field">
+        <label for="fTime">Начало</label>
+        <input id="fTime" type="text" placeholder="19:00" maxlength="20">
+      </div>
+    </div>
+    <div class="field">
+      <label for="fNote">Сообщение гостям (необязательно)</label>
+      <textarea id="fNote" placeholder="Дорогие друзья! Буду рад видеть вас. Стол накрыт, подарки не обязательны." maxlength="400"></textarea>
+    </div>
+
+    <button class="btn btn-gold" id="makeBtn" type="button">Собрать приглашение</button>
+
+    <div class="out" id="out" hidden>
+      <label>Ссылка для гостей</label>
+      <code id="outLink"></code>
+      <button class="btn btn-ghost" id="copyBtn" type="button">Скопировать ссылку</button>
+      <a class="btn btn-ghost" id="openLink" href="#" target="_blank" rel="noopener">Открыть</a>
+      <p class="hint" id="copyMsg"></p>
+    </div>
+
+    <p class="hint">
+      Как это работает: заказчик банкета получает ссылку и рассылает её гостям.
+      Каждый гость открывает страницу с логотипом паба, адресом и картой — и заодно видит,
+      что здесь есть меню, афиша и бронирование. Тридцать приглашённых — тридцать человек,
+      которые узнали про «Молли».
+    </p>
+  </div>
+</div>
+
+<script>
+(function(){
+  var p = new URLSearchParams(location.search);
+  var title = (p.get('t')||'').trim();
+
+  function setText(id, value){
+    var el = document.getElementById(id);
+    el.textContent = value;          // только текст: данные приходят из ссылки
+    return el;
+  }
+
+  if(title){
+    /* режим приглашения */
+    setText('cTitle', title);
+    setText('cDate', (p.get('d')||'').trim() || '—');
+    setText('cTime', (p.get('h')||'').trim() || '—');
+
+    var host = (p.get('f')||'').trim();
+    if(host){ setText('cHost', host).hidden = false; }
+
+    var note = (p.get('n')||'').trim();
+    if(note){ setText('cNote', note).hidden = false; }
+
+    document.title = title + ' — паб «Молли»';
+    document.getElementById('card').hidden = false;
+  }else{
+    /* режим конструктора */
+    var maker = document.getElementById('maker');
+    maker.hidden = false;
+
+    document.getElementById('makeBtn').addEventListener('click', function(){
+      var t = document.getElementById('fTitle').value.trim();
+      if(!t){
+        document.getElementById('fTitle').focus();
+        return;
+      }
+      var q = new URLSearchParams();
+      q.set('t', t);
+      var d = document.getElementById('fDate').value.trim();
+      var h = document.getElementById('fTime').value.trim();
+      var f = document.getElementById('fHost').value.trim();
+      var n = document.getElementById('fNote').value.trim();
+      if(d) q.set('d', d);
+      if(h) q.set('h', h);
+      if(f) q.set('f', f);
+      if(n) q.set('n', n);
+
+      var url = location.origin + location.pathname + '?' + q.toString();
+      document.getElementById('outLink').textContent = url;
+      document.getElementById('openLink').href = url;
+      document.getElementById('out').hidden = false;
+      document.getElementById('copyMsg').textContent = '';
+    });
+
+    document.getElementById('copyBtn').addEventListener('click', function(){
+      var url = document.getElementById('outLink').textContent;
+      var msg = document.getElementById('copyMsg');
+      function fallback(){
+        var ta = document.createElement('textarea');
+        ta.value = url; document.body.appendChild(ta); ta.select();
+        try{ document.execCommand('copy'); msg.textContent='Ссылка скопирована.'; msg.className='hint ok'; }
+        catch(e){ msg.textContent='Не удалось скопировать — выделите ссылку вручную.'; msg.className='hint'; }
+        document.body.removeChild(ta);
+      }
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(url).then(function(){
+          msg.textContent='Ссылка скопирована.'; msg.className='hint ok';
+        }, fallback);
+      }else{ fallback(); }
+    });
+  }
+})();
+</script>
+</body>
+</html>
