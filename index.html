@@ -214,14 +214,37 @@ h3{font-size:22px;line-height:1.25}
 .card h3{margin-bottom:12px}
 .card p{color:var(--muted);font-size:15.5px}
 
-/* ---------- афиша (заполним, когда придут даты) ---------- */
-.bill{
-  border:1px dashed var(--line);border-radius:3px;padding:44px 36px;margin-top:26px;
-  display:flex;align-items:center;gap:30px;flex-wrap:wrap;background:rgba(200,164,90,.035);
+/* ---------- афиша ---------- */
+.bill-head{margin:56px 0 26px}
+.bill-head h3{margin-bottom:8px}
+.bill-head p{color:var(--muted);font-size:15.5px;max-width:62ch}
+.afisha{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.ev{
+  background:var(--bg-2);border:1px solid var(--line-soft);border-radius:3px;overflow:hidden;
+  transition:transform .3s,border-color .3s;
 }
-.bill h3{margin-bottom:8px}
-.bill p{color:var(--muted);font-size:15.5px;max-width:52ch}
-.bill .btn{margin-left:auto}
+.ev:hover{transform:translateY(-5px);border-color:var(--line)}
+.ev-pic{aspect-ratio:1060/1484;overflow:hidden;background:#0e1a12}
+.ev-pic img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s}
+.ev:hover .ev-pic img{transform:scale(1.03)}
+.ev-txt{padding:16px 18px 20px}
+.ev-date{
+  display:block;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--amber);font-weight:700;margin-bottom:8px;
+}
+.ev-txt h4{font-family:var(--serif);font-size:19px;font-weight:400;line-height:1.2;margin-bottom:6px}
+.ev-txt p{font-size:14px;color:var(--muted)}
+.bill-foot{
+  margin-top:32px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+}
+.bill-foot p{color:var(--muted);font-size:15.5px;margin-right:auto;max-width:52ch}
+@media(max-width:1024px){.afisha{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:760px){
+  .afisha{grid-template-columns:repeat(2,1fr);gap:14px}
+  .ev-txt{padding:13px 14px 16px}
+  .ev-txt h4{font-size:16.5px}
+  .bill-foot .btn{width:100%}
+}
 
 /* ---------- о пабе ---------- */
 .about{display:grid;grid-template-columns:1.05fr .95fr;gap:64px;align-items:center}
@@ -361,6 +384,7 @@ h3{font-size:22px;line-height:1.25}
 }
 .pcard h3{margin-bottom:12px;color:var(--brass-bright)}
 .pcard p{color:var(--muted);font-size:15.5px;position:relative;z-index:1}
+.promo-note{margin-top:22px;font-size:13.5px;color:#7d8a7a}
 
 /* ---------- фотоотчёты ---------- */
 .gal{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
@@ -729,19 +753,59 @@ body:not(.hints) .need,body:not(.hints) .draft-bar{display:none}
     </div>
 
     <!-- Сюда подключим ленту ближайших событий, когда получим афишу -->
-    <div class="bill rv">
-      <div>
-        <h3>Ближайшие события</h3>
-        <p>Концерты, тематические вечеринки и шоу-программы. Афиша обновляется — следите за анонсами и бронируйте стол заранее.</p>
-      </div>
-      <a href="https://vk.com/molly174" target="_blank" rel="noopener" class="btn btn-ghost">Афиша во ВКонтакте</a>
+    <div class="bill-head rv">
+      <h3>Ближайшие события</h3>
+      <p>Двери открыты с 18:00. Танцпол и караоке, работает ведущий и развлекательная анимация. Вход платный — стол лучше забронировать заранее.</p>
+    </div>
+
+    <!-- data-until — последний день события. Прошедшие скрываются сами,
+         чтобы на сайте никогда не висели протухшие даты. -->
+    <div class="afisha rv" id="afisha">
+      <article class="ev" data-until="2026-09-11">
+        <div class="ev-pic"><img src="images/afisha-1.jpg" loading="lazy" width="620" height="868" alt="Афиша: группа «Мечта» в пабе Молли, 11 сентября"></div>
+        <div class="ev-txt"><span class="ev-date">11 сентября</span><h4>Группа «Мечта»</h4><p>Живая музыка</p></div>
+      </article>
+      <article class="ev" data-until="2026-09-19">
+        <div class="ev-pic"><img src="images/afisha-2.jpg" loading="lazy" width="620" height="868" alt="Афиша: «Караочные танцы» в пабе Молли, 18–19 сентября"></div>
+        <div class="ev-txt"><span class="ev-date">18–19 сентября</span><h4>Караочные танцы</h4><p>Караоке и танцпол</p></div>
+      </article>
+      <article class="ev" data-until="2026-09-26">
+        <div class="ev-pic"><img src="images/afisha-3.jpg" loading="lazy" width="620" height="868" alt="Афиша: «Октоберфест» в пабе Молли, 25–26 сентября"></div>
+        <div class="ev-txt"><span class="ev-date">25–26 сентября</span><h4>Октоберфест</h4><p>Баварская вечеринка</p></div>
+      </article>
+      <article class="ev" data-until="2026-10-03">
+        <div class="ev-pic"><img src="images/afisha-4.jpg" loading="lazy" width="620" height="868" alt="Афиша: «День учителя» в пабе Молли, 2–3 октября"></div>
+        <div class="ev-txt"><span class="ev-date">2–3 октября</span><h4>День учителя</h4><p>Праздничная программа</p></div>
+      </article>
+      <article class="ev" data-until="2026-10-10">
+        <div class="ev-pic"><img src="images/afisha-5.jpg" loading="lazy" width="620" height="868" alt="Афиша: «Ретро пати» в пабе Молли, 9–10 октября"></div>
+        <div class="ev-txt"><span class="ev-date">9–10 октября</span><h4>Ретро пати</h4><p>Легендарные хиты 80–90-х</p></div>
+      </article>
+      <article class="ev" data-until="2026-10-17">
+        <div class="ev-pic"><img src="images/afisha-6.jpg" loading="lazy" width="620" height="868" alt="Афиша: день рождения паба Молли, 16–17 октября"></div>
+        <div class="ev-txt"><span class="ev-date">16–17 октября</span><h4>День рождения Молли</h4><p>Принимаем поздравления</p></div>
+      </article>
+      <article class="ev" data-until="2026-10-24">
+        <div class="ev-pic"><img src="images/afisha-7.jpg" loading="lazy" width="620" height="868" alt="Афиша: «Пати в леопарде» в пабе Молли, 23–24 октября"></div>
+        <div class="ev-txt"><span class="ev-date">23–24 октября</span><h4>Пати в леопарде</h4><p>Живая музыка: группа «Рэдхэдбэнд»</p></div>
+      </article>
+      <article class="ev" data-until="2026-10-31">
+        <div class="ev-pic"><img src="images/afisha-8.jpg" loading="lazy" width="620" height="868" alt="Афиша: Хэллоуин в пабе Молли, 30–31 октября"></div>
+        <div class="ev-txt"><span class="ev-date">30–31 октября</span><h4>Хэллоуин</h4><p>Почувствуй вкус тёмной ночи</p></div>
+      </article>
+    </div>
+
+    <div class="bill-foot rv">
+      <p id="afishaEmpty" hidden>Программа на ближайшие даты готовится — следите за анонсами в нашем сообществе.</p>
+      <a href="https://vk.com/molly174" target="_blank" rel="noopener" class="btn btn-ghost">Вся афиша во ВКонтакте</a>
+      <a href="#book" class="btn btn-gold">Забронировать стол</a>
     </div>
     <div class="need">
       <span class="tag">Нужно от вас</span>
-      <b>Афиша ближайших событий</b>
-      <p>Здесь встанут карточки конкретных вечеринок и концертов — как у «Максимилианса» на главной. Это самый посещаемый блок на сайтах заведений: люди заходят посмотреть, что будет в выходные.</p>
-      <p>По каждому событию нужно: дата, название, что в программе, стоимость входа или билета, афиша-картинка.</p>
-      <span class="spec">Пришлите 3–5 ближайших — дальше покажу, как добавлять их самим</span>
+      <b>Стоимость входа и программа на ноябрь</b>
+      <p>Афиша по сентябрю и октябрю стоит — восемь событий. На всех написано «вход платный», но <b>сколько именно</b> — не указано. Люди из-за этого не приходят: сумма в 300 рублей никого не отпугнёт, а неизвестность отпугивает.</p>
+      <p>Карточки исчезнут сами, когда даты пройдут, — сайт не протухнет. Но к концу октября нужна программа на ноябрь, иначе раздел опустеет.</p>
+      <p>И скажите по концертным афишам, которые вы прислали отдельно (Папин Олимпос и другие): какие из них актуальны и на какие даты? «Папин Олимпос» помечен как солдаут — его ставить смысла нет.</p>
     </div>
   </div>
 </section>
@@ -1144,6 +1208,7 @@ body:not(.hints) .need,body:not(.hints) .draft-bar{display:none}
         <p>Скидка на меню имениннику и компаниям от 10 человек: 10% при оплате наличными, 5% по карте. Предупредите заранее при бронировании, чтобы всё подготовили.</p>
       </article>
     </div>
+    <p class="promo-note rv">Скидки и акции не суммируются, а также не действуют в праздничные и концертные дни.</p>
     <div class="need">
       <span class="tag">Можно добавить</span>
       <b>Остальные постоянные предложения</b>
@@ -1381,6 +1446,26 @@ body:not(.hints) .need,body:not(.hints) .draft-bar{display:none}
   nav.addEventListener('click',function(e){
     if(e.target.tagName==='A'){nav.classList.remove('on');burger.classList.remove('on');burger.setAttribute('aria-expanded','false');}
   });
+
+  /* афиша: прячем прошедшие даты, чтобы сайт не протухал сам собой */
+  (function(){
+    var box=document.getElementById('afisha');
+    if(!box)return;
+    var today=new Date(); today.setHours(0,0,0,0);
+    var left=0;
+    [].forEach.call(box.querySelectorAll('.ev'),function(ev){
+      var d=ev.getAttribute('data-until');
+      if(!d)return left++;
+      var parts=d.split('-');
+      var end=new Date(+parts[0],+parts[1]-1,+parts[2]);
+      if(end<today){ev.remove()}else{left++}
+    });
+    if(!left){
+      box.hidden=true;
+      var msg=document.getElementById('afishaEmpty');
+      if(msg)msg.hidden=false;
+    }
+  })();
 
   /* переключатель «Кухня / Бар и напитки» */
   var menuNav=document.querySelector('.menu-nav');
