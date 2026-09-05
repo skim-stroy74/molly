@@ -262,6 +262,48 @@ h3{font-size:22px;line-height:1.25}
 }
 
 /* ---------- меню ---------- */
+.menu-nav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:44px}
+.menu-nav button{
+  border:1px solid var(--line);background:rgba(200,164,90,.06);color:var(--cream);
+  padding:9px 17px;border-radius:999px;font-size:14px;font-family:inherit;cursor:pointer;
+  transition:background .22s,color .22s,border-color .22s;
+}
+.menu-nav button:hover{border-color:var(--brass);color:var(--brass-bright)}
+.menu-nav button.on{background:var(--brass);border-color:var(--brass);color:#14100a;font-weight:600}
+.mgroup{margin-bottom:44px}
+.mgroup:last-of-type{margin-bottom:0}
+.mgroup>h3{
+  font-family:var(--sans);font-size:12.5px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--brass);font-weight:700;margin-bottom:6px;padding-bottom:14px;border-bottom:1px solid var(--line);
+}
+.mlist{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:0 52px}
+.mi{padding:15px 0;border-bottom:1px solid var(--line-soft)}
+.mi-top{display:flex;align-items:baseline;gap:10px}
+/* название сжимается и переносится, цена никогда не уезжает за поле */
+.mi-name{font-family:var(--serif);font-size:18.5px;color:var(--cream);flex:0 1 auto;min-width:0}
+.mi-dots{flex:1;border-bottom:1px dotted rgba(200,164,90,.4);transform:translateY(-5px);min-width:14px}
+.mi-price{
+  font-size:16px;color:var(--brass-bright);font-weight:600;white-space:nowrap;flex:none;
+  font-variant-numeric:tabular-nums;
+}
+.mi-desc{font-size:14.5px;color:var(--muted);margin-top:6px;line-height:1.5;max-width:54ch}
+.menu-foot{
+  margin-top:34px;padding-top:20px;border-top:1px solid var(--line-soft);
+  display:flex;align-items:center;gap:24px;flex-wrap:wrap;
+}
+.menu-foot p{font-size:14px;color:#7d8a7a;max-width:52ch}
+.menu-foot .btn{margin-left:auto}
+.age-gate{
+  display:flex;align-items:center;gap:18px;margin:40px 0 34px;padding:20px 24px;
+  border:1px solid var(--line);border-radius:3px;background:rgba(200,164,90,.05);
+}
+.age-gate p{font-size:14px;color:var(--muted);line-height:1.55;max-width:62ch}
+.age-gate .age{width:44px;height:44px;font-size:14px}
+@media(max-width:860px){
+  .mlist{grid-template-columns:1fr;gap:0}
+  .mi-name{font-size:17px}
+}
+
 .menu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
 .mcard{
   background:var(--bg-2);border:1px solid var(--line-soft);border-radius:3px;padding:30px 28px;
@@ -287,6 +329,24 @@ h3{font-size:22px;line-height:1.25}
   border-left:1.5px solid var(--brass);border-bottom:1.5px solid var(--brass);transform:rotate(-45deg);
 }
 .blist li b{color:var(--cream);font-weight:600}
+
+/* ---------- банкеты: цена и бонусы ---------- */
+.banq-price{
+  margin-top:30px;padding:24px 28px;border:1px solid var(--line);border-radius:3px;
+  background:linear-gradient(140deg,rgba(200,164,90,.10),rgba(200,164,90,.03));
+}
+.banq-price>div{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.banq-price .from{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--brass);font-weight:600}
+.banq-price b{font-family:var(--serif);font-size:40px;color:var(--brass-bright);line-height:1}
+.banq-price .per{color:var(--muted);font-size:15px}
+.banq-price p{margin-top:10px;font-size:15px;color:var(--muted)}
+.banq-price p b{font-family:var(--sans);font-size:15px;color:var(--cream);font-weight:600}
+.banq-perks{margin-top:28px;padding:22px 26px;border-left:2px solid var(--brass);background:var(--panel);border-radius:0 3px 3px 0}
+.banq-perks .ttl{display:block;font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--brass);font-weight:700;margin-bottom:14px}
+.banq-perks ul{list-style:none;display:grid;gap:9px}
+.banq-perks li{font-size:15px;color:var(--muted);padding-left:20px;position:relative}
+.banq-perks li::before{content:"";position:absolute;left:0;top:9px;width:6px;height:6px;border-radius:50%;background:var(--brass)}
+.banq-perks li b{color:var(--brass-bright);font-weight:600}
 
 /* ---------- акции ---------- */
 .promo{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
@@ -322,6 +382,11 @@ h3{font-size:22px;line-height:1.25}
 .place h3{font-size:30px;margin-bottom:12px}
 .place p{color:var(--muted);font-size:15.5px;max-width:44ch;margin-bottom:20px}
 .place .soon{font-size:13px;color:#7d8a7a;letter-spacing:.04em}
+.place-tel{
+  display:inline-block;font-family:var(--serif);font-size:22px;color:var(--brass-bright);
+  margin-bottom:14px;transition:color .2s;
+}
+.place-tel:hover{color:var(--cream)}
 
 /* ---------- бронь ---------- */
 .book{
@@ -713,32 +778,290 @@ body:not(.hints) .need,body:not(.hints) .draft-bar{display:none}
     <div class="sec-head rv">
       <div class="eyebrow">Кухня и бар</div>
       <h2>Меню</h2>
-      <p class="lead">Три кухни под одной крышей и бар, ради которого сюда возвращаются. Всё готовится здесь и подаётся горячим — даже в четыре утра.</p>
+      <p class="lead">Гриль, паста, пицца и азиатская кухня. Закуски, ради которых заходят на час и остаются до закрытия, — и бар со своей картой.</p>
     </div>
-    <div class="menu-grid">
-      <article class="mcard rv"><div class="num">01</div><h3>Ирландская кухня</h3><p>То, ради чего заходят в паб: сытно, просто и честно.</p></article>
-      <article class="mcard rv"><div class="num">02</div><h3>Европейская кухня</h3><p>Классика на каждый день — от закусок до горячего.</p></article>
-      <article class="mcard rv"><div class="num">03</div><h3>Японская кухня</h3><p>Роллы и суши для тех, кто пришёл за другим настроением.</p></article>
-      <article class="mcard rv"><div class="num">04</div><h3>Закуски к пиву</h3><p>Всё, что положено к пенному, и в правильных порциях.</p></article>
-      <article class="mcard rv"><div class="num">05</div><h3>Пиво</h3><p>Более 10 сортов со всего мира — от классики до крафта.</p></article>
-      <article class="mcard rv"><div class="num">06</div><h3>Бар и коктейли</h3><p>Крепкое, авторские коктейли и то, что смешает бармен лично для вас.</p></article>
+    <div class="menu-nav rv" role="tablist">
+      <button class="on" data-side="food" role="tab" aria-selected="true">Кухня</button>
+      <button data-side="bar" role="tab" aria-selected="false">Бар и напитки</button>
     </div>
-    <div class="shot shot-wide rv" style="margin-top:24px;aspect-ratio:3/1">
+
+    <!-- ---------- кухня ---------- -->
+    <div class="menu-side rv" data-side="food">
+      <div class="mgroup">
+        <h3>Закуски</h3>
+        <ul class="mlist">
+          <li class="mi"><div class="mi-top"><span class="mi-name">Мясная тарелка</span><span class="mi-dots"></span><span class="mi-price">780 ₽</span></div><p class="mi-desc">Салями милано, карпаччо из курицы, сервелат</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Татаки из тунца</span><span class="mi-dots"></span><span class="mi-price">750 ₽</span></div><p class="mi-desc">Филе тунца, обжаренное до хрустящей корочки, с соусом понзу</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Филе сельди</span><span class="mi-dots"></span><span class="mi-price">500 ₽</span></div><p class="mi-desc">С картофелем</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Овощное плато</span><span class="mi-dots"></span><span class="mi-price">650 ₽</span></div><p class="mi-desc">Огурцы, помидоры, сельдерей, красный лук, зелень</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Ассорти сыров</span><span class="mi-dots"></span><span class="mi-price">800 ₽</span></div><p class="mi-desc">Пармезан, чеддер и дор блю, мёд</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Фруктовое ассорти</span><span class="mi-dots"></span><span class="mi-price">750 ₽</span></div><p class="mi-desc">Сезонные фрукты</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Пикантные гренки</span><span class="mi-dots"></span><span class="mi-price">450 ₽</span></div><p class="mi-desc">Из бородинского хлеба с чесноком</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Кольца кальмара</span><span class="mi-dots"></span><span class="mi-price">450 ₽</span></div></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Сырные палочки</span><span class="mi-dots"></span><span class="mi-price">500 ₽</span></div></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Креветки тигровые</span><span class="mi-dots"></span><span class="mi-price">700 ₽</span></div><p class="mi-desc">На гриле</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Мидии</span><span class="mi-dots"></span><span class="mi-price">700 ₽</span></div><p class="mi-desc">В оливковом соусе с фри и хлебом тартин</p></li>
+        </ul>
+      </div>
+
+      <div class="mgroup">
+        <h3>Салаты</h3>
+        <ul class="mlist">
+          <li class="mi"><div class="mi-top"><span class="mi-name">Греческий</span><span class="mi-dots"></span><span class="mi-price">580 ₽</span></div><p class="mi-desc">Огурцы, томаты, болгарский перец, оливки, редис, красный лук, сливочный сыр, оливковое масло</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Цезарь с куриной грудкой</span><span class="mi-dots"></span><span class="mi-price">600 ₽</span></div><p class="mi-desc">Листья салата, соус цезарь, черри, куриное филе, пармезан, сухарики, соус песто</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Салат с уткой</span><span class="mi-dots"></span><span class="mi-price">650 ₽</span></div><p class="mi-desc">Филе утиной грудки, шампиньоны, томаты, тыква, виноград, салат, кунжут, соево-медовый соус</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Цезарь с тигровыми креветками</span><span class="mi-dots"></span><span class="mi-price">650 ₽</span></div><p class="mi-desc">Листья салата, соус цезарь, черри, тигровые креветки, пармезан, сухарики</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Нисуаз</span><span class="mi-dots"></span><span class="mi-price">650 ₽</span></div><p class="mi-desc">Филе тунца, свежие овощи, яйцо, оливковое масло</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Салат Рамп</span><span class="mi-dots"></span><span class="mi-price">650 ₽</span></div><p class="mi-desc">Мраморная говядина, болгарский перец, красная фасоль, лук, гранат, ореховый соус</p></li>
+        </ul>
+      </div>
+
+      <div class="mgroup">
+        <h3>Горячее и гриль</h3>
+        <ul class="mlist">
+          <li class="mi"><div class="mi-top"><span class="mi-name">Свиная шея на гриле</span><span class="mi-dots"></span><span class="mi-price">700 ₽</span></div><p class="mi-desc">Шашлык из свинины с маринованным луком</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Свиные рёбрышки барбекю</span><span class="mi-dots"></span><span class="mi-price">700 ₽</span></div><p class="mi-desc">С салатом коул слоу</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Сковородка</span><span class="mi-dots"></span><span class="mi-price">650 ₽</span></div><p class="mi-desc">Со свининой, грибами и овощами</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Колбаски</span><span class="mi-dots"></span><span class="mi-price">650 ₽</span></div><p class="mi-desc">Свино-говяжьи, с салатом коул слоу</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Стейк из куриной грудки</span><span class="mi-dots"></span><span class="mi-price">650 ₽</span></div><p class="mi-desc">На гриле, со стручковой фасолью и грецким орехом</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Крылышки куриные чили</span><span class="mi-dots"></span><span class="mi-price">600 ₽</span></div></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Рамп-стейк</span><span class="mi-dots"></span><span class="mi-price">900 ₽</span></div><p class="mi-desc">Мраморная говядина на гриле</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Дорадо на гриле</span><span class="mi-dots"></span><span class="mi-price">950 ₽</span></div></li>
+        </ul>
+      </div>
+
+      <div class="mgroup">
+        <h3>На компанию</h3>
+        <ul class="mlist">
+          <li class="mi"><div class="mi-top"><span class="mi-name">Пивная тарелка</span><span class="mi-dots"></span><span class="mi-price">1200 ₽</span></div><p class="mi-desc">Сырные палочки, кольца кальмара, острые гренки, куриное филе в кляре, картофель фри, соус</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Мясной пир на гриле</span><span class="mi-dots"></span><span class="mi-price">3500 ₽</span></div><p class="mi-desc">Рёбрышки, крылышки, колбаски, шашлык свиной и куриный, картофель на углях, фри-гриль</p></li>
+        </ul>
+      </div>
+
+      <div class="mgroup">
+        <h3>Пицца</h3>
+        <ul class="mlist">
+          <li class="mi"><div class="mi-top"><span class="mi-name">Пепперони</span><span class="mi-dots"></span><span class="mi-price">900 ₽</span></div><p class="mi-desc">Томатный соус, моцарелла, пепперони</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Болоньезе</span><span class="mi-dots"></span><span class="mi-price">950 ₽</span></div><p class="mi-desc">Соус, моцарелла, мясной фарш</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Чикен барбекю</span><span class="mi-dots"></span><span class="mi-price">950 ₽</span></div><p class="mi-desc">Томатный соус, моцарелла, куриное филе, шампиньоны, соус барбекю</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Охотничья</span><span class="mi-dots"></span><span class="mi-price">950 ₽</span></div><p class="mi-desc">Томатный соус, моцарелла, охотничьи колбаски, ветчина, куриное филе, бекон</p></li>
+        </ul>
+      </div>
+
+      <div class="mgroup">
+        <h3>Паста</h3>
+        <ul class="mlist">
+          <li class="mi"><div class="mi-top"><span class="mi-name">Браджиолле</span><span class="mi-dots"></span><span class="mi-price">600 ₽</span></div><p class="mi-desc">Спагетти, копчёный цыплёнок, шпинат, зелёный горошек</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Карбонара</span><span class="mi-dots"></span><span class="mi-price">650 ₽</span></div><p class="mi-desc">Спагетти, бекон, сливки, чесночное масло, пармезан</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">С морепродуктами</span><span class="mi-dots"></span><span class="mi-price">700 ₽</span></div><p class="mi-desc">Креветки, кальмары, мидии, соус песто</p></li>
+        </ul>
+      </div>
+
+      <div class="mgroup">
+        <h3>По-азиатски</h3>
+        <ul class="mlist">
+          <li class="mi"><div class="mi-top"><span class="mi-name">Том-ям</span><span class="mi-dots"></span><span class="mi-price">650 ₽</span></div><p class="mi-desc">Креветки, кальмар, грибы, рис</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Поке с тунцом</span><span class="mi-dots"></span><span class="mi-price">650 ₽</span></div><p class="mi-desc">Рис, тунец, овощи</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Лапша удон</span><span class="mi-dots"></span><span class="mi-price">600 ₽</span></div><p class="mi-desc">С курицей и овощами в соусе терияки</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Азиатский салат с курицей</span><span class="mi-dots"></span><span class="mi-price">550 ₽</span></div><p class="mi-desc">Хрустящий лист салата, филе курицы, морковь, капуста, огурец, ореховый соус</p></li>
+        </ul>
+      </div>
+
+      <div class="mgroup">
+        <h3>Гарниры и соусы</h3>
+        <ul class="mlist">
+          <li class="mi"><div class="mi-top"><span class="mi-name">Картофель по-деревенски</span><span class="mi-dots"></span><span class="mi-price">200 ₽</span></div></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Картофель фри</span><span class="mi-dots"></span><span class="mi-price">250 ₽</span></div></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Грибы на гриле</span><span class="mi-dots"></span><span class="mi-price">300 ₽</span></div></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Овощи на гриле</span><span class="mi-dots"></span><span class="mi-price">500 ₽</span></div></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Хлебная корзина</span><span class="mi-dots"></span><span class="mi-price">150 ₽</span></div></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Соусы</span><span class="mi-dots"></span><span class="mi-price">70 ₽</span></div><p class="mi-desc">Тар-тар, «Джек Дэниелс», сладкий чили</p></li>
+        </ul>
+      </div>
+
+      <div class="mgroup">
+        <h3>Десерты</h3>
+        <ul class="mlist">
+          <li class="mi"><div class="mi-top"><span class="mi-name">Штрудель яблочный</span><span class="mi-dots"></span><span class="mi-price">450 ₽</span></div><p class="mi-desc">С шариком мороженого</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Чизкейк</span><span class="mi-dots"></span><span class="mi-price">450 ₽</span></div></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Медовик</span><span class="mi-dots"></span><span class="mi-price">400 ₽</span></div></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Ассорти мороженого</span><span class="mi-dots"></span><span class="mi-price">350 ₽</span></div></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ---------- бар ---------- -->
+    <div class="menu-side rv" data-side="bar" hidden>
+      <div class="mgroup">
+        <h3>Коктейли</h3>
+        <ul class="mlist">
+          <li class="mi"><div class="mi-top"><span class="mi-name">Манго-маракуйя</span><span class="mi-dots"></span><span class="mi-price">350 ₽</span></div><p class="mi-desc">Сок, лимонад, сахарный сироп, пюре манго и маракуйи · 280 мл</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Доктор Пеппер</span><span class="mi-dots"></span><span class="mi-price">350 ₽</span></div><p class="mi-desc">Сок, кола, сироп, лёд · 350 мл</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Мохито</span><span class="mi-dots"></span><span class="mi-price">300 ₽</span></div><p class="mi-desc">Лайм, мята, кордиал, содовая · 350 мл</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Найтфол</span><span class="mi-dots"></span><span class="mi-price">300 ₽</span></div><p class="mi-desc">Сок, молочный сироп, сок лимона · 270 мл</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Киви-апельсин</span><span class="mi-dots"></span><span class="mi-price">300 ₽</span></div><p class="mi-desc">Сироп, сок, лимон, лёд · 300 мл</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Балгам</span><span class="mi-dots"></span><span class="mi-price">300 ₽</span></div><p class="mi-desc">Сироп, сок, лимонад, содовая · 300 мл</p></li>
+        </ul>
+      </div>
+
+      <div class="mgroup">
+        <h3>Лимонады</h3>
+        <ul class="mlist">
+          <li class="mi"><div class="mi-top"><span class="mi-name">Манго-маракуйя</span><span class="mi-dots"></span><span class="mi-price">500 ₽</span></div><p class="mi-desc">1000 мл</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Малина-маракуйя</span><span class="mi-dots"></span><span class="mi-price">500 ₽</span></div><p class="mi-desc">1000 мл</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Тёмный чех</span><span class="mi-dots"></span><span class="mi-price">420 ₽</span></div><p class="mi-desc">Минеральная вода, сироп, лёд · 500 мл</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Ловен</span><span class="mi-dots"></span><span class="mi-price">420 ₽</span></div><p class="mi-desc">Вода с лимоном, лёд · 500 мл</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Баден-Баден</span><span class="mi-dots"></span><span class="mi-price">350 ₽</span></div><p class="mi-desc">Солод, сироп, лёд · 500 мл</p></li>
+        </ul>
+      </div>
+
+      <div class="mgroup">
+        <h3>Чай и кофе</h3>
+        <ul class="mlist">
+          <li class="mi"><div class="mi-top"><span class="mi-name">Чёрный таёжный</span><span class="mi-dots"></span><span class="mi-price">300 ₽</span></div><p class="mi-desc">450 мл</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Зелёный чародей</span><span class="mi-dots"></span><span class="mi-price">300 ₽</span></div><p class="mi-desc">450 мл</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Пуэр чёрный</span><span class="mi-dots"></span><span class="mi-price">300 ₽</span></div><p class="mi-desc">450 мл</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Молочный улун</span><span class="mi-dots"></span><span class="mi-price">300 ₽</span></div><p class="mi-desc">450 мл</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Капучино</span><span class="mi-dots"></span><span class="mi-price">350 ₽</span></div><p class="mi-desc">170 мл</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Американо</span><span class="mi-dots"></span><span class="mi-price">300 ₽</span></div><p class="mi-desc">150 мл</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Эспрессо</span><span class="mi-dots"></span><span class="mi-price">300 ₽</span></div><p class="mi-desc">50 мл</p></li>
+        </ul>
+      </div>
+
+      <div class="mgroup">
+        <h3>Напитки и вода</h3>
+        <ul class="mlist">
+          <li class="mi"><div class="mi-top"><span class="mi-name">Кола, спрайт</span><span class="mi-dots"></span><span class="mi-price">350 ₽</span></div><p class="mi-desc">500 мл</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Кола, спрайт, тоник на розлив</span><span class="mi-dots"></span><span class="mi-price">500 ₽</span></div><p class="mi-desc">Со льдом · 1000 мл</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Тоник</span><span class="mi-dots"></span><span class="mi-price">300 ₽</span></div><p class="mi-desc">330 мл</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Сок</span><span class="mi-dots"></span><span class="mi-price">150 / 500 ₽</span></div><p class="mi-desc">250 мл / 1000 мл</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Вода</span><span class="mi-dots"></span><span class="mi-price">250 ₽</span></div><p class="mi-desc">С газом и без · 500 мл</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Вода на розлив</span><span class="mi-dots"></span><span class="mi-price">350 ₽</span></div><p class="mi-desc">С газом и без, со льдом · 1000 мл</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Рычал-Су</span><span class="mi-dots"></span><span class="mi-price">350 ₽</span></div><p class="mi-desc">Минеральная · 500 мл</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Вулкан Original</span><span class="mi-dots"></span><span class="mi-price">250 ₽</span></div><p class="mi-desc">Энергетик · 250 мл</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Вулкан без сахара</span><span class="mi-dots"></span><span class="mi-price">300 ₽</span></div><p class="mi-desc">Энергетик · 450 мл</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Адреналин Раш</span><span class="mi-dots"></span><span class="mi-price">300 ₽</span></div><p class="mi-desc">Энергетик · 250 мл</p></li>
+        </ul>
+      </div>
+
+      <div class="mgroup">
+        <h3>Безалкогольное пиво</h3>
+        <ul class="mlist">
+          <li class="mi"><div class="mi-top"><span class="mi-name">Крушовице</span><span class="mi-dots"></span><span class="mi-price">300 ₽</span></div><p class="mi-desc">0,0% · 0,33 л</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Балтика пшеничное</span><span class="mi-dots"></span><span class="mi-price">300 ₽</span></div><p class="mi-desc">0,0% · 0,45 л</p></li>
+        </ul>
+      </div>
+
+      <div class="age-gate">
+        <span class="age">18+</span>
+        <p>Ниже — карта алкогольных напитков. Раздел предназначен для лиц старше 18 лет и носит справочный характер. Чрезмерное употребление алкоголя вредит вашему здоровью.</p>
+      </div>
+
+      <div class="mgroup">
+        <h3>Пиво</h3>
+        <ul class="mlist">
+          <li class="mi"><div class="mi-top"><span class="mi-name">Баден светлый</span><span class="mi-dots"></span><span class="mi-price">350 ₽</span></div><p class="mi-desc">4,3% · 0,5 л</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Крушовице тёмный лагер</span><span class="mi-dots"></span><span class="mi-price">420 ₽</span></div><p class="mi-desc">4,1% · 0,5 л</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Левен Браун</span><span class="mi-dots"></span><span class="mi-price">420 ₽</span></div><p class="mi-desc">5,2% · 0,5 л</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Блэк Шип</span><span class="mi-dots"></span><span class="mi-price">440 ₽</span></div><p class="mi-desc">Тёмный стаут · 4,0% · 0,5 л</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Шпатен</span><span class="mi-dots"></span><span class="mi-price">440 ₽</span></div><p class="mi-desc">5,2% · 0,5 л</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Хугарден</span><span class="mi-dots"></span><span class="mi-price">440 ₽</span></div><p class="mi-desc">Нефильтрованное · 4,9% · 0,5 л</p></li>
+        </ul>
+      </div>
+
+      <div class="mgroup">
+        <h3>Вино</h3>
+        <ul class="mlist">
+          <li class="mi"><div class="mi-top"><span class="mi-name">Каберне</span><span class="mi-dots"></span><span class="mi-price">1400 ₽</span></div><p class="mi-desc">Красное, Россия · 700 мл</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Шардоне</span><span class="mi-dots"></span><span class="mi-price">1400 ₽</span></div><p class="mi-desc">Белое, Россия · 700 мл</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Саперави</span><span class="mi-dots"></span><span class="mi-price">1800 ₽</span></div><p class="mi-desc">Красное сухое, Грузия · 700 мл</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Алазанская долина</span><span class="mi-dots"></span><span class="mi-price">1800 ₽</span></div><p class="mi-desc">Красное или белое, Грузия · 700 мл</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Цинандали</span><span class="mi-dots"></span><span class="mi-price">1800 ₽</span></div><p class="mi-desc">Белое сухое, Грузия · 700 мл</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Шевалье дю Валь</span><span class="mi-dots"></span><span class="mi-price">2100 ₽</span></div><p class="mi-desc">Красное или белое, Франция · 700 мл</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Пиросмани Палавани</span><span class="mi-dots"></span><span class="mi-price">2100 ₽</span></div><p class="mi-desc">Розовое полусухое, Грузия · 750 мл</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Кьянти</span><span class="mi-dots"></span><span class="mi-price">2500 ₽</span></div><p class="mi-desc">Красное сухое, Италия · 700 мл</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Пино Гриджио</span><span class="mi-dots"></span><span class="mi-price">2500 ₽</span></div><p class="mi-desc">Белое сухое, Италия · 700 мл</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Сантьяго «1541»</span><span class="mi-dots"></span><span class="mi-price">2500 ₽</span></div><p class="mi-desc">Красное или белое, Чили · 700 мл</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Домашнее по бокалам</span><span class="mi-dots"></span><span class="mi-price">170 / 1100 ₽</span></div><p class="mi-desc">Красное или белое · 150 мл / 1000 мл</p></li>
+        </ul>
+      </div>
+
+      <div class="mgroup">
+        <h3>Игристое, вермут, сидр</h3>
+        <ul class="mlist">
+          <li class="mi"><div class="mi-top"><span class="mi-name">Просекко</span><span class="mi-dots"></span><span class="mi-price">3200 ₽</span></div><p class="mi-desc">Брют, Италия · 750 мл</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Асти</span><span class="mi-dots"></span><span class="mi-price">3200 ₽</span></div><p class="mi-desc">Сладкое, Италия · 750 мл</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Ламбруско</span><span class="mi-dots"></span><span class="mi-price">2200 ₽</span></div><p class="mi-desc">Белое или красное, Италия · 750 мл</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Российское игристое</span><span class="mi-dots"></span><span class="mi-price">1200 ₽</span></div><p class="mi-desc">Полусладкое белое · 750 мл</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Лаветти</span><span class="mi-dots"></span><span class="mi-price">990 ₽</span></div><p class="mi-desc">Классико или крим кьянти · 750 мл</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Вермут Бьянко, Розе, Экстра драй, Фиеро</span><span class="mi-dots"></span><span class="mi-price">450 / 4500 ₽</span></div><p class="mi-desc">100 мл / 1000 мл</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Сидр Санто Стефано</span><span class="mi-dots"></span><span class="mi-price">1100 ₽</span></div><p class="mi-desc">5,5% · 750 мл</p></li>
+        </ul>
+      </div>
+
+      <div class="mgroup">
+        <h3>Виски</h3>
+        <ul class="mlist">
+          <li class="mi"><div class="mi-top"><span class="mi-name">Шотландский</span><span class="mi-dots"></span><span class="mi-price">260 / 650 ₽</span></div><p class="mi-desc">40 мл / 100 мл</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Джонни Уокер Ред Лейбл</span><span class="mi-dots"></span><span class="mi-price">460 / 1150 ₽</span></div><p class="mi-desc">40 мл / 100 мл</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Джонни Уокер Блэк Лейбл</span><span class="mi-dots"></span><span class="mi-price">500 / 1100 ₽</span></div><p class="mi-desc">40 мл / 100 мл</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Джек Дэниелс</span><span class="mi-dots"></span><span class="mi-price">460 / 1150 ₽</span></div><p class="mi-desc">40 мл / 100 мл</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Джемесон</span><span class="mi-dots"></span><span class="mi-price">500 / 1250 ₽</span></div><p class="mi-desc">40 мл / 100 мл</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Баллантайнс</span><span class="mi-dots"></span><span class="mi-price">450 / 950 ₽</span></div><p class="mi-desc">40 мл / 100 мл</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Джим Бим</span><span class="mi-dots"></span><span class="mi-price">340 / 850 ₽</span></div><p class="mi-desc">40 мл / 100 мл</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Уайт Хорс</span><span class="mi-dots"></span><span class="mi-price">330 / 750 ₽</span></div><p class="mi-desc">40 мл / 100 мл</p></li>
+        </ul>
+      </div>
+
+      <div class="mgroup">
+        <h3>Крепкие напитки</h3>
+        <ul class="mlist">
+          <li class="mi"><div class="mi-top"><span class="mi-name">Водка Граф Ледофф</span><span class="mi-dots"></span><span class="mi-price">170 / 400 ₽</span></div><p class="mi-desc">40 мл / 100 мл</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Водка Русский стандарт</span><span class="mi-dots"></span><span class="mi-price">200 / 500 ₽</span></div><p class="mi-desc">40 мл / 100 мл</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Водка Хаски</span><span class="mi-dots"></span><span class="mi-price">220 / 430 ₽</span></div><p class="mi-desc">40 мл / 100 мл</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Водка Белуга</span><span class="mi-dots"></span><span class="mi-price">350 / 700 ₽</span></div><p class="mi-desc">40 мл / 100 мл</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Коньяк российский</span><span class="mi-dots"></span><span class="mi-price">200 / 500 ₽</span></div><p class="mi-desc">40 мл / 100 мл</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Коньяк армянский 3 звезды</span><span class="mi-dots"></span><span class="mi-price">220 / 550 ₽</span></div><p class="mi-desc">40 мл / 100 мл</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Коньяк армянский 5 звёзд</span><span class="mi-dots"></span><span class="mi-price">240 / 600 ₽</span></div><p class="mi-desc">40 мл / 100 мл</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Ром Супериор</span><span class="mi-dots"></span><span class="mi-price">300 / 700 ₽</span></div><p class="mi-desc">40 мл / 100 мл</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Ром Голд</span><span class="mi-dots"></span><span class="mi-price">350 / 850 ₽</span></div><p class="mi-desc">40 мл / 100 мл</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Ром Блэк</span><span class="mi-dots"></span><span class="mi-price">350 / 850 ₽</span></div><p class="mi-desc">40 мл / 100 мл</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Текила серебряная</span><span class="mi-dots"></span><span class="mi-price">380 / 850 ₽</span></div><p class="mi-desc">40 мл / 100 мл</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Текила золотая</span><span class="mi-dots"></span><span class="mi-price">450 / 950 ₽</span></div><p class="mi-desc">40 мл / 100 мл</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Текила Ольмека</span><span class="mi-dots"></span><span class="mi-price">550 / 1150 ₽</span></div><p class="mi-desc">40 мл / 100 мл</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Джин Барристер</span><span class="mi-dots"></span><span class="mi-price">250 / 500 ₽</span></div><p class="mi-desc">40 мл / 100 мл</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Джин Гордонс</span><span class="mi-dots"></span><span class="mi-price">450 / 800 ₽</span></div><p class="mi-desc">40 мл / 100 мл</p></li>
+        </ul>
+      </div>
+
+      <div class="mgroup">
+        <h3>Ликёры и настойки</h3>
+        <ul class="mlist">
+          <li class="mi"><div class="mi-top"><span class="mi-name">Настойки</span><span class="mi-dots"></span><span class="mi-price">170 / 300 ₽</span></div><p class="mi-desc">Вишнёвая, смородина, апельсин-облепиха · 40 мл / 100 мл</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Ликёры</span><span class="mi-dots"></span><span class="mi-price">350 ₽</span></div><p class="mi-desc">Сливочный, блю кюрасао, мидори, трипл сек, фаер · 40 мл</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Апероль</span><span class="mi-dots"></span><span class="mi-price">350 ₽</span></div><p class="mi-desc">40 мл</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Самбука</span><span class="mi-dots"></span><span class="mi-price">300 ₽</span></div><p class="mi-desc">40 мл</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Абсент</span><span class="mi-dots"></span><span class="mi-price">400 ₽</span></div><p class="mi-desc">40 мл</p></li>
+          <li class="mi"><div class="mi-top"><span class="mi-name">Егермейстер</span><span class="mi-dots"></span><span class="mi-price">500 ₽</span></div><p class="mi-desc">40 мл</p></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="shot shot-wide rv" style="margin-top:34px;aspect-ratio:3/1">
       <img src="images/bar.jpg" loading="lazy" width="1400" height="933"
            alt="Коктейли на барной стойке ирландского паба Молли">
     </div>
-    <!-- ЗАМЕНИТЬ: когда придёт меню с ценами — раскрываем позиции и кладём PDF -->
-    <div class="menu-note rv">
-      <p>Полное меню с ценами мы обновляем — уточнить блюда, состав и стоимость можно по телефону, наши администраторы подскажут.</p>
-      <a href="tel:+73519453737" class="btn btn-gold">Спросить по телефону</a>
+
+    <div class="menu-foot rv">
+      <p>Цены указаны в рублях. Меню обновляется — актуальный состав блюд и наличие позиций уточняйте у администратора.</p>
+      <a href="tel:+73519453737" class="btn btn-gold">Уточнить по телефону</a>
     </div>
+
     <div class="need">
-      <span class="tag">Нужно от вас · без этого не собрать</span>
-      <b>Меню с актуальными ценами</b>
-      <p>Сейчас здесь только названия разделов. Вместо них должны раскрываться блюда: название, состав, вес, цена. Плюс отдельно карта бара и список сортов пива.</p>
-      <p>Подойдёт в любом виде — файл из программы учёта, PDF, вордовский документ, хоть фотографии страниц печатного меню. Разберу и оформлю сам.</p>
-      <p>И то же самое по «Гриль Хаусу» и «Дымку» — у каждого заведения будет своё меню.</p>
-      <span class="spec">Это первое, что нужно: без меню раздел собрать невозможно</span>
+      <span class="tag">Нужно от вас</span>
+      <b>Меню «Гриль Хауса» и «Дымка»</b>
+      <p>Меню паба и карта бара получены и разложены по разделам — этот блок готов. Осталось то же самое по двум другим заведениям: у каждого будет своя страница со своим меню.</p>
+      <p>И пара вопросов по этому меню: есть ли <b>бизнес-ланчи</b> и <b>детское меню</b>? Их в списке нет, а спрашивают о них часто.</p>
     </div>
   </div>
 </section>
@@ -758,24 +1081,45 @@ body:not(.hints) .need,body:not(.hints) .draft-bar{display:none}
         <div class="eyebrow">Банкеты и корпоративы</div>
         <h2>Отмечаем так,<br>чтобы вспоминали год</h2>
         <p class="lead">Дни рождения, корпоративы, выпускные и встречи выпускников. Берём на себя всё: меню, музыку, ведущего и настроение зала.</p>
+
+        <div class="banq-price">
+          <div>
+            <span class="from">Банкетное меню</span>
+            <b>2500 ₽</b>
+            <span class="per">с человека</span>
+          </div>
+          <p>Имениннику и компании от 10 человек — <b>скидка 10%</b>, это 2250 ₽ с человека.</p>
+        </div>
+
         <ul class="blist">
-          <li><b>Банкетное меню</b> — согласуем под ваш формат и бюджет</li>
-          <li><b>Ведущий и диджей</b> — программа, конкурсы, музыка весь вечер</li>
-          <li><b>Живая музыка</b> — артисты на нашей сцене</li>
+          <li><b>Закуски на компанию</b> — мясная тарелка, рыбная закуска, сельдь с бейби-картофелем, ассорти сыров, овощное плато, маслины</li>
+          <li><b>Закуски на персону</b> — круассан со слабосолёным эсколаром, мясной рулетик, тарталетка, цукини-роллы</li>
+          <li><b>Салат на выбор</b> — цезарь, охотничий, с ростбифом, с уткой или греческий</li>
+          <li><b>Горячее на выбор</b> — стейк из свиной шеи, шашлык, жаркое на сковороде, утиная грудка или индейка на гриле</li>
+          <li><b>Ведущий, диджей и живая музыка</b> — программа и настроение весь вечер</li>
           <li><b>VIP-комнаты и зал караоке</b> — для своей компании, отдельно от общего зала</li>
-          <li><b>Зал целиком или часть</b> — от компании друзей до большого корпоратива</li>
-          <li><b>Стоимость</b> — рассчитываем индивидуально, звоните</li>
         </ul>
+
+        <div class="banq-perks">
+          <span class="ttl">При заказе банкета</span>
+          <ul>
+            <li><b>50%</b> скидка на вход в караоке и на танцпол</li>
+            <li><b>50%</b> скидка на горячие напитки</li>
+            <li><b>150 ₽</b> за литр безалкогольных напитков на розлив</li>
+            <li>Можно принести <b>свой крепкий алкоголь</b></li>
+            <li>Можно принести <b>свой торт и фрукты</b></li>
+          </ul>
+        </div>
+
         <div style="margin-top:32px;display:flex;gap:14px;flex-wrap:wrap">
           <a href="tel:+73519453737" class="btn btn-gold">Обсудить банкет</a>
-          <a href="#book" class="btn btn-ghost">Забронировать</a>
+          <a href="files/banketnoe-menyu-molly.pdf" target="_blank" rel="noopener" class="btn btn-ghost">Банкетное меню, PDF</a>
         </div>
         <div class="need">
-          <span class="tag">Нужно подтвердить · и нужно фото</span>
-          <b>Условия, цены и накрытый стол</b>
-          <p>Сейчас в этом блоке фото с ведущим — банкетного стола среди присланных снимков не нашлось. Нужны 2–3 кадра накрытого стола: закуски, сервировка, зал под мероприятие. Это то, что человек хочет увидеть, прежде чем заказать корпоратив.</p>
-          <p>Цены я намеренно не проставил. В постах ВКонтакте нашёл 3000–3500 ₽ с человека и 4500 ₽ за новогоднюю ночь, но это были <b>новогодние</b> банкеты. Ставить их как обычные нельзя — гость приедет с этой цифрой и будет неприятный разговор.</p>
-          <p>Напишите реальную вилку на сегодня, минимальный заказ и вместимость зала — поставлю.</p>
+          <span class="tag">Нужно фото · и один вопрос</span>
+          <b>Накрытый банкетный стол</b>
+          <p>Цены и состав меню взял из вашего банкетного PDF, блок готов. Но фотографии накрытого стола среди присланных нет — сейчас здесь кадр с ведущим. Нужны 2–3 снимка: сервировка, закуски, зал под мероприятие.</p>
+          <p>И вопрос: <b>сколько человек вмещает зал</b> и есть ли минимальная сумма заказа на банкет? Это спрашивают первым делом.</p>
         </div>
       </div>
     </div>
@@ -796,8 +1140,8 @@ body:not(.hints) .need,body:not(.hints) .draft-bar{display:none}
         <p>Хочется именно своего любимого напитка? Закажите по меню от 1000 ₽ на человека — и приносите с собой. Условия уточняйте у администратора.</p>
       </article>
       <article class="pcard rv">
-        <h3>Именинникам</h3>
-        <p>Отмечаете день рождения у нас — готовим подарок от паба и поздравляем всем залом. Предупредите заранее при бронировании.</p>
+        <h3>Именинникам — 10%</h3>
+        <p>Скидка 10% на меню имениннику и компаниям от 10 человек. Предупредите заранее при бронировании, чтобы всё подготовили.</p>
       </article>
     </div>
     <div class="need">
@@ -866,6 +1210,7 @@ body:not(.hints) .need,body:not(.hints) .draft-bar{display:none}
         <div class="kind">Ресторан</div>
         <h3>Гриль Хаус</h3>
         <p>Мясо на открытом огне: стейки, люля-кебаб и овощи с гриля. Место для всей семьи.</p>
+        <a href="tel:+73519471177" class="place-tel">47-11-77</a>
         <div class="soon">Страница заведения готовится</div>
       </article>
       <article class="place place-lounge rv">
@@ -1037,6 +1382,24 @@ body:not(.hints) .need,body:not(.hints) .draft-bar{display:none}
     if(e.target.tagName==='A'){nav.classList.remove('on');burger.classList.remove('on');burger.setAttribute('aria-expanded','false');}
   });
 
+  /* переключатель «Кухня / Бар и напитки» */
+  var menuNav=document.querySelector('.menu-nav');
+  if(menuNav){
+    menuNav.addEventListener('click',function(e){
+      var btn=e.target.closest('button');
+      if(!btn)return;
+      var side=btn.dataset.side;
+      menuNav.querySelectorAll('button').forEach(function(b){
+        var on=b===btn;
+        b.classList.toggle('on',on);
+        b.setAttribute('aria-selected',on?'true':'false');
+      });
+      document.querySelectorAll('.menu-side').forEach(function(s){
+        s.hidden = s.dataset.side!==side;
+      });
+    });
+  }
+
   /* ---------- режим черновика ----------
      Подсказки о недостающих материалах. Включены по умолчанию,
      выбор запоминается. Когда сайт будет готов — удалить блок
@@ -1098,14 +1461,15 @@ body:not(.hints) .need,body:not(.hints) .draft-bar{display:none}
       'Если не найдёте вход — звоните <a href="tel:'+TEL+'">45-37-37</a>, подскажем.',
       next:['hours','book']},
     menu:{q:'Меню и кухня',a:
-      'У нас три кухни: <b>ирландская</b>, европейская и японская. Плюс закуски к пенному и бар с авторскими коктейлями.<br><br>'+
-      'Пива — <b>более 10 сортов</b> со всего мира, от классики до крафта.<br><br>'+
-      'Точный состав блюд и цены подскажут по телефону — меню обновляется: <a href="tel:'+TEL+'">45-37-37</a>.',
-      next:['alcohol','book','banquet']},
+      'Гриль, паста, пицца и азиатская кухня — от закусок к пенному до рамп-стейка и дорадо.'+
+      '<div class="rows"><i>· Закуски</i> — от 450 ₽<i>· Салаты</i> — от 580 ₽<i>· Горячее и гриль</i> — от 600 ₽'+
+      '<i>· Пивная тарелка на компанию</i> — 1200 ₽<i>· Мясной пир на гриле</i> — 3500 ₽</div>'+
+      'Полное меню и карта бара — <a href="#menu">в разделе «Меню»</a> на этой странице.',
+      next:['alcohol','banquet','book']},
     banquet:{q:'Банкет и день рождения',a:
-      'Проводим дни рождения, корпоративы, выпускные и встречи выпускников.<br><br>'+
-      'Берём на себя меню, ведущего, диджея и живую музыку. Можно забронировать часть зала или весь целиком.<br><br>'+
-      'Стоимость считаем под ваш формат — позвоните, всё рассчитаем: <a href="tel:'+TEL+'">45-37-37</a>.',
+      'Банкетное меню — <b>2500 ₽ с человека</b>. Имениннику и компании от 10 человек скидка 10%, это 2250 ₽.<br><br>'+
+      'В меню входят закуски на компанию и на персону, салат и горячее на выбор. При заказе банкета — 50% на вход в караоке и на танцпол, можно принести свой крепкий алкоголь и свой торт.<br><br>'+
+      'Всё обсудим по телефону: <a href="tel:'+TEL+'">45-37-37</a>.',
       next:['birthday','book','hours']},
     program:{q:'Что у вас происходит',a:
       '<b>Каждые выходные</b> у нас выступают музыканты и играет диджей. Вечеринки идут до 05:00: DJ Skimmi, Zarya и MC Rahmat, танцпол и караоке.<br><br>'+
@@ -1117,12 +1481,13 @@ body:not(.hints) .need,body:not(.hints) .draft-bar{display:none}
       'Условия лучше уточнить у администратора при бронировании: <a href="tel:'+TEL+'">45-37-37</a>.',
       next:['book','menu']},
     birthday:{q:'Я именинник',a:
-      'Тогда вам к нам! Отмечаете день рождения в Молли — готовим подарок от паба и поздравляем всем залом.<br><br>'+
+      'Тогда вам к нам — <b>скидка 10% на меню</b> имениннику и компаниям от 10 человек.<br><br>'+
+      'Если хотите отметить с размахом, есть банкетное меню за 2500 ₽ с человека — с той же скидкой выйдет 2250 ₽.<br><br>'+
       'Предупредите заранее при бронировании, чтобы всё успели подготовить.',
       next:['banquet','book']},
     places:{q:'Другие заведения',a:
       'Кроме паба у нас есть ещё два места:'+
-      '<div class="rows"><i>· Гриль Хаус</i> — мясо на открытом огне, для всей семьи'+
+      '<div class="rows"><i>· Гриль Хаус</i> — мясо на открытом огне, для всей семьи. Телефон <a href="tel:+73519471177">47-11-77</a>'+
       '<i>· Дымок</i> — лаундж-бар для спокойных вечеров</div>'+
       'Страницы этих заведений скоро появятся на сайте.',
       next:['book','hours']}
