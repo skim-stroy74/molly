@@ -652,3 +652,14 @@ body:not(.hints) .need,body:not(.hints) .draft-bar{display:none}
   text-decoration:none;transition:background .2s,color .2s;
 }
 .req-btn:hover{background:var(--brass);color:#14100a;border-color:var(--brass)}
+
+/* коллаж в блоке банкетов: широкий кадр, два квадратных, снова широкий.
+   Ровная сетка 2x2 рядом с длинной колонкой текста смотрелась пустой. */
+.banq-gal{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.banq-gal .shot{aspect-ratio:1}
+.banq-gal .shot:first-child,.banq-gal .shot:last-child{grid-column:1/-1;aspect-ratio:16/10}
+.banq-gal .shot img{transition:transform .5s}
+.banq-gal .shot:hover img{transform:scale(1.05)}
+@media(max-width:520px){
+  .banq-gal{gap:8px}
+}
