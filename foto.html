@@ -130,6 +130,18 @@
   });
 
 
+  /* появление блоков; без страховки заголовок и альбом
+     остаются невидимыми — у них класс .rv, который прячет их до .in */
+  var items=document.querySelectorAll('.rv');
+  function showAll(){for(var i=0;i<items.length;i++){items[i].classList.add('in')}}
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}});
+    },{threshold:.1,rootMargin:'0px 0px -40px 0px'});
+    [].forEach.call(items,function(el){io.observe(el)});
+    setTimeout(function(){if(!document.querySelector('.rv.in'))showAll()},2200);
+  }else{showAll()}
+
   /* ---------- альбомы ---------- */
   var albumsBox=document.getElementById('albums'),
       view=document.getElementById('albumView'),

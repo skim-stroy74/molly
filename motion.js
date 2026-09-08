@@ -39,7 +39,7 @@
         if (idx > 0) el.style.transitionDelay = Math.min(idx, 8) * 70 + 'ms';
         el.classList.add('in');
         io.unobserve(el);
-        if (el.hasAttribute('data-count')) runCount(el);
+        if (el.hasAttribute('data-countup')) runCount(el);
       });
     }, { threshold: .12, rootMargin: '0px 0px -40px 0px' });
 
@@ -61,7 +61,7 @@
       if (!m) return;
       var target = parseInt(m[1].replace(/\s/g, ''), 10);
       if (!target || target < 5) return;
-      b.setAttribute('data-count', String(target));
+      b.setAttribute('data-countup', String(target));
       b.setAttribute('data-suffix', m[2] || '');
       if (!reduce) b.textContent = '0' + (m[2] || '');
     });
@@ -72,9 +72,9 @@
   }
 
   function runCount(el){
-    if (reduce || el.dataset.done) return;
-    el.dataset.done = '1';
-    var target = +el.getAttribute('data-count');
+    if (reduce || el.dataset.countdone) return;
+    el.dataset.countdone = '1';
+    var target = +el.getAttribute('data-countup');
     var suffix = el.getAttribute('data-suffix') || '';
     var dur = 1100, t0 = null;
     function step(ts){
@@ -91,9 +91,9 @@
   prepCounters();
 
   function finishCount(el){
-    if (el.dataset.done) return;
-    el.dataset.done = '1';
-    el.textContent = fmt(+el.getAttribute('data-count')) + (el.getAttribute('data-suffix') || '');
+    if (el.dataset.countdone) return;
+    el.dataset.countdone = '1';
+    el.textContent = fmt(+el.getAttribute('data-countup')) + (el.getAttribute('data-suffix') || '');
   }
 
   /* счётчики внутри .facts наблюдаются вместе с карточками:
@@ -104,15 +104,15 @@
         if (e.isIntersecting) { runCount(e.target); cio.unobserve(e.target); }
       });
     }, { threshold: .5 });
-    [].forEach.call(document.querySelectorAll('[data-count]'), function(el){ cio.observe(el); });
+    [].forEach.call(document.querySelectorAll('[data-countup]'), function(el){ cio.observe(el); });
 
     /* страховка: цифра не имеет права остаться нулём,
        если наблюдатель почему-то не отработал */
     setTimeout(function(){
-      [].forEach.call(document.querySelectorAll('[data-count]'), finishCount);
+      [].forEach.call(document.querySelectorAll('[data-countup]'), finishCount);
     }, 4000);
   } else {
-    [].forEach.call(document.querySelectorAll('[data-count]'), finishCount);
+    [].forEach.call(document.querySelectorAll('[data-countup]'), finishCount);
   }
 
   /* --- 4. Шапка сжимается при прокрутке --- */

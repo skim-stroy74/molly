@@ -566,14 +566,14 @@ body:not(.hints) .need,body:not(.hints) .draft-bar{display:none}
   transition:transform .3s,border-color .3s;
 }
 .album:hover{transform:translateY(-5px);border-color:var(--line)}
-.album-pic{aspect-ratio:3/2;overflow:hidden;position:relative;background:#0e1a12}
+.album-pic{display:block;aspect-ratio:3/2;overflow:hidden;position:relative;background:#0e1a12}
 .album-pic img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s}
 .album:hover .album-pic img{transform:scale(1.04)}
 .album-count{
   position:absolute;right:12px;bottom:12px;background:rgba(10,18,9,.82);
   border:1px solid var(--line);border-radius:999px;padding:5px 13px;font-size:12.5px;color:var(--cream);
 }
-.album-txt{padding:18px 20px 22px}
+.album-txt{display:block;padding:18px 20px 22px}
 .album-txt .when{font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--amber);font-weight:700;margin-bottom:8px}
 .album-txt h3{font-size:20px;margin-bottom:6px}
 .album-txt p{font-size:14.5px;color:var(--muted)}
@@ -663,34 +663,44 @@ body:not(.hints) .need,body:not(.hints) .draft-bar{display:none}
 }
 
 /* ---------- концерты с билетами ---------- */
-.gigs{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.gigs{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
 .gig{
-  display:flex;align-items:center;gap:16px;padding:14px 18px;
-  background:var(--bg-2);border:1px solid var(--line-soft);border-radius:3px;
-  transition:border-color .25s,transform .25s,background .25s;
+  display:flex;flex-direction:column;
+  background:var(--bg-2);border:1px solid var(--line-soft);border-radius:3px;overflow:hidden;
+  transition:border-color .3s,transform .3s,box-shadow .3s;
 }
-.gig:hover{border-color:var(--brass);transform:translateY(-3px);background:var(--panel)}
-.gig-date{
-  flex:none;width:56px;text-align:center;border-right:1px solid var(--line-soft);padding-right:14px;
+.gig:hover{
+  border-color:var(--brass);transform:translateY(-5px);
+  box-shadow:0 18px 40px rgba(0,0,0,.45);
 }
-.gig-date b{display:block;font-family:var(--serif);font-size:26px;color:var(--brass-bright);line-height:1}
-.gig-date span{display:block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:3px}
-.gig-main{flex:1;min-width:0}
-.gig-name{display:block;font-family:var(--serif);font-size:19px;line-height:1.2;margin-bottom:4px}
-.gig-meta{display:block;font-size:13.5px;color:var(--muted)}
+/* афиши разного формата — вписываем целиком, ничего не обрезаем */
+.gig-pic{
+  aspect-ratio:3/4;background:#0b1610;display:block;overflow:hidden;position:relative;
+  border-bottom:1px solid var(--line-soft);
+}
+.gig-pic img{width:100%;height:100%;object-fit:contain;display:block;transition:transform .5s}
+.gig:hover .gig-pic img{transform:scale(1.03)}
+.gig-txt{padding:16px 18px 8px;flex:1}
+.gig-when{
+  display:block;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--amber);font-weight:700;margin-bottom:8px;
+}
+.gig-name{display:block;font-family:var(--serif);font-size:20px;line-height:1.2;margin-bottom:6px}
+.gig-price{display:block;font-size:14.5px;color:var(--muted);font-variant-numeric:tabular-nums}
 .gig-cta{
-  flex:none;font-size:13.5px;font-weight:600;color:var(--brass);
-  border:1px solid var(--line);border-radius:999px;padding:7px 15px;white-space:nowrap;
-  transition:background .25s,color .25s;
+  margin:0 18px 18px;text-align:center;font-size:14px;font-weight:600;color:var(--brass);
+  border:1px solid var(--line);border-radius:2px;padding:10px 15px;
+  transition:background .25s,color .25s,border-color .25s;
 }
 .gig:hover .gig-cta{background:var(--brass);color:#14100a;border-color:var(--brass)}
-@media(max-width:860px){.gigs{grid-template-columns:1fr}}
-@media(max-width:480px){
-  .gig{gap:12px;padding:12px 14px}
-  .gig-date{width:46px;padding-right:10px}
-  .gig-date b{font-size:22px}
-  .gig-name{font-size:17px}
-  .gig-cta{padding:6px 12px;font-size:12.5px}
+@media(max-width:1024px){.gigs{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){
+  .gigs{grid-template-columns:1fr 1fr;gap:12px}
+  .gig-txt{padding:12px 13px 6px}
+  .gig-name{font-size:16.5px}
+  .gig-when{font-size:10.5px;letter-spacing:.1em;margin-bottom:6px}
+  .gig-price{font-size:13px}
+  .gig-cta{margin:0 13px 13px;padding:9px 10px;font-size:13px}
 }
 
 /* ================= ДВИЖЕНИЕ ================= */
