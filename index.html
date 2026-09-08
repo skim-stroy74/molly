@@ -198,6 +198,46 @@
       </article>
     </div>
 
+    <div class="bill-head rv" style="margin-top:58px">
+      <h3>Концерты</h3>
+      <p>На нашу сцену приезжают гастролирующие артисты. Билеты — на Яндекс Афише, места лучше занимать заранее.</p>
+    </div>
+
+    <!-- data-until — день концерта. Прошедшие исчезают сами. -->
+    <div class="gigs rv" id="gigs">
+      <a class="gig" data-until="2026-09-10" href="https://afisha.yandex.ru/magnitogorsk/concert/sergey-zavyalov-16" target="_blank" rel="noopener">
+        <span class="gig-date"><b>10</b><span>сент</span></span>
+        <span class="gig-main"><span class="gig-name">Сергей Завьялов</span><span class="gig-meta">Четверг, 20:00 · от 2000 ₽</span></span>
+        <span class="gig-cta">Билеты</span>
+      </a>
+      <a class="gig" data-until="2026-10-08" href="https://afisha.yandex.ru/magnitogorsk/concert/eduard-khusnutdinov-2026" target="_blank" rel="noopener">
+        <span class="gig-date"><b>8</b><span>окт</span></span>
+        <span class="gig-main"><span class="gig-name">Эдуард Хуснутдинов</span><span class="gig-meta">Четверг, 20:00 · от 1000 ₽</span></span>
+        <span class="gig-cta">Билеты</span>
+      </a>
+      <a class="gig" data-until="2026-10-18" href="https://afisha.yandex.ru/magnitogorsk/concert/chiornyi-kofe-tour" target="_blank" rel="noopener">
+        <span class="gig-date"><b>18</b><span>окт</span></span>
+        <span class="gig-main"><span class="gig-name">Чёрный кофе</span><span class="gig-meta">Воскресенье, 19:00 · от 1500 ₽</span></span>
+        <span class="gig-cta">Билеты</span>
+      </a>
+      <a class="gig" data-until="2026-11-09" href="https://afisha.yandex.ru/magnitogorsk/concert/papin-olimpos-tour" target="_blank" rel="noopener">
+        <span class="gig-date"><b>9</b><span>ноя</span></span>
+        <span class="gig-main"><span class="gig-name">Папин Олимпос</span><span class="gig-meta">Понедельник, 19:00 · от 1800 ₽</span></span>
+        <span class="gig-cta">Билеты</span>
+      </a>
+      <a class="gig" data-until="2026-11-14" href="https://afisha.yandex.ru/magnitogorsk/concert/murakami-nevesta-khochet-12" target="_blank" rel="noopener">
+        <span class="gig-date"><b>14</b><span>ноя</span></span>
+        <span class="gig-main"><span class="gig-name">Мураками</span><span class="gig-meta">Суббота, 19:00 · от 1800 ₽</span></span>
+        <span class="gig-cta">Билеты</span>
+      </a>
+      <a class="gig" data-until="2027-02-13" href="https://afisha.yandex.ru/magnitogorsk/concert/kosta-lakosta-tour" target="_blank" rel="noopener">
+        <span class="gig-date"><b>13</b><span>фев</span></span>
+        <span class="gig-main"><span class="gig-name">Коста Лакоста</span><span class="gig-meta">Суббота, 19:00 · от 3000 ₽</span></span>
+        <span class="gig-cta">Билеты</span>
+      </a>
+    </div>
+    <p id="gigsEmpty" class="lead" hidden style="margin-top:20px">Ближайшие концерты объявим — следите за анонсами.</p>
+
     <div class="bill-foot rv">
       <p id="afishaEmpty" hidden>Программа на ближайшие даты готовится — следите за анонсами в нашем сообществе.</p>
       <a href="https://vk.com/molly174" target="_blank" rel="noopener" class="btn btn-ghost">Вся афиша во ВКонтакте</a>
@@ -460,8 +500,6 @@
           <li class="mi"><div class="mi-top"><span class="mi-name">Просекко</span><span class="mi-dots"></span><span class="mi-price">3200 ₽</span></div><p class="mi-desc">Брют, Италия · 750 мл</p></li>
           <li class="mi"><div class="mi-top"><span class="mi-name">Асти</span><span class="mi-dots"></span><span class="mi-price">3200 ₽</span></div><p class="mi-desc">Сладкое, Италия · 750 мл</p></li>
           <li class="mi"><div class="mi-top"><span class="mi-name">Ламбруско</span><span class="mi-dots"></span><span class="mi-price">2200 ₽</span></div><p class="mi-desc">Белое или красное, Италия · 750 мл</p></li>
-          <li class="mi"><div class="mi-top"><span class="mi-name">Российское игристое</span><span class="mi-dots"></span><span class="mi-price">1200 ₽</span></div><p class="mi-desc">Полусладкое белое · 750 мл</p></li>
-          <li class="mi"><div class="mi-top"><span class="mi-name">Лаветти</span><span class="mi-dots"></span><span class="mi-price">990 ₽</span></div><p class="mi-desc">Классико или крим кьянти · 750 мл</p></li>
           <li class="mi"><div class="mi-top"><span class="mi-name">Вермут Бьянко, Розе, Экстра драй, Фиеро</span><span class="mi-dots"></span><span class="mi-price">450 / 4500 ₽</span></div><p class="mi-desc">100 мл / 1000 мл</p></li>
           <li class="mi"><div class="mi-top"><span class="mi-name">Сидр Санто Стефано</span><span class="mi-dots"></span><span class="mi-price">1100 ₽</span></div><p class="mi-desc">5,5% · 750 мл</p></li>
         </ul>
@@ -838,24 +876,28 @@
     if(e.target.tagName==='A'){nav.classList.remove('on');burger.classList.remove('on');burger.setAttribute('aria-expanded','false');}
   });
 
-  /* афиша: прячем прошедшие даты, чтобы сайт не протухал сам собой */
+  /* афиша и концерты: прячем прошедшие даты,
+     чтобы сайт не протухал сам собой */
   (function(){
-    var box=document.getElementById('afisha');
-    if(!box)return;
     var today=new Date(); today.setHours(0,0,0,0);
-    var left=0;
-    [].forEach.call(box.querySelectorAll('.ev'),function(ev){
-      var d=ev.getAttribute('data-until');
-      if(!d)return left++;
-      var parts=d.split('-');
-      var end=new Date(+parts[0],+parts[1]-1,+parts[2]);
-      if(end<today){ev.remove()}else{left++}
-    });
-    if(!left){
-      box.hidden=true;
-      var msg=document.getElementById('afishaEmpty');
-      if(msg)msg.hidden=false;
+    function clean(boxId, itemSel, emptyId){
+      var box=document.getElementById(boxId);
+      if(!box)return;
+      var left=0;
+      [].forEach.call(box.querySelectorAll(itemSel),function(el){
+        var d=el.getAttribute('data-until');
+        if(!d){left++;return}
+        var p=d.split('-');
+        if(new Date(+p[0],+p[1]-1,+p[2])<today){el.remove()}else{left++}
+      });
+      if(!left){
+        box.hidden=true;
+        var msg=document.getElementById(emptyId);
+        if(msg)msg.hidden=false;
+      }
     }
+    clean('afisha','.ev','afishaEmpty');
+    clean('gigs','.gig','gigsEmpty');
   })();
 
   /* переключатель «Кухня / Бар и напитки» */
@@ -892,29 +934,10 @@
     applyHints(on);hintsStore(on?'on':'off');
   });
 
-  // появление блоков при скролле
-  var items=document.querySelectorAll('.rv');
-  function showAll(){for(var i=0;i<items.length;i++){items[i].classList.add('in')}}
-  if('IntersectionObserver' in window){
-    var io=new IntersectionObserver(function(entries){
-      entries.forEach(function(en,i){
-        if(en.isIntersecting){
-          var el=en.target;
-          setTimeout(function(){el.classList.add('in')},(i%3)*90);
-          io.unobserve(el);
-        }
-      });
-    },{threshold:.12,rootMargin:'0px 0px -60px 0px'});
-    items.forEach(function(el){io.observe(el)});
-    // страховка: если наблюдатель почему-то не отработал,
-    // через 2,5 с показываем всё — пустой страницы быть не должно
-    setTimeout(function(){if(!document.querySelector('.rv.in')){showAll()}},2500);
-  }else{
-    showAll();
-  }
 
 })();
 </script>
+<script src="motion.js" defer></script>
 <script src="assistant.js" defer></script>
 </body>
 </html>

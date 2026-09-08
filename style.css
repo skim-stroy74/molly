@@ -500,8 +500,6 @@ body:not(.hints) .need,body:not(.hints) .draft-bar{display:none}
 /* ---------- появление при скролле ----------
    Прячем блоки только если JS жив: без него страница
    должна остаться читаемой, а не пустой. */
-.js .rv{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease}
-.js .rv.in{opacity:1;transform:none}
 
 /* ---------- адаптив ---------- */
 @media(max-width:960px){
@@ -662,4 +660,84 @@ body:not(.hints) .need,body:not(.hints) .draft-bar{display:none}
 .banq-gal .shot:hover img{transform:scale(1.05)}
 @media(max-width:520px){
   .banq-gal{gap:8px}
+}
+
+/* ---------- концерты с билетами ---------- */
+.gigs{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.gig{
+  display:flex;align-items:center;gap:16px;padding:14px 18px;
+  background:var(--bg-2);border:1px solid var(--line-soft);border-radius:3px;
+  transition:border-color .25s,transform .25s,background .25s;
+}
+.gig:hover{border-color:var(--brass);transform:translateY(-3px);background:var(--panel)}
+.gig-date{
+  flex:none;width:56px;text-align:center;border-right:1px solid var(--line-soft);padding-right:14px;
+}
+.gig-date b{display:block;font-family:var(--serif);font-size:26px;color:var(--brass-bright);line-height:1}
+.gig-date span{display:block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:3px}
+.gig-main{flex:1;min-width:0}
+.gig-name{display:block;font-family:var(--serif);font-size:19px;line-height:1.2;margin-bottom:4px}
+.gig-meta{display:block;font-size:13.5px;color:var(--muted)}
+.gig-cta{
+  flex:none;font-size:13.5px;font-weight:600;color:var(--brass);
+  border:1px solid var(--line);border-radius:999px;padding:7px 15px;white-space:nowrap;
+  transition:background .25s,color .25s;
+}
+.gig:hover .gig-cta{background:var(--brass);color:#14100a;border-color:var(--brass)}
+@media(max-width:860px){.gigs{grid-template-columns:1fr}}
+@media(max-width:480px){
+  .gig{gap:12px;padding:12px 14px}
+  .gig-date{width:46px;padding-right:10px}
+  .gig-date b{font-size:22px}
+  .gig-name{font-size:17px}
+  .gig-cta{padding:6px 12px;font-size:12.5px}
+}
+
+/* ================= ДВИЖЕНИЕ ================= */
+
+/* сетки: контейнер виден, карточки внутри проявляются по очереди */
+.js .rv{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s cubic-bezier(.2,.75,.25,1)}
+.js .rv.in{opacity:1;transform:none}
+
+/* первый экран — вход по очереди сразу при загрузке */
+@keyframes liftIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+.js .hero-in.lift > *{animation:liftIn .7s cubic-bezier(.2,.75,.25,1) both}
+.js .hero-in.lift > *:nth-child(1){animation-delay:.05s}
+.js .hero-in.lift > *:nth-child(2){animation-delay:.16s}
+.js .hero-in.lift > *:nth-child(3){animation-delay:.27s}
+.js .hero-in.lift > *:nth-child(4){animation-delay:.38s}
+.js .hero-in.lift > *:nth-child(5){animation-delay:.49s}
+.js .hero-in.lift > *:nth-child(6){animation-delay:.60s}
+
+/* фон первого экрана медленно дышит */
+@keyframes heroDrift{from{transform:scale(1)}to{transform:scale(1.07)}}
+.hero-bg{animation:heroDrift 26s ease-in-out infinite alternate;will-change:transform}
+
+/* шапка подбирается при прокрутке */
+.hdr .wrap{transition:height .3s cubic-bezier(.2,.75,.25,1)}
+.logo img{transition:height .3s cubic-bezier(.2,.75,.25,1)}
+.hdr.small{background:rgba(8,15,8,.94);box-shadow:0 10px 30px rgba(0,0,0,.35)}
+.hdr.small .wrap{height:62px}
+.hdr.small .logo img{height:44px}
+.hdr.small .logo-txt b{font-size:20px}
+
+/* кнопка помощницы зовёт, пока с ней не заговорили */
+@keyframes asstRing{
+  0%{box-shadow:0 0 0 0 rgba(200,164,90,.45)}
+  70%{box-shadow:0 0 0 16px rgba(200,164,90,0)}
+  100%{box-shadow:0 0 0 0 rgba(200,164,90,0)}
+}
+.asst-btn:not(.hide){animation:asstRing 3.4s ease-out 4s infinite}
+.asst-btn:hover{animation:none}
+
+/* смена «Кухня / Бар» — мягкая подмена, а не рывок */
+@keyframes menuFade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.js .menu-side:not([hidden]){animation:menuFade .45s ease both}
+
+/* цифры в фактах не прыгают по ширине при отсчёте */
+.fact b{font-variant-numeric:tabular-nums}
+
+@media(prefers-reduced-motion:reduce){
+  .hero-bg,.asst-btn:not(.hide),.js .menu-side:not([hidden]),.js .hero-in.lift > *{animation:none!important}
+  .js .rv{opacity:1;transform:none;transition:none}
 }
