@@ -104,6 +104,12 @@
   <div class="wrap">
     <div class="hero-in">
       <div class="eyebrow">Магнитогорск · Завенягина, 8а</div>
+      <!-- подтягивается из афиши; если событий не осталось — не показывается -->
+      <a class="next-ev" id="nextEv" href="#program" hidden>
+        <span class="next-ev-when" id="nextEvWhen"></span>
+        <span class="next-ev-name" id="nextEvName"></span>
+        <span class="next-ev-go">Афиша</span>
+      </a>
       <h1>Ирландский паб,<br>в котором <em>шумно</em><br>по-хорошему</h1>
       <p>Тёмное дерево, витражи и контактная барная стойка. Живая музыка по выходным, караоке до хрипоты и танцпол, который не выключается до утра.</p>
       <div class="hero-cta">
@@ -926,6 +932,30 @@
     }
     clean('afisha','.ev','afishaEmpty');
     clean('gigs','.gig','gigsEmpty');
+
+    /* ближайшее событие — в первый экран.
+       Человек приходит с вопросом «когда идти», а не «какой у вас интерьер». */
+    (function(){
+      var ev=document.querySelector('#afisha .ev');
+      var box=document.getElementById('nextEv');
+      if(!ev||!box)return;
+
+      var from=ev.getAttribute('data-from')||ev.getAttribute('data-until');
+      var p=from.split('-');
+      var start=new Date(+p[0],+p[1]-1,+p[2]);
+      var days=Math.round((start-today)/86400000);
+      var DAYS=['в воскресенье','в понедельник','во вторник','в среду','в четверг','в пятницу','в субботу'];
+
+      var when;
+      if(days<=0)      when='сегодня';
+      else if(days===1)when='завтра';
+      else if(days<7)  when=DAYS[start.getDay()];
+      else             when=ev.querySelector('.ev-date').textContent;
+
+      document.getElementById('nextEvWhen').textContent=when;
+      document.getElementById('nextEvName').textContent=ev.querySelector('h4').textContent;
+      box.hidden=false;
+    })();
   })();
 
   /* переключатель «Кухня / Бар и напитки» */
