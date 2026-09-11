@@ -865,3 +865,53 @@ body.cookie-open .hints-toggle{display:none}
   letter-spacing:.12em;text-transform:uppercase;font-size:12px;
 }
 .gig:hover .gig-cta-off{background:transparent;border-color:var(--line-soft);color:#7d8a7a}
+
+/* ================= СТРАНИЦА АФИШИ ================= */
+.bill-title{
+  font-size:clamp(24px,3.2vw,34px);margin:56px 0 22px;padding-bottom:14px;
+  border-bottom:1px solid var(--line);
+}
+.bill-list{display:flex;flex-direction:column;gap:20px}
+.bill-item{
+  display:grid;grid-template-columns:220px 1fr;gap:26px;align-items:start;
+  background:var(--bg-2);border:1px solid var(--line-soft);border-radius:3px;
+  padding:22px;transition:border-color .3s,transform .3s;
+}
+.bill-item:hover{border-color:var(--line);transform:translateY(-3px)}
+.bill-pic{
+  display:block;border-radius:2px;overflow:hidden;background:#0e1a12;
+  aspect-ratio:1060/1484;position:relative;
+}
+.bill-pic img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s}
+.bill-pic:hover img{transform:scale(1.04)}
+.bill-body{min-width:0}
+.bill-date{
+  display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px;
+  font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--amber);font-weight:700;
+}
+.bill-soon{
+  background:var(--amber);color:#1a1006;padding:3px 10px;border-radius:999px;
+  letter-spacing:.1em;font-size:10.5px;
+}
+.bill-body h3{font-size:25px;margin-bottom:10px;line-height:1.15}
+.bill-desc{color:var(--muted);font-size:15.5px;line-height:1.6;margin-bottom:16px;max-width:62ch}
+.bill-facts{list-style:none;margin:0 0 20px;display:flex;flex-direction:column;gap:7px}
+.bill-facts li{
+  position:relative;padding-left:18px;font-size:14.5px;color:var(--muted);line-height:1.5;
+}
+.bill-facts li::before{
+  content:"";position:absolute;left:2px;top:9px;width:5px;height:5px;
+  border-radius:50%;background:var(--brass);
+}
+.bill-facts li b{color:var(--cream);font-weight:600}
+body.hints .bill-need{color:#eda85f}
+body.hints .bill-need::before{background:var(--amber)}
+.bill-cta{display:flex;gap:10px;flex-wrap:wrap}
+.bill-off{opacity:.6;cursor:default}
+@media(max-width:760px){
+  .bill-item{grid-template-columns:1fr;gap:16px;padding:16px}
+  .bill-pic{max-width:260px}
+  .bill-body h3{font-size:21px}
+  .bill-title{margin:40px 0 18px}
+  .bill-cta .btn{flex:1;min-width:140px}
+}
