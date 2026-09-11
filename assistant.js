@@ -699,7 +699,7 @@
     setTimeout(function () {
       dots.remove();
       add('msg-bot',
-        'Здравствуйте! Я Молли, хозяйка паба.<br><br>' +
+        'Здравствуйте! Я Молли, проводница паба.<br><br>' +
         (st.open ? 'Мы <b>сейчас открыты</b> — работаем до ' + hh(st.closes) + '.'
                  : 'Сейчас закрыто, <b>откроемся в 18:00</b>.') +
         '<br><br>Спросите что угодно про меню, афишу или бронь — или нажмите кнопку ниже.');
@@ -708,7 +708,7 @@
     }, 450);
   }
 
-  function hideTeaser() { teaser.classList.remove('on'); store('molly_teaser', '1'); }
+  function hideTeaser() { teaser.classList.remove('on'); store('molly_teaser', String(Date.now())); }
   function openPanel() {
     hideTeaser();
     panel.classList.remove('mini');   /* открываем всегда развёрнутой */
@@ -759,25 +759,24 @@
     if (e.key === 'Escape' && panel.classList.contains('on')) closePanel();
   });
 
-  /* Молли здоровается сама, как хостес у входа. Но если гость её закрыл —
-     сегодня больше не лезем: навязчивость отпугивает сильнее, чем помогает. */
+  /* Молли здоровается сама, как хостес у входа: облачком, а не окном —
+     окно закрывает собой страницу, гость ещё ничего не увидел, а его уже
+     заслонили. Облачко висит, пока его не закроют или не тронут.
+
+     Закрыл — уважаем и сутки не лезем. Но именно сутки, а не навсегда:
+     иначе человек, один раз смахнувший облачко, больше никогда бы
+     не узнал, что тут есть кому задать вопрос. */
   var СУТКИ = 24 * 60 * 60 * 1000;
-  function закрывалНедавно() {
-    var t = +store('molly_closed') || 0;
-    return t && (Date.now() - t) < СУТКИ;
+
+  function свежаяОтметка(ключ) {
+    var t = +store(ключ) || 0;
+    return t > 1 && (Date.now() - t) < СУТКИ;
   }
 
-  if (!закрывалНедавно()) {
+  if (!свежаяОтметка('molly_teaser')) {
     setTimeout(function () {
-      if (panel.classList.contains('on')) return;
-      /* И на телефоне, и на компьютере здороваемся облачком, а не окном:
-         окно закрывает собой страницу, гость ещё ничего не увидел, а его
-         уже заслонили. Облачко висит, пока его не закроют или не тронут —
-         тогда открывается разговор. */
-      if (!store('molly_teaser')) teaser.classList.add('on');
+      if (!panel.classList.contains('on')) teaser.classList.add('on');
     }, 1200);
-  } else if (!store('molly_teaser')) {
-    setTimeout(function () { if (!panel.classList.contains('on')) teaser.classList.add('on'); }, 6000);
   } else if (asstDot) {
     asstDot.style.display = 'none';
   }
