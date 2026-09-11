@@ -21,6 +21,14 @@
       BOOK = 'https://416936.restoplace.ws',
       MAP  = 'https://yandex.ru/maps/?text=Магнитогорск, Завенягина, 8а';
 
+  /* Адрес посредника, который ходит в нейросеть. Пока пусто — нейросеть
+     выключена, и Молли отвечает только по сценарию, как и раньше.
+     Как включить: развернуть worker/molly-ai.js и вписать сюда его адрес.
+     Инструкция — в worker/README.md */
+  var AI_URL = window.MOLLY_AI_URL || '';
+  var aiBusy = false, aiCount = 0;
+  var AI_LIMIT = 12; // больше двенадцати вопросов за визит — явно не гость
+
   /* ---------- мелкие помощники ---------- */
 
   function norm(s) {
@@ -482,6 +490,46 @@
     }, 520);
   }
 
+  /* ---------- вопрос нейросети ----------
+     Включается только тогда, когда сценарий не понял вопрос.
+     Так цены и часы остаются железными, а нейросеть отвечает
+     на всё остальное — и счёт за неё выходит в разы меньше. */
+  function askAI(text) {
+    if (aiBusy) return;
+    if (aiCount >= AI_LIMIT) {
+      say('Я сегодня уже много вам рассказала. Дальше лучше к администратору: ' + CALL + '.');
+      return;
+    }
+    aiBusy = true; aiCount++;
+    var dots = typing();
+
+    var stop = setTimeout(function () { finish(null, 'долго'); }, 20000);
+
+    function finish(answer, err) {
+      if (!aiBusy) return;
+      clearTimeout(stop);
+      aiBusy = false;
+      if (dots && dots.remove) dots.remove();
+      if (answer) {
+        say(esc(answer).replace(/\n/g, '<br>'));
+      } else {
+        track('ai-fail', err || 'ошибка');
+        say('Что-то я задумалась и не смогла ответить.<br><br>' +
+            'Спросите администратора — он точно подскажет: ' + CALL + '.');
+      }
+      setTimeout(function () { setChips(MAIN.slice(0, 4)); }, 520);
+    }
+
+    fetch(AI_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ q: text })
+    })
+      .then(function (r) { return r.ok ? r.json() : r.json().then(function (j) { throw new Error(j.error || r.status); }); })
+      .then(function (j) { finish(j.answer); })
+      .catch(function (e) { finish(null, String(e.message || e)); });
+  }
+
   /* ---------- заявка на бронь ---------- */
 
   var flow = null;
@@ -572,6 +620,9 @@
       track('hit', text);
       say(a);
       setTimeout(function () { setChips(MAIN.slice(0, 4)); }, 520);
+    } else if (AI_URL) {
+      track('ai', text);
+      askAI(text);
     } else {
       track('miss', text);
       say('Такого я пока не знаю — и придумывать не буду.<br><br>' +
