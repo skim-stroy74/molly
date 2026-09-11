@@ -5,15 +5,26 @@
    заберёт любой желающий и будет тратить чужие деньги. Ключ живёт здесь,
    на сервере, и наружу не попадает.
 
-   Что настраивается в панели Cloudflare (Settings → Variables):
-     YANDEX_API_KEY   — ключ сервисного аккаунта Яндекс Облака (секрет)
-     YANDEX_FOLDER_ID — идентификатор каталога в Яндекс Облаке
+   Работает в двух режимах.
+
+   БЕСПЛАТНО (по умолчанию): нейросети самой Cloudflare, прямо внутри воркера.
+   Ни второго аккаунта, ни карты. 10 000 нейронов в сутки бесплатно —
+   это примерно 320 ответов, для паба с запасом. Нужна привязка AI в настройках
+   воркера (Settings → Bindings → AI, имя переменной AI).
+
+   ПЛАТНО (необязательно): YandexGPT. Русский язык у него заметно лучше.
+   Включается сам, если задан YANDEX_API_KEY.
+
+   Переменные в панели Cloudflare (Settings → Variables):
      SITE_ORIGIN      — адрес сайта, напр. https://molly-mgn.com
      KNOWLEDGE_URL    — адрес справочника, напр. https://molly-mgn.com/data/knowledge.txt
+     YANDEX_API_KEY   — только для платного режима (секрет)
+     YANDEX_FOLDER_ID — только для платного режима
 
    Инструкция по шагам — в файле worker/README.md */
 
-const MODEL = 'yandexgpt-lite/latest';
+const CF_MODEL = '@cf/qwen/qwen3-30b-a3b-fp8'; // 30B, хорошо знает русский, дёшев по нейронам
+const YA_MODEL = 'yandexgpt-lite/latest';
 const MAX_QUESTION = 500;      // длиннее вопрос не принимаем
 const MAX_ANSWER_TOKENS = 350; // и не даём разогнаться ответу
 
@@ -89,39 +100,68 @@ export default {
     try { book = await knowledge(env); }
     catch (e) { return reply({ error: 'справочник недоступен' }, 503, head); }
 
-    const payload = {
-      modelUri: 'gpt://' + env.YANDEX_FOLDER_ID + '/' + MODEL,
-      completionOptions: { stream: false, temperature: 0.2, maxTokens: String(MAX_ANSWER_TOKENS) },
-      messages: [
-        { role: 'system', text: SYSTEM + book },
-        { role: 'user', text: question }
-      ]
-    };
+    const messages = [
+      { role: 'system', content: SYSTEM + book },
+      { role: 'user', content: question }
+    ];
 
-    let res;
+    /* ---------- платный режим: YandexGPT ---------- */
+    if (env.YANDEX_API_KEY && env.YANDEX_FOLDER_ID) {
+      const payload = {
+        modelUri: 'gpt://' + env.YANDEX_FOLDER_ID + '/' + YA_MODEL,
+        completionOptions: { stream: false, temperature: 0.2, maxTokens: String(MAX_ANSWER_TOKENS) },
+        messages: messages.map(m => ({ role: m.role, text: m.content }))
+      };
+
+      let res;
+      try {
+        res = await fetch('https://llm.api.cloud.yandex.net/foundationModels/v1/completion', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Api-Key ' + env.YANDEX_API_KEY,
+            'x-folder-id': env.YANDEX_FOLDER_ID
+          },
+          body: JSON.stringify(payload)
+        });
+      } catch (e) {
+        return reply({ error: 'нейросеть недоступна' }, 502, head);
+      }
+
+      if (!res.ok) {
+        const detail = await res.text().catch(() => '');
+        return reply({ error: 'нейросеть ответила ошибкой', status: res.status, detail: detail.slice(0, 300) }, 502, head);
+      }
+
+      const out = await res.json();
+      const answer = out?.result?.alternatives?.[0]?.message?.text?.trim();
+      if (!answer) return reply({ error: 'пустой ответ' }, 502, head);
+      return reply({ answer, engine: 'yandex' }, 200, head);
+    }
+
+    /* ---------- бесплатный режим: нейросети Cloudflare ---------- */
+    if (!env.AI) {
+      return reply({ error: 'не подключена привязка AI в настройках воркера' }, 500, head);
+    }
+
+    let out;
     try {
-      res = await fetch('https://llm.api.cloud.yandex.net/foundationModels/v1/completion', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Api-Key ' + env.YANDEX_API_KEY,
-          'x-folder-id': env.YANDEX_FOLDER_ID
-        },
-        body: JSON.stringify(payload)
+      out = await env.AI.run(CF_MODEL, {
+        messages,
+        temperature: 0.2,
+        max_tokens: MAX_ANSWER_TOKENS
       });
     } catch (e) {
-      return reply({ error: 'нейросеть недоступна' }, 502, head);
+      /* сюда же попадаем, когда на сутки кончились бесплатные нейроны —
+         сайт от этого не ломается, помощница просто вернётся к сценарию */
+      return reply({ error: 'нейросеть недоступна', detail: String(e && e.message || e).slice(0, 200) }, 502, head);
     }
 
-    if (!res.ok) {
-      const detail = await res.text().catch(() => '');
-      return reply({ error: 'нейросеть ответила ошибкой', status: res.status, detail: detail.slice(0, 300) }, 502, head);
-    }
-
-    const out = await res.json();
-    const answer = out?.result?.alternatives?.[0]?.message?.text?.trim();
+    let answer = (out && (out.response || out.result?.response) || '').trim();
+    /* некоторые модели думают вслух — отрезаем служебную часть */
+    answer = answer.replace(/<think>[\s\S]*?<\/think>/gi, '').trim();
     if (!answer) return reply({ error: 'пустой ответ' }, 502, head);
 
-    return reply({ answer, usage: out?.result?.usage || null }, 200, head);
+    return reply({ answer, engine: 'cloudflare' }, 200, head);
   }
 };
