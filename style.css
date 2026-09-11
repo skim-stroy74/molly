@@ -1245,7 +1245,6 @@ body.zoom-open{overflow:hidden}
 .ins p{color:var(--muted);font-size:14.5px;line-height:1.55}
 @media(prefers-reduced-motion:reduce){ .ins:hover{transform:none} }
 
-}
 
 /* ---------- свёрнутый разговор ----------
    Закрыть — убрать помощницу совсем. Свернуть — спрятать переписку,
@@ -1259,3 +1258,32 @@ body.zoom-open{overflow:hidden}
 .asst-panel.mini .asst-foot{display:none}
 .asst-panel.mini .asst-head{cursor:pointer;border-bottom:0}
 .asst-panel.mini .min{transform:rotate(180deg)}
+
+
+/* ---------- сам блок «Сколько выйдет вечер» стал заметнее ---------- */
+.calc-call{
+  border-color:rgba(200,164,90,.4);
+  background:linear-gradient(140deg,rgba(200,164,90,.14),rgba(200,164,90,.03));
+  box-shadow:0 20px 60px rgba(0,0,0,.25);
+}
+.calc-call .eyebrow{color:var(--brass-bright)}
+
+/* На невысоких экранах первый экран не вмещает всё сразу. Плашки
+   с перечислением — самое необязательное, их и убираем: приглашение
+   посчитать вечер важнее, чем список «караоке, танцпол, VIP». */
+@media(min-width:761px) and (max-height:900px){
+  .hero .chips{display:none}
+}
+
+/* ---------- выделенный пункт в шапке ----------
+   Калькулятор — самое необычное, что есть на сайте, а в ровном ряду
+   ссылок он теряется. Подсвечиваем: видно на каждой странице,
+   но без мигания и восклицательных знаков. */
+.nav a.nav-hit{
+  position:relative;color:var(--brass-bright);
+}
+.nav a.nav-hit::after{
+  content:"";position:absolute;left:0;right:0;bottom:-3px;height:1px;
+  background:linear-gradient(90deg,transparent,var(--brass),transparent);
+}
+.nav a.nav-hit:hover{color:var(--cream)}

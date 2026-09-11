@@ -83,7 +83,8 @@
      Берём числа из блока фактов: «21 000» оживает,
      «VIP» и «05:00» трогать не надо. */
   function prepCounters(){
-    [].forEach.call(document.querySelectorAll('.fact b'), function(b){
+    /* цифры оживают и в фактах о пабе, и в образце счёта у калькулятора */
+    [].forEach.call(document.querySelectorAll('.fact b, .ccd-sum b'), function(b){
       var txt = b.textContent.trim();
       var m = txt.match(/^(\d[\d\s]*)(\D*)$/);
       if (!m) return;
