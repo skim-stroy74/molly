@@ -1041,3 +1041,15 @@ body.cookie-open .asst{display:none}
 /* display:grid у блоков перебивает браузерный hidden, и скрытая вкладка
    продолжала показываться. Пусть hidden значит hidden. */
 [hidden]{display:none !important}
+
+/* ---------- ссылки на карточки в картах ---------- */
+.maps-links{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.maps-links a{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:9px 16px;border:1px solid var(--line);border-radius:999px;
+  color:var(--cream);font-size:14.5px;transition:border-color .2s,background .2s;
+}
+.maps-links a:hover{border-color:var(--brass);background:rgba(200,164,90,.08)}
+.maps-ask{font-size:14px;color:var(--muted);line-height:1.55}
+.maps-ask a{color:var(--brass-bright);border-bottom:1px solid rgba(224,188,116,.4)}
+.maps-ask a:hover{border-bottom-color:var(--brass-bright)}
