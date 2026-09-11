@@ -747,7 +747,15 @@
 
   if (!закрывалНедавно()) {
     setTimeout(function () {
-      if (!panel.classList.contains('on')) openPanel();
+      if (panel.classList.contains('on')) return;
+      /* На телефоне окно закрывает собой всю страницу — гость ещё ничего
+         не увидел, а его уже заслонили. Там здороваемся облачком, а панель
+         открывается, только если человек сам его тронет. */
+      if (window.innerWidth <= 760) {
+        if (!store('molly_teaser')) teaser.classList.add('on');
+      } else {
+        openPanel();
+      }
     }, 1200);
   } else if (!store('molly_teaser')) {
     setTimeout(function () { if (!panel.classList.contains('on')) teaser.classList.add('on'); }, 6000);

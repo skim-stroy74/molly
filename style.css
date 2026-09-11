@@ -1087,3 +1087,160 @@ body.cookie-open .asst{display:none}
 .rep-bar{width:100%;background:linear-gradient(180deg,var(--brass),rgba(200,164,90,.35));border-radius:4px 4px 0 0}
 .rep-day span{font-size:11px;color:var(--muted);white-space:nowrap}
 @media(max-width:760px){ .rep-cols{grid-template-columns:1fr} }
+
+/* ---------- появление с разных сторон ----------
+   Раньше всё выезжало снизу одинаково, и длинная страница читалась
+   однообразно. Теперь заголовок опускается сверху, текст приходит слева,
+   картинка справа — движение подсказывает, что с чем связано. */
+.js .rv-down{transform:translateY(-26px)}
+.js .rv-left{transform:translateX(-34px)}
+.js .rv-right{transform:translateX(34px)}
+.js .rv-down.in,
+.js .rv-left.in,
+.js .rv-right.in{transform:none}
+
+/* На узком экране боковой заезд создаёт горизонтальную прокрутку,
+   поэтому на телефоне оставляем привычное движение снизу. */
+@media(max-width:760px){
+  .js .rv-left,.js .rv-right{transform:translateY(22px)}
+}
+
+/* «меньше движения» в системе — выключаем всё разом */
+@media(prefers-reduced-motion:reduce){
+  .js .rv-down,.js .rv-left,.js .rv-right{transform:none}
+}
+
+/* ---------- первый экран проявляется из размытия ----------
+   Приём подсмотрен у «Романико»: фон входит мягко, как наведение резкости.
+   Только на фон — текст размывать нельзя, его начинают читать сразу. */
+.js .hero-bg{animation:heroDrift 26s ease-in-out infinite alternate, heroFocus 1.4s ease-out both}
+@keyframes heroFocus{
+  from{filter:blur(14px);opacity:.5}
+  to{filter:blur(0);opacity:1}
+}
+@media(prefers-reduced-motion:reduce){
+  .js .hero-bg{animation:none;filter:none;opacity:1}
+}
+
+/* ---------- объявление для гостей ---------- */
+.anons{
+  position:fixed;inset:0;z-index:80;display:flex;align-items:center;justify-content:center;
+  padding:20px;background:rgba(6,12,7,.72);backdrop-filter:blur(3px);
+  opacity:0;transition:opacity .3s ease;
+}
+.anons.on{opacity:1}
+.anons-box{
+  position:relative;max-width:440px;width:100%;
+  background:linear-gradient(160deg,#16281c,#0f1d14);
+  border:1px solid var(--brass);border-radius:18px;
+  padding:34px 36px 32px;text-align:center;
+  box-shadow:0 30px 80px rgba(0,0,0,.6);
+  transform:translateY(14px) scale(.97);transition:transform .32s cubic-bezier(.2,.75,.25,1);
+}
+.anons.on .anons-box{transform:none}
+.anons-eyebrow{
+  font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--brass);font-weight:700;margin-bottom:12px;
+}
+.anons-box h3{font-family:var(--serif);font-weight:500;font-size:24px;line-height:1.25;margin-bottom:12px}
+.anons-box p{color:var(--muted);font-size:15px;line-height:1.6;margin-bottom:20px}
+.anons-box .btn{margin-top:4px}
+.anons-x{
+  position:absolute;top:12px;right:14px;width:34px;height:34px;border-radius:50%;
+  background:transparent;border:1px solid var(--line);color:var(--muted);
+  font-size:20px;line-height:1;cursor:pointer;
+}
+.anons-x:hover{border-color:var(--brass);color:var(--brass-bright)}
+@media(prefers-reduced-motion:reduce){
+  .anons,.anons-box{transition:none}
+}
+
+/* ---------- фото во весь экран ---------- */
+.zoomable{cursor:zoom-in;position:relative}
+.zoomable:focus-visible{outline:2px solid var(--brass);outline-offset:3px}
+.zoom{
+  position:fixed;inset:0;z-index:120;display:flex;align-items:center;justify-content:center;
+  background:rgba(5,10,6,.95);padding:52px 20px;opacity:0;pointer-events:none;
+  transition:opacity .28s ease;
+}
+.zoom.on{opacity:1;pointer-events:auto}
+body.zoom-open{overflow:hidden}
+.zoom-fig{display:flex;flex-direction:column;align-items:center;gap:14px;max-width:100%;max-height:100%}
+.zoom-fig img{
+  max-width:min(1200px,92vw);max-height:78vh;border-radius:10px;
+  box-shadow:0 30px 90px rgba(0,0,0,.6);
+  transform:scale(.97);transition:transform .28s cubic-bezier(.2,.75,.25,1);
+}
+.zoom.on .zoom-fig img{transform:none}
+.zoom-fig figcaption{color:var(--muted);font-size:14px;text-align:center;max-width:60ch;line-height:1.5}
+.zoom-x,.zoom-nav{
+  position:absolute;background:rgba(20,32,22,.8);border:1px solid var(--line);
+  color:var(--cream);cursor:pointer;border-radius:50%;line-height:1;
+  transition:border-color .2s,background .2s;
+}
+.zoom-x{top:16px;right:18px;width:44px;height:44px;font-size:24px}
+.zoom-nav{top:50%;transform:translateY(-50%);width:52px;height:52px;font-size:30px}
+.zoom-prev{left:16px}
+.zoom-next{right:16px}
+.zoom-x:hover,.zoom-nav:hover{border-color:var(--brass);background:rgba(200,164,90,.2)}
+.zoom-count{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);color:var(--muted);font-size:13.5px;font-variant-numeric:tabular-nums}
+.zoom.alone .zoom-nav,.zoom.alone .zoom-count{display:none}
+@media(max-width:700px){
+  .zoom{padding:44px 10px}
+  .zoom-nav{width:42px;height:42px;font-size:24px}
+  .zoom-prev{left:6px}
+  .zoom-next{right:6px}
+  .zoom-fig img{max-height:70vh}
+}
+@media(prefers-reduced-motion:reduce){
+  .zoom,.zoom-fig img{transition:none}
+}
+
+/* ---------- кнопка «наверх» ---------- */
+.to-top{
+  position:fixed;left:24px;bottom:24px;z-index:60;
+  width:46px;height:46px;border-radius:50%;cursor:pointer;
+  background:rgba(20,32,22,.88);border:1px solid var(--line);
+  color:var(--brass-bright);font-size:20px;line-height:1;
+  opacity:0;pointer-events:none;transform:translateY(10px);
+  transition:opacity .25s ease,transform .25s ease,border-color .2s;
+}
+.to-top.on{opacity:1;pointer-events:auto;transform:none}
+.to-top:hover{border-color:var(--brass)}
+/* внизу справа сидит помощница — уводим кнопку налево, чтобы не толкались */
+@media(max-width:700px){ .to-top{left:16px;bottom:16px;width:42px;height:42px} }
+
+/* ---------- что стоит знать заранее ---------- */
+.rules{
+  grid-column:1/-1;list-style:none;margin-top:28px;padding-top:24px;
+  border-top:1px solid var(--line-soft);
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px 28px;
+}
+.rules li{
+  position:relative;padding-left:18px;color:var(--muted);
+  font-size:14.5px;line-height:1.55;
+}
+.rules li::before{
+  content:"";position:absolute;left:0;top:9px;
+  width:5px;height:5px;border-radius:50%;background:var(--brass);
+}
+.rules b{color:var(--cream);font-weight:700}
+
+/* ---------- что внутри паба ---------- */
+.inside{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:18px;margin-top:46px;
+}
+.ins{
+  background:var(--panel);border:1px solid var(--line-soft);border-radius:14px;
+  padding:24px 24px 22px;transition:border-color .25s,transform .25s;
+}
+.ins:hover{border-color:var(--line);transform:translateY(-3px)}
+.ins-ic{
+  display:flex;align-items:center;justify-content:center;
+  width:42px;height:42px;border-radius:11px;margin-bottom:14px;
+  background:rgba(200,164,90,.12);color:var(--brass-bright);font-size:19px;
+}
+.ins h3{font-family:var(--serif);font-weight:500;font-size:18px;margin-bottom:7px}
+.ins p{color:var(--muted);font-size:14.5px;line-height:1.55}
+@media(prefers-reduced-motion:reduce){ .ins:hover{transform:none} }

@@ -10,7 +10,7 @@
      Контейнер перестаёт появляться целиком, вместо него
      по одной проявляются карточки внутри. */
   var GRIDS = ['.prog', '.afisha', '.gigs', '.gal', '.banq-gal',
-               '.promo', '.facts', '.book-ways', '.albums', '.shots'];
+               '.promo', '.inside', '.facts', '.book-ways', '.albums', '.shots'];
   GRIDS.forEach(function(sel){
     [].forEach.call(document.querySelectorAll(sel), function(box){
       box.classList.remove('rv');
@@ -130,6 +130,32 @@
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
   }
+
+  /* --- 5. Кнопка «наверх» ---
+     Страница длинная: от контактов до брони прокручивать далеко. */
+  (function(){
+    var кн = document.createElement('button');
+    кн.className = 'to-top';
+    кн.type = 'button';
+    кн.setAttribute('aria-label', 'Наверх страницы');
+    кн.innerHTML = '↑';
+    document.body.appendChild(кн);
+
+    кн.addEventListener('click', function(){
+      window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+    });
+
+    var виднa = false, tick = false;
+    window.addEventListener('scroll', function(){
+      if (tick) return;
+      tick = true;
+      requestAnimationFrame(function(){
+        var надо = window.pageYOffset > window.innerHeight * 1.5;
+        if (надо !== виднa) { кн.classList.toggle('on', надо); виднa = надо; }
+        tick = false;
+      });
+    }, { passive: true });
+  })();
 
   /* --- 5. Первый экран: вход по очереди --- */
   if (!reduce) {
