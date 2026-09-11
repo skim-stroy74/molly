@@ -57,7 +57,12 @@
       <p class="lead">Скажите, сколько вас и по какому поводу, — и мы соберём стол из настоящего меню с точной суммой. Никаких «средних чеков»: конкретные блюда, конкретные цены.</p>
     </div>
 
-    <div class="calc rv">
+    <div class="calc-tabs rv" role="tablist">
+      <button type="button" class="on" data-tab="auto" role="tab" aria-selected="true">Соберите за меня</button>
+      <button type="button" data-tab="self" role="tab" aria-selected="false">Выберу сам</button>
+    </div>
+
+    <div class="calc rv" id="tabAuto">
       <div class="calc-controls">
         <div class="calc-field">
           <label for="people">Сколько вас</label>
@@ -76,6 +81,7 @@
             <button type="button" data-mood="dinner">Поужинать</button>
             <button type="button" data-mood="birthday">День рождения</button>
             <button type="button" data-mood="beer">Только под пенное</button>
+            <button type="button" data-mood="sober">Я не пью</button>
           </div>
         </div>
 
@@ -114,6 +120,45 @@
         </div>
         <p class="calc-msg" id="msg"></p>
       </div>
+    </div>
+
+    <!-- Ручная сборка: то же меню, но человек сам решает, что берёт.
+         Кому-то важно не гадать, а сложить свой чек до копейки. -->
+    <div class="calc self rv" id="tabSelf" hidden>
+      <div class="self-pick">
+        <label class="self-search">
+          <input type="search" id="selfSearch" placeholder="Найти блюдо или напиток…" aria-label="Поиск по меню">
+        </label>
+        <div class="self-groups" id="selfGroups"></div>
+      </div>
+
+      <aside class="self-bill">
+        <div class="calc-head">
+          <h2>Ваш счёт</h2>
+          <button type="button" class="calc-again" id="selfClear">Очистить</button>
+        </div>
+
+        <ul class="calc-list" id="selfList"></ul>
+        <p class="self-empty" id="selfEmpty">Пока пусто. Нажимайте на блюда слева — они будут падать сюда.</p>
+
+        <div class="calc-total">
+          <div><span>Итого</span><b id="selfTotal">—</b></div>
+          <div><span>С человека</span><b id="selfEach">—</b></div>
+        </div>
+
+        <div class="self-people">
+          <span>Делим на</span>
+          <button type="button" id="selfLess" aria-label="Меньше гостей">−</button>
+          <output id="selfPeople">4</output>
+          <button type="button" id="selfMore" aria-label="Больше гостей">+</button>
+        </div>
+
+        <div class="calc-acts">
+          <a href="tel:+73519453737" class="btn btn-gold">Забронировать стол</a>
+          <button type="button" class="btn btn-ghost" id="selfCopy">Скопировать счёт</button>
+        </div>
+        <p class="calc-msg" id="selfMsg"></p>
+      </aside>
     </div>
 
   </div>
@@ -192,6 +237,18 @@
       {group:'Закуски',          per:2, w:.30, need:true},
       {group:'На компанию',      per:8, w:.18},
       {group:'Гарниры и соусы',  per:4, w:.10}
+    ],
+    /* Непьющих в компании обычно хотя бы один — за рулём, в положении,
+       просто не хочется. Отдельный повод, где спиртного нет вовсе:
+       коктейли в этом баре безалкогольные, на соке и сиропе. */
+    sober:[
+      {group:'Горячее и гриль',  each:true, w:.34, need:true},
+      {group:'Закуски',          per:3, w:.16},
+      {group:'Коктейли',         each:true, w:.18, need:true},
+      {group:'Лимонады',         per:4, w:.12},
+      {group:'Салаты',           per:3, w:.10},
+      {group:'Десерты',          per:2, w:.06},
+      {group:'Чай и кофе',       per:3, w:.04}
     ]
   };
 
@@ -320,6 +377,175 @@
   });
 
   /* ---------- загрузка меню ---------- */
+  /* ---------- ручная сборка ----------
+     Всё то же меню, но выбирает человек. Считаем на лету: он видит сумму
+     до того, как сядет за стол, а не после. */
+
+  var корзина = {};            // название → сколько порций
+  var selfPeople = 4;
+
+  function ключ(i){ return i.name + '|' + i.price; }
+
+  function рисоватьМеню(фильтр){
+    var box = document.getElementById('selfGroups');
+    var n = (фильтр||'').toLowerCase().trim();
+    var группы = {}, порядок = [];
+
+    MENU.forEach(function(i){
+      if (n && (i.name + ' ' + i.group).toLowerCase().indexOf(n) === -1) return;
+      if (!группы[i.group]) { группы[i.group] = []; порядок.push(i.group); }
+      группы[i.group].push(i);
+    });
+
+    if (!порядок.length){
+      box.innerHTML = '<p class="self-empty">Ничего не нашлось. Попробуйте другое слово — или посмотрите <a href="index.html#menu">всё меню</a>.</p>';
+      return;
+    }
+
+    box.innerHTML = порядок.map(function(g){
+      return '<div class="self-group"><h3>' + g + '</h3>' +
+        группы[g].map(function(i){
+          var k = ключ(i), сколько = корзина[k] || 0;
+          return '<button type="button" class="self-item' + (сколько ? ' picked' : '') + '" data-key="' + k + '">' +
+            '<span class="si-name">' + i.name + '</span>' +
+            '<span class="si-price">' + money(i.price) + '</span>' +
+            (сколько ? '<span class="si-count">' + сколько + '</span>' : '') +
+            '</button>';
+        }).join('') + '</div>';
+    }).join('');
+  }
+
+  function рисоватьСчёт(){
+    var список = document.getElementById('selfList');
+    var пусто  = document.getElementById('selfEmpty');
+    var строки = Object.keys(корзина);
+
+    if (!строки.length){
+      список.innerHTML = '';
+      пусто.hidden = false;
+      document.getElementById('selfTotal').textContent = '—';
+      document.getElementById('selfEach').textContent = '—';
+      return;
+    }
+    пусто.hidden = true;
+
+    var сумма = 0;
+    список.innerHTML = строки.map(function(k){
+      var часть = k.split('|'), имя = часть[0], цена = +часть[1], кол = корзина[k];
+      сумма += цена * кол;
+      return '<li>' +
+        '<span class="calc-name">' + имя + (кол > 1 ? ' × ' + кол : '') + '</span>' +
+        '<span class="calc-dots"></span>' +
+        '<span class="calc-price">' + money(цена * кол) + '</span>' +
+        '<span class="self-pm">' +
+          '<button type="button" data-minus="' + k + '" aria-label="Убрать одну порцию">−</button>' +
+          '<button type="button" data-plus="'  + k + '" aria-label="Добавить порцию">+</button>' +
+        '</span></li>';
+    }).join('');
+
+    document.getElementById('selfTotal').textContent = money(сумма);
+    document.getElementById('selfEach').textContent  = money(Math.round(сумма / selfPeople));
+  }
+
+  /* Обновляем одну нажатую кнопку, а не весь список: иначе при каждом
+     клике список перерисовывается и прокрутка прыгает в начало —
+     человек теряет место, где выбирал. */
+  function обновитьКнопку(k){
+    var кн = [].filter.call(document.querySelectorAll('.self-item'), function(b){
+      return b.getAttribute('data-key') === k;
+    })[0];
+    if (!кн) return;
+    var кол = корзина[k] || 0;
+    кн.classList.toggle('picked', кол > 0);
+    var бейдж = кн.querySelector('.si-count');
+    if (кол > 0){
+      if (!бейдж){
+        бейдж = document.createElement('span');
+        бейдж.className = 'si-count';
+        кн.appendChild(бейдж);
+      }
+      бейдж.textContent = кол;
+    } else if (бейдж) {
+      бейдж.remove();
+    }
+  }
+
+  function добавить(k, шаг){
+    корзина[k] = (корзина[k] || 0) + шаг;
+    if (корзина[k] <= 0) delete корзина[k];
+    рисоватьСчёт();
+    обновитьКнопку(k);
+  }
+
+  document.getElementById('selfGroups').addEventListener('click', function(e){
+    var кн = e.target.closest('.self-item');
+    if (кн) добавить(кн.getAttribute('data-key'), 1);
+  });
+
+  document.getElementById('selfList').addEventListener('click', function(e){
+    var плюс = e.target.getAttribute && e.target.getAttribute('data-plus');
+    var минус = e.target.getAttribute && e.target.getAttribute('data-minus');
+    if (плюс)  добавить(плюс, 1);
+    if (минус) добавить(минус, -1);
+  });
+
+  document.getElementById('selfSearch').addEventListener('input', function(){
+    рисоватьМеню(this.value);
+  });
+
+  document.getElementById('selfClear').addEventListener('click', function(){
+    var было = Object.keys(корзина);
+    корзина = {};
+    рисоватьСчёт();
+    было.forEach(обновитьКнопку);
+    document.getElementById('selfMsg').textContent = '';
+  });
+
+  function менятьГостей(шаг){
+    selfPeople = Math.min(20, Math.max(1, selfPeople + шаг));
+    document.getElementById('selfPeople').textContent = selfPeople;
+    рисоватьСчёт();
+  }
+  document.getElementById('selfLess').addEventListener('click', function(){ менятьГостей(-1); });
+  document.getElementById('selfMore').addEventListener('click', function(){ менятьГостей(1); });
+
+  document.getElementById('selfCopy').addEventListener('click', function(){
+    var строки = Object.keys(корзина);
+    if (!строки.length) return;
+    var сумма = 0;
+    var текст = строки.map(function(k){
+      var ч = k.split('|'), цена = +ч[1], кол = корзина[k];
+      сумма += цена * кол;
+      return ч[0] + (кол > 1 ? ' × ' + кол : '') + ' — ' + money(цена * кол);
+    }).join('\n');
+    текст += '\n\nИтого: ' + money(сумма) + ' · по ' + money(Math.round(сумма / selfPeople)) + ' с человека';
+    текст += '\nПаб «Молли», Магнитогорск, Завенягина 8а · +7 (3519) 45-37-37';
+
+    var msg = document.getElementById('selfMsg');
+    if (navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(текст).then(function(){
+        msg.textContent = 'Счёт скопирован — можно отправить друзьям.';
+      }).catch(function(){ msg.textContent = 'Не вышло скопировать, выделите список вручную.'; });
+    } else {
+      msg.textContent = 'Браузер не дал скопировать — выделите список вручную.';
+    }
+  });
+
+  /* переключение режимов */
+  document.querySelector('.calc-tabs').addEventListener('click', function(e){
+    var кн = e.target.closest('[data-tab]');
+    if (!кн) return;
+    var режим = кн.getAttribute('data-tab');
+    [].forEach.call(this.querySelectorAll('[data-tab]'), function(b){
+      var свой = b === кн;
+      b.classList.toggle('on', свой);
+      b.setAttribute('aria-selected', свой ? 'true' : 'false');
+    });
+    document.getElementById('tabAuto').hidden = режим !== 'auto';
+    document.getElementById('tabSelf').hidden = режим !== 'self';
+    if (режим === 'self' && ready) рисоватьМеню('');
+  });
+
   fetch('data/menu.json')
     .then(function(r){ if(!r.ok) throw new Error(r.status); return r.json(); })
     .then(function(j){
@@ -327,6 +553,8 @@
       document.getElementById('budgetOut').textContent=money(budget);
       document.getElementById('perPerson').textContent='по '+money(Math.round(budget/people))+' с человека';
       render();
+      рисоватьМеню('');
+      рисоватьСчёт();
     })
     .catch(function(){
       document.getElementById('note').textContent='Не удалось загрузить меню. Откройте раздел «Меню» — там всё на месте.';

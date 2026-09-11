@@ -956,3 +956,88 @@ body.cookie-open .asst{display:none}
   .calc-total b{font-size:25px}
   .calc-acts .btn{flex:1;min-width:150px}
 }
+
+/* ---------- приглашение собрать вечер (главная, сразу за меню) ---------- */
+.calc-call{
+  display:grid;grid-template-columns:1.15fr .85fr;gap:38px;align-items:center;
+  background:linear-gradient(140deg,rgba(200,164,90,.10),rgba(200,164,90,.02));
+  border:1px solid var(--line);border-radius:20px;padding:38px 40px;
+}
+.calc-call h2{font-size:clamp(26px,3.4vw,38px);margin:10px 0 14px}
+.calc-call p{color:var(--muted);max-width:46ch;margin-bottom:24px;line-height:1.6}
+/* чек-образец: показывает результат раньше, чем человек нажмёт кнопку */
+.calc-call-demo{
+  background:var(--bg);border:1px solid var(--line-soft);border-radius:14px;
+  padding:20px 22px;font-size:15px;
+}
+.ccd-row,.ccd-sum{display:flex;justify-content:space-between;gap:16px;padding:9px 0}
+.ccd-row{border-bottom:1px dashed rgba(242,234,216,.10);color:var(--muted)}
+.ccd-row b{color:var(--cream);font-variant-numeric:tabular-nums;white-space:nowrap}
+.ccd-sum{padding-top:15px;font-family:var(--serif);font-size:18px}
+.ccd-sum b{color:var(--brass-bright);font-variant-numeric:tabular-nums}
+@media(max-width:860px){
+  .calc-call{grid-template-columns:1fr;gap:26px;padding:28px 22px}
+  .calc-call-demo{order:2}
+}
+
+/* ---------- переключатель режимов калькулятора ---------- */
+.calc-tabs{display:flex;gap:10px;margin-bottom:22px;flex-wrap:wrap}
+.calc-tabs button{
+  border:1px solid var(--line);background:transparent;color:var(--muted);
+  padding:11px 22px;border-radius:999px;cursor:pointer;font-size:15px;
+  transition:color .2s,border-color .2s,background .2s;
+}
+.calc-tabs button:hover{color:var(--cream);border-color:var(--brass)}
+.calc-tabs button.on{background:var(--brass);border-color:var(--brass);color:#14200f;font-weight:700}
+
+/* ---------- ручная сборка счёта ---------- */
+.calc.self{display:grid;grid-template-columns:1.3fr .9fr;gap:28px;align-items:start}
+.self-search input{
+  width:100%;padding:13px 16px;border-radius:12px;font:inherit;
+  background:var(--bg);border:1px solid var(--line);color:var(--cream);
+}
+.self-search input:focus{outline:2px solid var(--brass);outline-offset:1px}
+.self-groups{margin-top:18px;max-height:620px;overflow-y:auto;padding-right:6px}
+.self-group h3{
+  font-family:var(--serif);font-weight:500;font-size:16px;color:var(--brass);
+  margin:18px 0 8px;position:sticky;top:0;background:var(--panel);padding:6px 0;
+}
+.self-group:first-child h3{margin-top:0}
+.self-item{
+  width:100%;display:flex;align-items:center;gap:10px;text-align:left;
+  padding:10px 12px;border-radius:10px;cursor:pointer;font:inherit;
+  background:transparent;border:1px solid transparent;color:var(--cream);
+  transition:background .18s,border-color .18s;
+}
+.self-item:hover{background:rgba(200,164,90,.08);border-color:var(--line)}
+.self-item .si-name{flex:1}
+.self-item .si-price{color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+.self-item.picked{background:rgba(200,164,90,.13);border-color:var(--brass)}
+.self-item .si-count{
+  min-width:24px;height:24px;border-radius:999px;background:var(--brass);color:#14200f;
+  font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;
+}
+.self-bill{position:sticky;top:96px;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:24px}
+.self-empty{color:var(--muted);font-size:14.5px;line-height:1.6;padding:12px 0}
+.self-pm{display:inline-flex;gap:6px;margin-left:10px}
+.self-pm button{
+  width:26px;height:26px;border-radius:50%;cursor:pointer;font-size:15px;line-height:1;
+  background:transparent;border:1px solid var(--line);color:var(--cream);
+}
+.self-pm button:hover{border-color:var(--brass);color:var(--brass-bright)}
+.self-people{display:flex;align-items:center;gap:10px;margin:16px 0 20px;color:var(--muted);font-size:14.5px}
+.self-people button{
+  width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:16px;
+  background:transparent;border:1px solid var(--line);color:var(--cream);
+}
+.self-people button:hover{border-color:var(--brass)}
+.self-people output{font-family:var(--serif);font-size:18px;color:var(--cream);min-width:22px;text-align:center}
+@media(max-width:860px){
+  .calc.self{grid-template-columns:1fr}
+  .self-bill{position:static}
+  .self-groups{max-height:440px}
+}
+
+/* display:grid у блоков перебивает браузерный hidden, и скрытая вкладка
+   продолжала показываться. Пусть hidden значит hidden. */
+[hidden]{display:none !important}

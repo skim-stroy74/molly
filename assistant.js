@@ -712,16 +712,24 @@
   function openPanel() {
     hideTeaser();
     panel.classList.add('on');
-    asstBtn.classList.add('hide');
+    asstBtn.setAttribute('aria-label', 'Свернуть помощницу');
     if (asstDot) asstDot.style.display = 'none';
     start();
   }
   function closePanel() {
     panel.classList.remove('on');
+    store('molly_closed', String(Date.now()));
     asstBtn.classList.remove('hide');
+    asstBtn.setAttribute('aria-label', 'Открыть помощницу');
   }
 
-  asstBtn.addEventListener('click', openPanel);
+  /* Конверт больше не прячется за панелью: он же её и закрывает.
+     Одна кнопка на одном месте понятнее, чем крестик, который надо искать. */
+  function togglePanel() {
+    if (panel.classList.contains('on')) closePanel(); else openPanel();
+  }
+
+  asstBtn.addEventListener('click', togglePanel);
   document.getElementById('panelX').addEventListener('click', closePanel);
   document.getElementById('teaserX').addEventListener('click', function (e) { e.stopPropagation(); hideTeaser(); });
   teaser.addEventListener('click', openPanel);
@@ -729,7 +737,19 @@
     if (e.key === 'Escape' && panel.classList.contains('on')) closePanel();
   });
 
-  if (!store('molly_teaser')) {
+  /* Молли здоровается сама, как хостес у входа. Но если гость её закрыл —
+     сегодня больше не лезем: навязчивость отпугивает сильнее, чем помогает. */
+  var СУТКИ = 24 * 60 * 60 * 1000;
+  function закрывалНедавно() {
+    var t = +store('molly_closed') || 0;
+    return t && (Date.now() - t) < СУТКИ;
+  }
+
+  if (!закрывалНедавно()) {
+    setTimeout(function () {
+      if (!panel.classList.contains('on')) openPanel();
+    }, 1200);
+  } else if (!store('molly_teaser')) {
     setTimeout(function () { if (!panel.classList.contains('on')) teaser.classList.add('on'); }, 6000);
   } else if (asstDot) {
     asstDot.style.display = 'none';
