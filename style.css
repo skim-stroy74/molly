@@ -1244,3 +1244,18 @@ body.zoom-open{overflow:hidden}
 .ins h3{font-family:var(--serif);font-weight:500;font-size:18px;margin-bottom:7px}
 .ins p{color:var(--muted);font-size:14.5px;line-height:1.55}
 @media(prefers-reduced-motion:reduce){ .ins:hover{transform:none} }
+
+}
+
+/* ---------- свёрнутый разговор ----------
+   Закрыть — убрать помощницу совсем. Свернуть — спрятать переписку,
+   но оставить её под рукой: нажал на шапку, и разговор продолжается
+   с того же места. */
+.asst-head .min{background:none;border:0;color:var(--muted);font-size:22px;cursor:pointer;padding:6px 8px;line-height:1;margin-left:auto}
+.asst-head .x{margin-left:0}
+.asst-head .min:hover{color:var(--cream)}
+.asst-panel.mini{height:auto}
+.asst-panel.mini .asst-body,
+.asst-panel.mini .asst-foot{display:none}
+.asst-panel.mini .asst-head{cursor:pointer;border-bottom:0}
+.asst-panel.mini .min{transform:rotate(180deg)}

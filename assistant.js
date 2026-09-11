@@ -711,6 +711,7 @@
   function hideTeaser() { teaser.classList.remove('on'); store('molly_teaser', '1'); }
   function openPanel() {
     hideTeaser();
+    panel.classList.remove('mini');   /* открываем всегда развёрнутой */
     panel.classList.add('on');
     asstBtn.setAttribute('aria-label', 'Свернуть помощницу');
     if (asstDot) asstDot.style.display = 'none';
@@ -729,7 +730,28 @@
     if (panel.classList.contains('on')) closePanel(); else openPanel();
   }
 
+  /* Свернуть — не то же самое, что закрыть: переписка остаётся на месте,
+     видна только шапка. Нажатие на неё разворачивает обратно. */
+  function свернуть(да) {
+    panel.classList.toggle('mini', да);
+    var кн = document.getElementById('panelMin');
+    if (кн) {
+      кн.setAttribute('aria-label', да ? 'Развернуть разговор' : 'Свернуть разговор');
+      кн.title = да ? 'Развернуть' : 'Свернуть';
+    }
+    if (!да) chat.scrollTop = chat.scrollHeight;
+  }
+
   asstBtn.addEventListener('click', togglePanel);
+  document.getElementById('panelMin').addEventListener('click', function (e) {
+    e.stopPropagation();
+    свернуть(!panel.classList.contains('mini'));
+  });
+  /* по самой шапке разворачиваем — так привычнее, чем целиться в кнопку */
+  document.querySelector('.asst-head').addEventListener('click', function (e) {
+    if (e.target.closest('button')) return;
+    if (panel.classList.contains('mini')) свернуть(false);
+  });
   document.getElementById('panelX').addEventListener('click', closePanel);
   document.getElementById('teaserX').addEventListener('click', function (e) { e.stopPropagation(); hideTeaser(); });
   teaser.addEventListener('click', openPanel);
@@ -748,14 +770,11 @@
   if (!закрывалНедавно()) {
     setTimeout(function () {
       if (panel.classList.contains('on')) return;
-      /* На телефоне окно закрывает собой всю страницу — гость ещё ничего
-         не увидел, а его уже заслонили. Там здороваемся облачком, а панель
-         открывается, только если человек сам его тронет. */
-      if (window.innerWidth <= 760) {
-        if (!store('molly_teaser')) teaser.classList.add('on');
-      } else {
-        openPanel();
-      }
+      /* И на телефоне, и на компьютере здороваемся облачком, а не окном:
+         окно закрывает собой страницу, гость ещё ничего не увидел, а его
+         уже заслонили. Облачко висит, пока его не закроют или не тронут —
+         тогда открывается разговор. */
+      if (!store('molly_teaser')) teaser.classList.add('on');
     }, 1200);
   } else if (!store('molly_teaser')) {
     setTimeout(function () { if (!panel.classList.contains('on')) teaser.classList.add('on'); }, 6000);
