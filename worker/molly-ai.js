@@ -166,6 +166,76 @@ const PHRASES = {
   'на всех':     ['компани', 'тарелк', 'плато', 'ассорти']
 };
 
+/* ---------- учёт вопросов ----------
+
+   Зачем: пока вопросы копятся только в браузере гостя, никто не знает,
+   о чём люди спрашивают и на чём Молли спотыкается. Сводка показывает,
+   чего людям не хватает на сайте, и даёт Ваде понять, что сайт живой.
+
+   Что храним: только сам вопрос и получилось ли ответить. Ни имён,
+   ни телефонов, ни адресов — длинные числа вырезаем на всякий случай.
+   Записи живут месяц и пропадают сами.
+
+   Работает, только если в воркере заведено хранилище KV с именем STATS.
+   Нет хранилища — учёт молча выключен, на ответы это не влияет. */
+
+const ХРАНИТЬ_ДНЕЙ = 30;
+
+function обезличить(q) {
+  return String(q)
+    .replace(/\d[\d\s\-()]{5,}/g, '…')   // телефоны и прочие длинные номера
+    .replace(/\s+/g, ' ')
+    .trim()
+    .slice(0, 90);
+}
+
+async function записать(env, вопрос, получилось) {
+  if (!env.STATS) return;
+  const id = Date.now() + '-' + Math.random().toString(36).slice(2, 7);
+  try {
+    await env.STATS.put('q:' + id, JSON.stringify({
+      q: обезличить(вопрос),
+      ok: !!получилось,
+      d: new Date().toISOString().slice(0, 10)
+    }), { expirationTtl: ХРАНИТЬ_ДНЕЙ * 24 * 60 * 60 });
+  } catch (e) { /* учёт не должен мешать ответу */ }
+}
+
+async function сводка(env) {
+  if (!env.STATS) return { error: 'хранилище не подключено' };
+
+  const список = await env.STATS.list({ prefix: 'q:', limit: 1000 });
+  const записи = [];
+  for (const k of список.keys) {
+    const v = await env.STATS.get(k.name);
+    if (v) { try { записи.push(JSON.parse(v)); } catch (e) {} }
+  }
+
+  const поДням = {}, поВопросам = {};
+  let всего = 0, неответила = 0;
+
+  for (const з of записи) {
+    всего++;
+    if (!з.ok) неответила++;
+    поДням[з.d] = (поДням[з.d] || 0) + 1;
+    const к = з.q.toLowerCase();
+    if (!поВопросам[к]) поВопросам[к] = { текст: з.q, сколько: 0, промахов: 0 };
+    поВопросам[к].сколько++;
+    if (!з.ok) поВопросам[к].промахов++;
+  }
+
+  const топ = Object.values(поВопросам).sort((a, b) => b.сколько - a.сколько);
+
+  return {
+    всего: всего,
+    неответила: неответила,
+    поДням: Object.keys(поДням).sort().map(d => ({ день: d, сколько: поДням[d] })),
+    частые: топ.slice(0, 40),
+    промахи: топ.filter(x => x.промахов > 0).slice(0, 30),
+    хранимДней: ХРАНИТЬ_ДНЕЙ
+  };
+}
+
 function pickContext(book, question) {
   const words = [];
   const целиком = norm(question);
@@ -256,6 +326,17 @@ export default {
     const head = cors(origin, env.SITE_ORIGIN);
 
     if (request.method === 'OPTIONS') return new Response(null, { status: 204, headers: head });
+
+    /* Отчёт: что спрашивают у Молли. Отдаём только по ключу, иначе
+       выписку мог бы посмотреть любой желающий. */
+    if (request.method === 'GET' && new URL(request.url).pathname === '/stats') {
+      const ключ = new URL(request.url).searchParams.get('key');
+      if (!env.STATS_KEY || ключ !== env.STATS_KEY) {
+        return reply({ error: 'нужен ключ' }, 403, head);
+      }
+      return reply(await сводка(env), 200, head);
+    }
+
     if (request.method !== 'POST') return reply({ error: 'only POST' }, 405, head);
 
     /* пускаем только со своего сайта — чтобы ключом не пользовались посторонние */
@@ -308,7 +389,8 @@ export default {
 
       const out = await res.json();
       const answer = tidy(out?.result?.alternatives?.[0]?.message?.text?.trim() || '');
-      if (!answer) return reply({ error: 'пустой ответ' }, 502, head);
+      if (!answer) { await записать(env, question, false); return reply({ error: 'пустой ответ' }, 502, head); }
+      await записать(env, question, true);
       return reply({ answer, engine: 'yandex' }, 200, head);
     }
 
@@ -333,8 +415,9 @@ export default {
     let answer = (out && (out.response || out.result?.response) || '').trim();
     /* некоторые модели думают вслух — отрезаем служебную часть */
     answer = tidy(answer.replace(/<think>[\s\S]*?<\/think>/gi, '').trim());
-    if (!answer) return reply({ error: 'пустой ответ' }, 502, head);
+    if (!answer) { await записать(env, question, false); return reply({ error: 'пустой ответ' }, 502, head); }
 
+    await записать(env, question, true);
     return reply({ answer, engine: 'cloudflare' }, 200, head);
   }
 };

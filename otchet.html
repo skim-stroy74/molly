@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>О чём спрашивают Молли</title>
+<meta name="description" content="Служебная сводка вопросов к помощнице паба «Молли».">
+<!-- Служебная страница: в поиске ей делать нечего -->
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0d1a12">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<script>document.documentElement.className+=' js';</script>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="hdr">
+  <div class="wrap">
+    <a href="index.html" class="logo">
+      <img src="images/logo.png" alt="Паб Молли" width="600" height="541">
+      <span class="logo-txt"><b>Паб Молли</b><span>Служебная сводка</span></span>
+    </a>
+    <a href="index.html" class="btn btn-ghost btn-sm">На сайт</a>
+  </div>
+</header>
+
+<section class="sec wood">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="eyebrow">Только для своих</div>
+      <h1>О чём спрашивают Молли</h1>
+      <p class="lead">Видно, чего людям не хватает на сайте и где помощница разводит руками.
+         Имён и телефонов тут нет — только сами вопросы.</p>
+    </div>
+
+    <form class="rep-key rv" id="keyForm">
+      <input type="password" id="key" placeholder="Ключ доступа" aria-label="Ключ доступа" autocomplete="current-password">
+      <button type="submit" class="btn btn-gold">Показать</button>
+      <p class="rep-msg" id="msg"></p>
+    </form>
+
+    <div id="report" hidden>
+      <div class="rep-nums">
+        <div class="rep-num"><b id="nAll">—</b><span>вопросов за месяц</span></div>
+        <div class="rep-num"><b id="nMiss">—</b><span>осталось без ответа</span></div>
+        <div class="rep-num"><b id="nDays">—</b><span>дней с вопросами</span></div>
+      </div>
+
+      <div class="rep-cols">
+        <div class="rep-box">
+          <h2>Спрашивают чаще всего</h2>
+          <ol class="rep-list" id="top"></ol>
+        </div>
+        <div class="rep-box">
+          <h2>Ответить не смогла</h2>
+          <p class="rep-hint">Вот это и стоит добавить на сайт или в справочник.</p>
+          <ol class="rep-list" id="miss"></ol>
+        </div>
+      </div>
+
+      <div class="rep-box">
+        <h2>По дням</h2>
+        <div class="rep-days" id="days"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+(function(){
+  var AI = 'https://molly-ai.vladchugunov06.workers.dev';
+  var форма = document.getElementById('keyForm');
+  var поле  = document.getElementById('key');
+  var сообщ = document.getElementById('msg');
+
+  /* ключ помним на этом устройстве, чтобы не вводить каждый раз */
+  try { var сохр = localStorage.getItem('molly_stats_key'); if (сохр) поле.value = сохр; } catch(e){}
+
+  function число(n){ return (n||0).toLocaleString('ru-RU'); }
+
+  function строки(куда, список, показыватьПромахи){
+    var box = document.getElementById(куда);
+    if (!список.length){
+      box.innerHTML = '<li class="rep-empty">Пока пусто.</li>';
+      return;
+    }
+    box.innerHTML = список.map(function(x){
+      return '<li><span class="rep-q"></span><span class="rep-n">' +
+        число(показыватьПромахи ? x.промахов : x.сколько) + '</span></li>';
+    }).join('');
+    /* текст вопроса вставляем как текст, а не как разметку: его писали
+       посетители, и в нём может оказаться что угодно */
+    [].forEach.call(box.querySelectorAll('.rep-q'), function(el, i){
+      el.textContent = список[i].текст;
+    });
+  }
+
+  function рисовать(d){
+    document.getElementById('nAll').textContent  = число(d.всего);
+    document.getElementById('nMiss').textContent = число(d.неответила);
+    document.getElementById('nDays').textContent = число((d.поДням||[]).length);
+
+    строки('top',  d.частые  || [], false);
+    строки('miss', d.промахи || [], true);
+
+    var дни = d.поДням || [];
+    var макс = дни.reduce(function(m,x){ return Math.max(m, x.сколько); }, 1);
+    document.getElementById('days').innerHTML = дни.map(function(x){
+      var в = Math.max(4, Math.round(x.сколько / макс * 100));
+      var подпись = x.день.slice(8) + '.' + x.день.slice(5,7);
+      return '<div class="rep-day" title="' + подпись + ': ' + x.сколько + '">' +
+        '<div class="rep-bar" style="height:' + в + '%"></div>' +
+        '<span>' + подпись + '</span></div>';
+    }).join('');
+
+    document.getElementById('report').hidden = false;
+  }
+
+  форма.addEventListener('submit', function(e){
+    e.preventDefault();
+    var ключ = поле.value.trim();
+    if (!ключ) return;
+    сообщ.textContent = 'Смотрю…';
+
+    fetch(AI + '/stats?key=' + encodeURIComponent(ключ))
+      .then(function(r){ return r.json(); })
+      .then(function(d){
+        if (d.error){
+          сообщ.textContent = d.error === 'нужен ключ'
+            ? 'Ключ не подошёл.'
+            : 'Хранилище ещё не подключено — см. worker/README.md.';
+          return;
+        }
+        try { localStorage.setItem('molly_stats_key', ключ); } catch(e){}
+        сообщ.textContent = 'Данные за последние ' + (d.хранимДней || 30) + ' дней.';
+        рисовать(d);
+      })
+      .catch(function(){
+        сообщ.textContent = 'Не достучалась до помощницы. Проверьте, что воркер развёрнут.';
+      });
+  });
+})();
+</script>
+</body>
+</html>
