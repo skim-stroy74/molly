@@ -131,6 +131,18 @@ out.push('Парковка, наличие Wi-Fi, дресс-код, можно 
 out.push('вместимость зала, минимальная сумма банкета, стоимость входа на вечеринки,');
 out.push('вакансии, наличие кальянов, программа на ноябрь и позже.');
 
+/* ---------- меню машинным видом: для калькулятора вечера ---------- */
+if (!fs.existsSync(path.join(root, 'data'))) fs.mkdirSync(path.join(root, 'data'));
+const menuJson = [];
+for (const g of menuGroups) {
+  for (const line of g.items) {
+    const m = line.match(/^- (.+?) — (\d+)/);
+    if (!m) continue;
+    menuJson.push({ side: g.side, group: g.title, name: m[1].trim(), price: +m[2] });
+  }
+}
+fs.writeFileSync(path.join(root, 'data', 'menu.json'), JSON.stringify(menuJson), 'utf8');
+
 const text = out.join('\n');
 const dir = path.join(root, 'data');
 if (!fs.existsSync(dir)) fs.mkdirSync(dir);

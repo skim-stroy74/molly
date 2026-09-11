@@ -915,3 +915,103 @@ body.hints .bill-need::before{background:var(--amber)}
   .bill-title{margin:40px 0 18px}
   .bill-cta .btn{flex:1;min-width:140px}
 }
+
+/* ================= УСТАНОВКА НА ТЕЛЕФОН ================= */
+.install{
+  position:fixed;left:12px;right:12px;bottom:12px;z-index:115;
+  background:rgba(18,35,24,.98);border:1px solid var(--line);border-radius:4px;
+  box-shadow:0 20px 50px rgba(0,0,0,.55);padding:14px 16px;
+  display:flex;align-items:center;gap:14px;
+  transform:translateY(140%);transition:transform .35s cubic-bezier(.2,.8,.3,1);
+}
+.install.on{transform:none}
+.install img{width:48px;height:48px;border-radius:10px;flex:none}
+.install-txt{flex:1;min-width:0;line-height:1.35}
+.install-txt b{display:block;font-size:15px;color:var(--cream);margin-bottom:3px}
+.install-txt span{display:block;font-size:12.5px;color:var(--muted)}
+.install-txt span b{display:inline;color:var(--brass-bright);font-size:inherit;margin:0}
+.install-x{
+  flex:none;background:none;border:0;color:var(--muted);font-size:22px;
+  line-height:1;cursor:pointer;padding:4px 2px;
+}
+.install-x:hover{color:var(--cream)}
+/* когда открыто как приложение — полоса черновика и лишнее ни к чему */
+.in-app .draft-bar{display:none}
+
+/* ================= КАЛЬКУЛЯТОР ВЕЧЕРА ================= */
+.calc{display:grid;grid-template-columns:340px 1fr;gap:34px;align-items:start}
+.calc-controls{
+  background:var(--bg-2);border:1px solid var(--line-soft);border-radius:3px;
+  padding:26px 24px;position:sticky;top:96px;
+}
+.calc-field{margin-bottom:28px}
+.calc-field:last-child{margin-bottom:0}
+.calc-field label{
+  display:block;font-size:12px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--brass);font-weight:700;margin-bottom:12px;
+}
+.calc-field label span{float:right;letter-spacing:0;text-transform:none;color:var(--brass-bright);font-size:14px}
+.calc-stepper{display:flex;align-items:center;gap:14px;margin-bottom:12px}
+.calc-stepper button{
+  width:38px;height:38px;border-radius:50%;border:1px solid var(--line);
+  background:rgba(200,164,90,.07);color:var(--cream);font-size:20px;cursor:pointer;
+  transition:background .2s,color .2s;line-height:1;
+}
+.calc-stepper button:hover{background:var(--brass);color:#14100a}
+.calc-stepper output{
+  font-family:var(--serif);font-size:26px;color:var(--cream);min-width:38px;text-align:center;
+  font-variant-numeric:tabular-nums;
+}
+.calc-field input[type=range]{
+  width:100%;-webkit-appearance:none;appearance:none;height:3px;border-radius:2px;
+  background:rgba(242,234,216,.16);outline:none;
+}
+.calc-field input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none;width:20px;height:20px;border-radius:50%;
+  background:var(--brass);cursor:pointer;border:3px solid var(--bg-2);
+}
+.calc-field input[type=range]::-moz-range-thumb{
+  width:20px;height:20px;border-radius:50%;background:var(--brass);
+  cursor:pointer;border:3px solid var(--bg-2);
+}
+.calc-hint{display:block;margin-top:10px;font-size:13.5px;color:var(--muted)}
+.calc-moods{display:flex;flex-direction:column;gap:8px}
+.calc-moods button{
+  text-align:left;padding:11px 15px;border-radius:3px;border:1px solid var(--line-soft);
+  background:transparent;color:var(--muted);font-family:inherit;font-size:14.5px;cursor:pointer;
+  transition:border-color .2s,color .2s,background .2s;
+}
+.calc-moods button:hover{border-color:var(--line);color:var(--cream)}
+.calc-moods button.on{background:rgba(200,164,90,.12);border-color:var(--brass);color:var(--cream);font-weight:600}
+
+.calc-result{background:var(--panel);border:1px solid var(--line);border-radius:3px;padding:30px 32px}
+.calc-head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-bottom:22px}
+.calc-head h2{font-size:26px}
+.calc-again{
+  background:none;border:0;color:var(--brass-bright);font-family:inherit;font-size:14px;
+  cursor:pointer;text-decoration:underline;text-underline-offset:3px;padding:0;
+}
+.calc-again:hover{color:var(--cream)}
+.calc-list{list-style:none;margin-bottom:24px}
+.calc-list li{display:flex;align-items:baseline;gap:10px;padding:11px 0;border-bottom:1px solid var(--line-soft)}
+.calc-name{font-size:16px;color:var(--cream);flex:none;max-width:72%}
+.calc-name i{font-style:normal;color:var(--muted);font-size:14px}
+.calc-dots{flex:1;border-bottom:1px dotted rgba(200,164,90,.35);transform:translateY(-4px);min-width:12px}
+.calc-price{font-size:15.5px;color:var(--brass-bright);font-weight:600;white-space:nowrap;font-variant-numeric:tabular-nums}
+.calc-total{display:flex;gap:40px;padding:18px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.calc-total div{display:flex;flex-direction:column;gap:4px}
+.calc-total span{font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.calc-total b{font-family:var(--serif);font-size:30px;color:var(--brass-bright);font-variant-numeric:tabular-nums}
+.calc-note{margin:18px 0 22px;font-size:14.5px;color:var(--muted);line-height:1.6}
+.calc-warn{color:#eda85f}
+.calc-acts{display:flex;gap:12px;flex-wrap:wrap}
+.calc-msg{margin-top:14px;font-size:13.5px;color:#7d8a7a;min-height:18px}
+.calc-msg.ok{color:#7ec98a}
+@media(max-width:960px){
+  .calc{grid-template-columns:1fr;gap:22px}
+  .calc-controls{position:static}
+  .calc-result{padding:22px 20px}
+  .calc-total{gap:28px}
+  .calc-total b{font-size:25px}
+  .calc-acts .btn{flex:1;min-width:150px}
+}

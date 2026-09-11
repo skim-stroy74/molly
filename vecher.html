@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Соберите вечер — Irish Pub Molly</title>
+<meta name="description" content="Подберём стол под вашу компанию и бюджет: конкретные блюда из меню паба «Молли» с точной суммой. Магнитогорск, Завенягина, 8а.">
+<link rel="canonical" href="https://molly-mgn.com/vecher.html">
+<!-- ЧЕРНОВИК: снять перед сдачей -->
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0d1a12">
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="apple-touch-icon" href="images/icon-192.png">
+<link rel="manifest" href="manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Паб Молли">
+<script>document.documentElement.className+=' js';</script>
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="hints">
+
+<header class="hdr">
+  <div class="wrap">
+    <a href="index.html" class="logo">
+      <img src="images/logo.png" alt="Паб Молли — ирландский паб в Магнитогорске" width="600" height="541">
+      <span class="logo-txt"><b>Паб Молли</b><span>Ирландский паб</span></span>
+    </a>
+    <nav class="nav" id="nav">
+      <a href="afisha.html">Афиша</a>
+      <a href="index.html#about">О пабе</a>
+      <a href="index.html#menu">Меню</a>
+      <a href="index.html#banquet">Банкеты</a>
+      <a href="foto.html">Фото</a>
+      <a href="index.html#contacts">Контакты</a>
+    </nav>
+    <a href="tel:+73519453737" class="hdr-phone">45-37-37</a>
+    <a href="index.html#book" class="btn btn-gold btn-sm">Забронировать</a>
+    <button class="burger" id="burger" aria-label="Меню" aria-expanded="false"><i></i><i></i><i></i></button>
+  </div>
+</header>
+
+<section class="sec wood">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div class="eyebrow">Прикинуть заранее</div>
+      <h1>Соберите вечер</h1>
+      <p class="lead">Скажите, сколько вас и по какому поводу, — и мы соберём стол из настоящего меню с точной суммой. Никаких «средних чеков»: конкретные блюда, конкретные цены.</p>
+    </div>
+
+    <div class="calc rv">
+      <div class="calc-controls">
+        <div class="calc-field">
+          <label for="people">Сколько вас</label>
+          <div class="calc-stepper">
+            <button type="button" id="less" aria-label="Меньше">−</button>
+            <output id="peopleOut">4</output>
+            <button type="button" id="more" aria-label="Больше">+</button>
+          </div>
+          <input type="range" id="people" min="1" max="20" value="4" aria-label="Количество гостей">
+        </div>
+
+        <div class="calc-field">
+          <label for="mood">Какой повод</label>
+          <div class="calc-moods" id="mood">
+            <button type="button" data-mood="friends" class="on">Посидеть с друзьями</button>
+            <button type="button" data-mood="dinner">Поужинать</button>
+            <button type="button" data-mood="birthday">День рождения</button>
+            <button type="button" data-mood="beer">Только под пенное</button>
+          </div>
+        </div>
+
+        <div class="calc-field">
+          <label for="budget">Сколько готовы потратить <span id="budgetOut">6000 ₽</span></label>
+          <input type="range" id="budget" min="1000" max="40000" step="500" value="6000" aria-label="Бюджет">
+          <span class="calc-hint" id="perPerson">по 1500 ₽ с человека</span>
+        </div>
+      </div>
+
+      <div class="calc-result">
+        <div class="calc-head">
+          <h2>Получается так</h2>
+          <button type="button" class="calc-again" id="again">Собрать иначе</button>
+        </div>
+
+        <ul class="calc-list" id="list"></ul>
+
+        <div class="calc-total">
+          <div>
+            <span>Итого</span>
+            <b id="total">—</b>
+          </div>
+          <div>
+            <span>С человека</span>
+            <b id="each">—</b>
+          </div>
+        </div>
+
+        <p class="calc-note" id="note"></p>
+
+        <div class="calc-acts">
+          <a href="tel:+73519453737" class="btn btn-gold">Забронировать стол</a>
+          <button type="button" class="btn btn-ghost" id="copy">Скопировать заказ</button>
+          <a href="index.html#menu" class="btn btn-ghost">Всё меню</a>
+        </div>
+        <p class="calc-msg" id="msg"></p>
+      </div>
+    </div>
+
+    <div class="need">
+      <span class="tag">Как это считается</span>
+      <b>Честно и из настоящего меню</b>
+      <p>Подбор идёт по тем же 131 позиции, что и в разделе «Меню», с теми же ценами. Ничего не придумывается: если блюда нет в меню, его не будет и здесь.</p>
+      <p>Это прикидка, а не заказ. Итог зависит от того, что вы в итоге выберете за столом, — но порядок суммы понятен заранее, и это главное.</p>
+    </div>
+  </div>
+</section>
+
+<footer class="ftr">
+  <div class="wrap">
+    <div class="ftr-top">
+      <a href="index.html" class="logo">
+        <img src="images/logo.png" alt="Паб Молли" width="600" height="541">
+      </a>
+      <nav class="ftr-nav">
+        <a href="afisha.html">Афиша</a>
+        <a href="index.html#menu">Меню</a>
+        <a href="vecher.html">Собрать вечер</a>
+        <a href="foto.html">Фото</a>
+        <a href="index.html#book">Бронирование</a>
+        <a href="politika.html">Конфиденциальность</a>
+      </nav>
+    </div>
+    <div class="ftr-bot">
+      <div>Irish Pub Molly · Магнитогорск, Завенягина, 8а · <a href="tel:+73519453737">45-37-37</a></div>
+      <div style="display:flex;align-items:center;gap:14px">
+        <span class="age">18+</span>
+        <span>Чрезмерное употребление алкоголя вредит вашему здоровью</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  /* мобильное меню */
+  var burger=document.getElementById('burger'), nav=document.getElementById('nav');
+  burger.addEventListener('click',function(){
+    var open=nav.classList.toggle('on');
+    burger.classList.toggle('on',open);
+    burger.setAttribute('aria-expanded',open?'true':'false');
+  });
+
+  var items=document.querySelectorAll('.rv');
+  [].forEach.call(items,function(el){el.classList.add('in')});
+
+  /* ---------- данные ---------- */
+  var MENU=[], ready=false;
+
+  /* Из чего собираем вечер. shared — одна порция на несколько человек,
+     each — по порции на каждого. Порядок важен: что выше, то ставим первым. */
+  var PLANS={
+    friends:[
+      {group:'Закуски',          per:3, w:.22, need:true},
+      {group:'На компанию',      per:6, w:.24},
+      {group:'Пицца',            per:4, w:.16},
+      {group:'Пиво',             each:true, w:.26, need:true},
+      {group:'Гарниры и соусы',  per:4, w:.07},
+      {group:'Напитки и вода',   per:3, w:.05}
+    ],
+    dinner:[
+      {group:'Салаты',           each:true, w:.24, need:true},
+      {group:'Горячее и гриль',  each:true, w:.40, need:true},
+      {group:'Закуски',          per:4, w:.10},
+      {group:'Гарниры и соусы',  per:2, w:.07},
+      {group:'Напитки и вода',   each:true, w:.12, need:true},
+      {group:'Десерты',          per:2, w:.07}
+    ],
+    birthday:[
+      {group:'На компанию',      per:6, w:.26, need:true},
+      {group:'Салаты',           per:2, w:.14},
+      {group:'Горячее и гриль',  each:true, w:.30, need:true},
+      {group:'Игристое, вермут, сидр', per:4, w:.14},
+      {group:'Десерты',          each:true, w:.11},
+      {group:'Напитки и вода',   per:3, w:.05}
+    ],
+    beer:[
+      {group:'Пиво',             each:true, w:.42, need:true},
+      {group:'Закуски',          per:2, w:.30, need:true},
+      {group:'На компанию',      per:8, w:.18},
+      {group:'Гарниры и соусы',  per:4, w:.10}
+    ]
+  };
+
+  var people=4, budget=6000, mood='friends', shuffle=0;
+
+  function byGroup(name){ return MENU.filter(function(i){return i.group===name}); }
+
+  /* Подбор по долям бюджета, а не «бери самое дорогое, что влезет».
+     Иначе первая же строка съедает все деньги и на пиво не остаётся —
+     а заказ в пабе без пенного выглядит странно.
+
+     Каждой строке плана отведена своя доля (w). Внутри доли берём
+     позицию, цена которой ближе всего к расчётной. «Собрать иначе»
+     сдвигает выбор на соседнюю по цене. */
+  function compose(){
+    var plan=PLANS[mood]||PLANS.friends;
+    var out=[], spent=0;
+
+    plan.forEach(function(row,idx){
+      var pool=byGroup(row.group);
+      if(!pool.length) return;
+
+      var qty = row.each ? people : Math.max(1, Math.ceil(people/(row.per||4)));
+      var target = (budget*(row.w||0.1))/qty;          // сколько можем дать за порцию
+
+      /* сортируем по близости к расчётной цене, но не дороже её в полтора раза */
+      var pool2 = pool.slice().sort(function(a,b){
+        return Math.abs(a.price-target)-Math.abs(b.price-target);
+      });
+      var near = pool2.filter(function(i){return i.price<=target*1.5});
+      if(!near.length) near=[pool.slice().sort(function(a,b){return a.price-b.price})[0]];
+
+      var pick = near[(idx+shuffle)%Math.min(near.length,3)] || near[0];
+
+      /* необязательную строку пропускаем, если она выбивает из бюджета */
+      if(!row.need && spent+pick.price*qty > budget) return;
+
+      out.push({name:pick.name, price:pick.price, qty:qty, sum:pick.price*qty});
+      spent+=pick.price*qty;
+    });
+
+    return out;
+  }
+
+  function money(n){ return n.toLocaleString('ru-RU')+' ₽'; }
+
+  function render(){
+    if(!ready) return;
+    var rows=compose();
+    var total=rows.reduce(function(s,r){return s+r.sum},0);
+
+    var list=document.getElementById('list');
+    list.innerHTML='';
+    rows.forEach(function(r){
+      var li=document.createElement('li');
+      li.innerHTML='<span class="calc-name">'+r.name+
+        (r.qty>1?'<i> × '+r.qty+'</i>':'')+'</span>'+
+        '<span class="calc-dots"></span>'+
+        '<span class="calc-price">'+money(r.sum)+'</span>';
+      list.appendChild(li);
+    });
+
+    document.getElementById('total').textContent=money(total);
+    document.getElementById('each').textContent=money(Math.round(total/people));
+
+    var note=document.getElementById('note');
+    if(total>budget){
+      note.textContent='Уложиться в '+money(budget)+' на '+people+' — сложно: даже самое скромное выходит дороже. Подвиньте бюджет или уменьшите компанию.';
+      note.className='calc-note calc-warn';
+    } else if(budget-total>budget*0.35){
+      note.textContent='Остаётся '+money(budget-total)+' — можно взять десерт, добавить закусок или просто не считать каждую позицию.';
+      note.className='calc-note';
+    } else {
+      note.textContent='Набор укладывается в бюджет. Это прикидка: за столом вы можете заказать что угодно другое.';
+      note.className='calc-note';
+    }
+    window.__order={rows:rows,total:total};
+  }
+
+  /* ---------- органы управления ---------- */
+  var peopleR=document.getElementById('people'),
+      budgetR=document.getElementById('budget');
+
+  function setPeople(v){
+    people=Math.min(20,Math.max(1,v));
+    peopleR.value=people;
+    document.getElementById('peopleOut').textContent=people;
+    render();
+  }
+  peopleR.addEventListener('input',function(){setPeople(+peopleR.value)});
+  document.getElementById('less').addEventListener('click',function(){setPeople(people-1)});
+  document.getElementById('more').addEventListener('click',function(){setPeople(people+1)});
+
+  budgetR.addEventListener('input',function(){
+    budget=+budgetR.value;
+    document.getElementById('budgetOut').textContent=money(budget);
+    document.getElementById('perPerson').textContent='по '+money(Math.round(budget/people))+' с человека';
+    render();
+  });
+
+  document.getElementById('mood').addEventListener('click',function(e){
+    var b=e.target.closest('button'); if(!b) return;
+    mood=b.dataset.mood;
+    [].forEach.call(this.querySelectorAll('button'),function(x){x.classList.toggle('on',x===b)});
+    render();
+  });
+
+  document.getElementById('again').addEventListener('click',function(){
+    shuffle++; render();
+  });
+
+  document.getElementById('copy').addEventListener('click',function(){
+    var o=window.__order; if(!o) return;
+    var text='Заказ в паб «Молли», '+people+' чел.:\n'+
+      o.rows.map(function(r){return '— '+r.name+(r.qty>1?' × '+r.qty:'')+' — '+money(r.sum)}).join('\n')+
+      '\nИтого '+money(o.total)+' (по '+money(Math.round(o.total/people))+' с человека)';
+    var msg=document.getElementById('msg');
+    function done(ok){
+      msg.textContent = ok ? 'Скопировано — можно отправить администратору при бронировании.'
+                           : 'Не удалось скопировать, выделите список вручную.';
+      msg.className = 'calc-msg' + (ok?' ok':'');
+    }
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(function(){done(true)},function(){done(false)});
+    } else { done(false); }
+  });
+
+  /* ---------- загрузка меню ---------- */
+  fetch('data/menu.json')
+    .then(function(r){ if(!r.ok) throw new Error(r.status); return r.json(); })
+    .then(function(j){
+      MENU=j; ready=true;
+      document.getElementById('budgetOut').textContent=money(budget);
+      document.getElementById('perPerson').textContent='по '+money(Math.round(budget/people))+' с человека';
+      render();
+    })
+    .catch(function(){
+      document.getElementById('note').textContent='Не удалось загрузить меню. Откройте раздел «Меню» — там всё на месте.';
+      document.getElementById('note').className='calc-note calc-warn';
+    });
+})();
+</script>
+<script src="install.js" defer></script>
+<script src="cookie.js" defer></script>
+</body>
+</html>
