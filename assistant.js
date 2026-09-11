@@ -173,11 +173,18 @@
     }).join('') + '</div>';
   }
 
+  /* Гость может открыть помощницу раньше, чем страница дочитает меню —
+     тогда MENU окажется пустым и на вопрос про пиво он получит отписку.
+     Дешевле перечитать, чем отправлять человека звонить. */
+  function ensureMenu() { if (!MENU.length) readMenu(); }
+
   function menuByGroup(re) {
+    ensureMenu();
     return MENU.filter(function (m) { return re.test(m.group.toLowerCase()); });
   }
 
   function menuSearch(q) {
+    ensureMenu();
     var n = norm(q);
     var words = n.split(' ').filter(function (w) { return w.length > 3; });
     if (!words.length) return [];
@@ -395,6 +402,22 @@
   function priceQuery(n) {
     var m = n.match(/(?:до|дешевле|меньше|не дороже|в пределах)\s*(\d{2,5})/);
     return m ? +m[1] : null;
+  }
+
+  /* Заготовки отвечают мгновенно и не тратят нейроны, но они прямолинейны:
+     на «посоветуйте что-нибудь под пиво на четверых» выдавали карту сортов,
+     хотя гость просил закуску к пиву. Просьбы подобрать отдаём нейросети —
+     она для того и подключена. Бронь остаётся за сценарием: там форма заявки,
+     которую нейросеть не заменит. */
+  var ADVICE = /(посовет|порекоменд|подбер|что взять|что выбрать|что попробовать|под пиво|на двоих|на троих|на четверых|на компанию|вегетариан|не ем |бюджет|уложиться)/;
+  var BOOKING = /(заброн|бронь|брониров|столик|заявк)/;
+
+  function wantsAI(n) {
+    if (!AI_URL || !n) return false;
+    if (BOOKING.test(n)) return false;
+    if (ADVICE.test(n)) return true;
+    /* длинный вопрос своими словами — почти всегда не про одно ключевое слово */
+    return n.split(' ').filter(function (w) { return w.length > 3; }).length >= 5;
   }
 
   function answerFor(text) {
@@ -641,7 +664,7 @@
       return;
     }
 
-    var a = answerFor(text);
+    var a = wantsAI(norm(text)) ? null : answerFor(text);
     if (a) {
       track('hit', text);
       say(a);
