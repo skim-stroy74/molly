@@ -68,6 +68,11 @@
 
 <script>
 (function(){
+  /* Блоки с классом rv прячутся до появления в поле зрения — за это отвечает
+     скрипт главной страницы, которого здесь нет. Без него заголовок и поле
+     для ключа остаются невидимыми, и страница выглядит пустой. Показываем сразу. */
+  [].forEach.call(document.querySelectorAll('.rv'), function(el){ el.classList.add('in'); });
+
   var AI = 'https://molly-ai.vladchugunov06.workers.dev';
   var форма = document.getElementById('keyForm');
   var поле  = document.getElementById('key');
