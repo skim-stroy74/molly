@@ -75,6 +75,110 @@ function cors(origin, raw) {
   };
 }
 
+/* ---------- подбор нужных разделов справочника ----------
+
+   Справочник целиком — 13 КБ, из них меню и афиша занимают 83%.
+   Слабая модель в таком объёме тонет: на вопрос «шумно ли в четверг»
+   она отвечала, как добраться до паба. Поэтому отдаём ей не всё,
+   а только те разделы, которые относятся к заданному вопросу.
+
+   Побочная выгода: запрос втрое короче, значит втрое дешевле
+   по нейронам — бесплатного лимита хватает на большее число ответов. */
+
+const CONTEXT_LIMIT = 4500;  // символов справочника на один вопрос
+
+function norm(s) {
+  return String(s || '').toLowerCase().replace(/ё/g, 'е')
+    .replace(/[^a-zа-я0-9\s]/g, ' ').replace(/\s+/g, ' ').trim();
+}
+
+/* режем справочник на разделы; меню дополнительно — на подразделы,
+   иначе «Пиво» тянет за собой все 7 КБ карты бара и кухни */
+function sections(book) {
+  const out = [];
+  let head = 'начало', body = [];
+  const push = () => { if (body.length) out.push({ head, text: body.join('\n') }); };
+
+  for (const line of book.split('\n')) {
+    if (/^== /.test(line)) { push(); head = line; body = [line]; }
+    else if (/^-- /.test(line)) { push(); head = line; body = [line]; }
+    else body.push(line);
+  }
+  push();
+  return out;
+}
+
+/* слова, которые есть в любом вопросе и потому ни на что не указывают:
+   без этого «есть что-нибудь острое» вытаскивало карту ликёров */
+const STOP = ['есть', 'быть', 'вас', 'ваш', 'наш', 'мне', 'что', 'как', 'где',
+  'когда', 'можно', 'сколько', 'какой', 'какая', 'какие', 'какое', 'нибудь',
+  'нужно', 'хочу', 'буду', 'подскажи', 'скажи', 'пожалуйста', 'привет',
+  'спасибо', 'друг', 'друга', 'двоих', 'троих', 'человек', 'тысячи'];
+
+/* гость говорит своими словами, а в справочнике другие: «вегетарианец»
+   там не встречается ни разу, зато есть «овощное плато» и салаты */
+const SYNONYMS = {
+  'вегетариан': ['овощ', 'салат', 'сырн', 'гриб'],
+  'веган':      ['овощ', 'салат'],
+  'мясоед':     ['мясн', 'стейк', 'гриль'],
+  'мясо':       ['мясн', 'стейк', 'гриль', 'ребр'],
+  'остр':       ['чили', 'том ям', 'пикант'],
+  'сладк':      ['десерт', 'мороженое', 'медовик'],
+  'выпить':     ['пиво', 'коктейл', 'виски'],
+  'перекус':    ['закуск'],
+  'шумн':       ['музык', 'диджей', 'танцпол', 'караоке'],
+  'тихо':       ['программ'],
+  'доехать':    ['адрес', 'завенягина'],
+  'добрат':     ['адрес', 'завенягина'],
+  'припарк':    ['парковк']
+};
+
+function pickContext(book, question) {
+  const words = [];
+  for (const raw of norm(question).split(' ')) {
+    if (raw.length <= 3 || STOP.includes(raw)) continue;
+    const w = raw.length > 5 ? raw.slice(0, raw.length - 2) : raw;
+    words.push(w);
+    for (const key of Object.keys(SYNONYMS)) {
+      if (raw.startsWith(key) || key.startsWith(w)) words.push(...SYNONYMS[key]);
+    }
+  }
+
+  const secs = sections(book);
+  const always = secs.filter(s => /ЧАСЫ РАБОТЫ|ЧЕГО МЫ НЕ ЗНАЕМ/.test(s.head));
+
+  const scored = secs
+    .filter(s => !always.includes(s))
+    .map(s => {
+      const hay = norm(s.text), title = norm(s.head);
+      let score = 0;
+      for (const w of words) {
+        if (title.includes(w)) score += 3;   // совпало в заголовке — почти наверняка оно
+        else if (hay.includes(w)) score += 1;
+      }
+      return { s, score };
+    })
+    .filter(x => x.score > 0)
+    .sort((a, b) => b.score - a.score);
+
+  const chosen = always.slice();
+  let size = chosen.reduce((n, s) => n + s.text.length, 0);
+  for (const { s } of scored) {
+    if (size + s.text.length > CONTEXT_LIMIT) continue;
+    chosen.push(s);
+    size += s.text.length;
+  }
+
+  /* вопрос ни на что не похож — даём общее описание, пусть ответит по сути */
+  if (chosen.length === always.length) {
+    for (const s of secs) {
+      if (/ЗАВЕДЕНИЕ|ПРОГРАММА|БРОНИРОВАНИЕ/.test(s.head)) chosen.push(s);
+    }
+  }
+
+  return chosen.map(s => s.text).join('\n\n');
+}
+
 /* Модель иногда упирается в лимит длины и обрывается на полуслове:
    «Точную атмосферу в будние дни не указана, но, скорее». Гостю лучше
    показать последнюю законченную мысль, чем огрызок фразы. */
@@ -130,7 +234,7 @@ export default {
     catch (e) { return reply({ error: 'справочник недоступен' }, 503, head); }
 
     const messages = [
-      { role: 'system', content: SYSTEM + book },
+      { role: 'system', content: SYSTEM + pickContext(book, question) },
       { role: 'user', content: question }
     ];
 
