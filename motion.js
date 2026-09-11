@@ -6,6 +6,34 @@
 (function(){
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  /* --- 0. Отложенные фоны ---
+     Картинка, поставленная фоном через style, грузится сразу, даже если
+     блок далеко внизу: у фонов нет ленивой загрузки. Из-за этого афиши
+     концертов тянули 800 КБ ещё до того, как гость до них долистал.
+     Поэтому адрес лежит в data-bg, а сюда попадает при появлении. */
+  (function(){
+    var фоны = document.querySelectorAll('[data-bg]');
+    if (!фоны.length) return;
+
+    function поставить(el){
+      var адрес = el.getAttribute('data-bg');
+      if (!адрес) return;
+      el.style.backgroundImage = 'url(' + адрес + ')';
+      el.removeAttribute('data-bg');
+    }
+
+    if (!('IntersectionObserver' in window)) {
+      [].forEach.call(фоны, поставить);
+      return;
+    }
+    var bio = new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if (e.isIntersecting) { поставить(e.target); bio.unobserve(e.target); }
+      });
+    }, { rootMargin: '300px' });      /* с запасом, чтобы успело подгрузиться */
+    [].forEach.call(фоны, function(el){ bio.observe(el); });
+  })();
+
   /* --- 1. Готовим сетки к появлению по очереди ---
      Контейнер перестаёт появляться целиком, вместо него
      по одной проявляются карточки внутри. */
