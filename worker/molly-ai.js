@@ -23,7 +23,7 @@
 
    Инструкция по шагам — в файле worker/README.md */
 
-const CF_MODEL = '@cf/qwen/qwen3-30b-a3b-fp8'; // 30B, хорошо знает русский, дёшев по нейронам
+const CF_MODEL = '@cf/meta/llama-3.3-70b-instruct-fp8-fast'; // 70B, русский заметно лучше
 const YA_MODEL = 'yandexgpt-lite/latest';
 const MAX_QUESTION = 500;      // длиннее вопрос не принимаем
 const MAX_ANSWER_TOKENS = 600; // и не даём разогнаться ответу
@@ -241,19 +241,8 @@ export default {
     try { book = await knowledge(env); }
     catch (e) { return reply({ error: 'справочник недоступен' }, 503, head); }
 
-    /* Два примера вместо длинных объяснений: модель у нас небольшая,
-       ей проще повторить образец, чем следовать списку правил.
-       Первый показывает, что надо соображать по смыслу, второй —
-       что отказ уместен только там, где сведений правда нет. */
     const messages = [
       { role: 'system', content: SYSTEM + pickContext(book, question) },
-      { role: 'user', content: 'есть что-нибудь острое?' },
-      { role: 'assistant', content: 'Есть крылышки куриные чили — 600 ₽ и пикантные ' +
-        'гренки из бородинского хлеба с чесноком — 450 ₽. К закускам можно взять ' +
-        'соус сладкий чили за 70 ₽.' },
-      { role: 'user', content: 'сколько стоит вход на вечеринку?' },
-      { role: 'assistant', content: 'Вход платный, но точную сумму назвать не возьмусь — ' +
-        'она зависит от события. Позвоните, пожалуйста: +7 (3519) 45-37-37.' },
       { role: 'user', content: question }
     ];
 
