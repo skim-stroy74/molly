@@ -26,7 +26,7 @@
 const CF_MODEL = '@cf/qwen/qwen3-30b-a3b-fp8'; // 30B, хорошо знает русский, дёшев по нейронам
 const YA_MODEL = 'yandexgpt-lite/latest';
 const MAX_QUESTION = 500;      // длиннее вопрос не принимаем
-const MAX_ANSWER_TOKENS = 350; // и не даём разогнаться ответу
+const MAX_ANSWER_TOKENS = 600; // и не даём разогнаться ответу
 
 const SYSTEM = `Ты — Молли, помощница ирландского паба «Молли» в Магнитогорске.
 
@@ -37,6 +37,8 @@ const SYSTEM = `Ты — Молли, помощница ирландского �
 
 КАК ОТВЕЧАТЬ:
 - по-русски, на «вы», дружелюбно и коротко: две-четыре фразы, без воды;
+- НИКОГДА не вываливай раздел меню целиком. Если перечисляешь — не больше пяти
+  позиций, и только те, что подходят под вопрос;
 - цены называй ровно так, как в справочнике;
 - если спрашивают о том, чего в пабе нет, — так и скажи, но предложи, что есть взамен;
 - разговор только о пабе: меню, часы, афиша, банкеты, бронь, как добраться.
@@ -71,6 +73,18 @@ function cors(origin, raw) {
     'Access-Control-Allow-Headers': 'Content-Type',
     'Access-Control-Max-Age': '86400'
   };
+}
+
+/* Модель иногда упирается в лимит длины и обрывается на полуслове:
+   «Точную атмосферу в будние дни не указана, но, скорее». Гостю лучше
+   показать последнюю законченную мысль, чем огрызок фразы. */
+function tidy(s) {
+  if (/[.!?…»)]\s*$/.test(s)) return s;
+  const cut = Math.max(s.lastIndexOf('.'), s.lastIndexOf('!'),
+                       s.lastIndexOf('?'), s.lastIndexOf('…'));
+  /* оставляем всё до последней точки, но только если там есть
+     хоть одна законченная мысль, а не два слова */
+  return cut >= 19 ? s.slice(0, cut + 1) : s;
 }
 
 function reply(body, status, headers) {
@@ -149,7 +163,7 @@ export default {
       }
 
       const out = await res.json();
-      const answer = out?.result?.alternatives?.[0]?.message?.text?.trim();
+      const answer = tidy(out?.result?.alternatives?.[0]?.message?.text?.trim() || '');
       if (!answer) return reply({ error: 'пустой ответ' }, 502, head);
       return reply({ answer, engine: 'yandex' }, 200, head);
     }
@@ -174,7 +188,7 @@ export default {
 
     let answer = (out && (out.response || out.result?.response) || '').trim();
     /* некоторые модели думают вслух — отрезаем служебную часть */
-    answer = answer.replace(/<think>[\s\S]*?<\/think>/gi, '').trim();
+    answer = tidy(answer.replace(/<think>[\s\S]*?<\/think>/gi, '').trim());
     if (!answer) return reply({ error: 'пустой ответ' }, 502, head);
 
     return reply({ answer, engine: 'cloudflare' }, 200, head);
