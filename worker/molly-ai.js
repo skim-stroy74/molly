@@ -155,7 +155,7 @@ function pickContext(book, question) {
   }
 
   const secs = sections(book);
-  const always = secs.filter(s => /ЧАСЫ РАБОТЫ|ЧЕГО МЫ НЕ ЗНАЕМ/.test(s.head));
+  const always = secs.filter(s => /ЧАСЫ РАБОТЫ|СВЕДЕНИЙ НЕТ/.test(s.head));
 
   const scored = secs
     .filter(s => !always.includes(s))
@@ -171,8 +171,11 @@ function pickContext(book, question) {
     .filter(x => x.score > 0)
     .sort((a, b) => b.score - a.score);
 
-  const chosen = always.slice();
-  let size = chosen.reduce((n, s) => n + s.text.length, 0);
+  /* Подходящее вопросу идёт ПЕРВЫМ, служебное — в хвост. Модель опирается
+     на начало текста: когда «чего мы не знаем» стояло сверху, на вопрос
+     про еду она отвечала «мы не знаем про парковку». */
+  const chosen = [];
+  let size = always.reduce((n, s) => n + s.text.length, 0);
   for (const { s } of scored) {
     if (size + s.text.length > CONTEXT_LIMIT) continue;
     chosen.push(s);
@@ -180,13 +183,13 @@ function pickContext(book, question) {
   }
 
   /* вопрос ни на что не похож — даём общее описание, пусть ответит по сути */
-  if (chosen.length === always.length) {
+  if (!chosen.length) {
     for (const s of secs) {
       if (/ЗАВЕДЕНИЕ|ПРОГРАММА|БРОНИРОВАНИЕ/.test(s.head)) chosen.push(s);
     }
   }
 
-  return chosen.map(s => s.text).join('\n\n');
+  return chosen.concat(always).map(s => s.text).join('\n\n');
 }
 
 /* Модель иногда упирается в лимит длины и обрывается на полуслове:
