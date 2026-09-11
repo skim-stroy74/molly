@@ -86,7 +86,9 @@
     /* цифры оживают и в фактах о пабе, и в образце счёта у калькулятора */
     [].forEach.call(document.querySelectorAll('.fact b, .ccd-sum b'), function(b){
       var txt = b.textContent.trim();
-      var m = txt.match(/^(\d[\d\s]*)(\D*)$/);
+      /* первая группа ленивая: иначе пробел перед «₽» уезжал в число,
+         и сумма показывалась слипшейся — «4 450₽» вместо «4 450 ₽» */
+      var m = txt.match(/^(\d[\d\s]*?)(\s*\D*)$/);
       if (!m) return;
       var target = parseInt(m[1].replace(/\s/g, ''), 10);
       if (!target || target < 5) return;
