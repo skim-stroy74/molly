@@ -48,10 +48,25 @@ const SYSTEM = `Ты — Молли, помощница ирландского �
 СПРАВОЧНИК:
 `;
 
-function cors(origin, allowed) {
-  const ok = allowed && origin && origin.startsWith(allowed);
+/* SITE_ORIGIN можно задать списком через запятую:
+   впишите сразу и нынешний адрес, и будущий домен — при переезде
+   ничего менять не придётся, оба будут работать. */
+function allowList(raw) {
+  return String(raw || '').split(',').map(s => s.trim()).filter(Boolean);
+}
+/* сравниваем адрес целиком, а не по началу строки: иначе чужой сайт
+   вида skim174.ru.злодей.рф прошёл бы проверку как «наш» */
+function trimSlash(s) { return String(s).replace(/\/+$/, ''); }
+function allowed(origin, raw) {
+  if (!origin) return false;
+  return allowList(raw).some(a => trimSlash(a) === trimSlash(origin));
+}
+
+function cors(origin, raw) {
+  const list = allowList(raw);
+  const ok = allowed(origin, raw);
   return {
-    'Access-Control-Allow-Origin': ok ? origin : (allowed || '*'),
+    'Access-Control-Allow-Origin': ok ? origin : (list[0] || '*'),
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type',
     'Access-Control-Max-Age': '86400'
@@ -86,7 +101,7 @@ export default {
     if (request.method !== 'POST') return reply({ error: 'only POST' }, 405, head);
 
     /* пускаем только со своего сайта — чтобы ключом не пользовались посторонние */
-    if (env.SITE_ORIGIN && origin && !origin.startsWith(env.SITE_ORIGIN)) {
+    if (env.SITE_ORIGIN && origin && !allowed(origin, env.SITE_ORIGIN)) {
       return reply({ error: 'чужой источник' }, 403, head);
     }
 
