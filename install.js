@@ -16,7 +16,10 @@
   var standalone = window.matchMedia('(display-mode: standalone)').matches ||
                    window.navigator.standalone === true;
   if (standalone) { document.documentElement.classList.add('in-app'); return; }
-  if (stored() === 'no' || stored() === 'done') return;
+  /* Установил — больше не предлагаем вовсе. А вот отказ от плашки
+     кружок не отменяет: плашка спрашивает не вовремя, кружок молча ждёт. */
+  if (stored() === 'done') return;
+  var плашкуНеПоказывать = stored() === 'no';
 
   var isPhone = window.innerWidth <= 900;
   var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
@@ -42,6 +45,8 @@
     e.preventDefault();
     prompt = e;
     if (!isPhone) return;
+    показатьКружок();
+    return;   /* дальше плашка — она больше не нужна, есть кружок */
 
     var el = box(
       '<img src="images/icon-192.png" alt="" width="48" height="48">' +
@@ -65,6 +70,8 @@
 
   /* --- айфон: команды нет, показываем как сделать руками --- */
   if (isIOS && isPhone) {
+    показатьКружок();
+    return;   /* дальше плашка — она больше не нужна, есть кружок */
     setTimeout(function () {
       var el = box(
         '<img src="images/icon-192.png" alt="" width="48" height="48">' +
@@ -76,6 +83,57 @@
       );
       el.querySelector('[data-no]').addEventListener('click', function () { close(el, 'no'); });
     }, 9000);
+  }
+
+
+  /* --- кружок «поставить приложение» ---
+     Плашку внизу гость видит один раз и она уходит навсегда. Кружок
+     остаётся на месте: человек ставит приложение, когда сам созреет.
+     Показываем только на телефоне и только если установка вообще
+     возможна — иначе кнопка обманывала бы. */
+  var кружок = null;
+
+  function показатьКружок() {
+    if (кружок || !isPhone) return;
+    кружок = document.createElement('button');
+    кружок.type = 'button';
+    кружок.className = 'install-dot';
+    кружок.setAttribute('aria-label', 'Поставить Молли на экран «Домой»');
+    кружок.title = 'Поставить на экран «Домой»';
+    кружок.innerHTML = '<img src="images/icon-192.png" alt="" width="30" height="30">';
+    document.body.appendChild(кружок);
+    setTimeout(function () { кружок.classList.add('on'); }, 600);
+
+    кружок.addEventListener('click', function () {
+      if (prompt) {
+        prompt.prompt();
+        prompt.userChoice.then(function (r) {
+          if (r && r.outcome === 'accepted') {
+            кружок.remove();
+            кружок = null;
+            remember('done');
+          }
+        });
+      } else if (isIOS) {
+        подсказкаАйфон();
+      }
+    });
+  }
+
+  function подсказкаАйфон() {
+    if (document.querySelector('.install')) return;
+    var el = box(
+      '<img src="images/icon-192.png" alt="" width="48" height="48">' +
+      '<div class="install-txt">' +
+        '<b>Молли на экране «Домой»</b>' +
+        '<span>Нажмите <b>Поделиться</b> внизу, затем «На экран «Домой»»</span>' +
+      '</div>' +
+      '<button class="install-x" data-no aria-label="Понятно">×</button>'
+    );
+    el.querySelector('[data-no]').addEventListener('click', function () {
+      el.classList.remove('on');
+      setTimeout(function () { el.remove(); }, 300);
+    });
   }
 
   /* регистрируем обслуживающий скрипт — без него установка недоступна */

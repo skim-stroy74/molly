@@ -391,7 +391,7 @@ h3{font-size:22px;line-height:1.25}
 }
 
 /* ---------- ассистент ---------- */
-.asst{position:fixed;right:22px;bottom:22px;z-index:90;display:flex;flex-direction:column;align-items:flex-end;gap:12px}
+.asst{position:fixed;right:22px;bottom:22px;z-index:90;display:flex;flex-direction:column;align-items:flex-end;gap:12px;transition:margin-bottom .35s ease}
 .asst-btn{
   width:62px;height:62px;border-radius:50%;border:1px solid var(--line);cursor:pointer;
   background:linear-gradient(150deg,#1c3222,#101d14);color:var(--brass-bright);
@@ -766,7 +766,11 @@ h3{font-size:22px;line-height:1.25}
 
 /* пока висит уведомление о cookie, прячем плавающую кнопку помощницы:
    на телефоне она оказывается под баннером */
-body.cookie-open .asst{display:none}
+/* Пока висит уведомление о cookie, помощницу не прячем — иначе гость
+   заходит и не видит её вовсе. Просто приподнимаем над баннером,
+   чтобы не наслаивались: баннер занимает низ экрана целиком. */
+body.cookie-open .asst{margin-bottom:130px}
+@media(max-width:760px){ body.cookie-open .asst{margin-bottom:210px} }
 
 /* ближайшее событие в первом экране */
 .next-ev{
@@ -1287,3 +1291,36 @@ body.zoom-open{overflow:hidden}
   background:linear-gradient(90deg,transparent,var(--brass),transparent);
 }
 .nav a.nav-hit:hover{color:var(--cream)}
+
+@media(prefers-reduced-motion:reduce){ .asst{transition:none} }
+
+/* ---------- кружок «поставить приложение» (только телефон) ----------
+   Плашка внизу показывается один раз и уходит навсегда. Кружок остаётся:
+   человек может поставить приложение когда созреет, а не когда мы спросили.
+   Слева вверху под шапкой — там ничего не перекрывает. */
+.install-dot{
+  position:fixed;left:12px;top:104px;z-index:95;display:none;
+  width:52px;height:52px;border-radius:50%;cursor:pointer;padding:0;
+  background:linear-gradient(150deg,#1c3222,#101d14);
+  border:1px solid var(--brass);
+  box-shadow:0 10px 28px rgba(0,0,0,.5);
+  align-items:center;justify-content:center;
+  animation:dotIn .4s ease both;
+}
+.install-dot.on{display:flex}
+.install-dot img{width:30px;height:30px;border-radius:7px}
+/* стрелка вниз — общепонятный знак «установить» */
+.install-dot::after{
+  content:"";position:absolute;right:-2px;bottom:-2px;
+  width:20px;height:20px;border-radius:50%;
+  background:var(--brass);
+  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 3v12m0 0l-4-4m4 4l4-4M5 21h14' stroke='%23000' stroke-width='2.4' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/14px no-repeat,
+          linear-gradient(#000,#000);
+  -webkit-mask-composite:source-in;
+          mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 3v12m0 0l-4-4m4 4l4-4M5 21h14' stroke='%23000' stroke-width='2.4' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/14px no-repeat;
+  box-shadow:0 2px 8px rgba(0,0,0,.4);
+}
+@keyframes dotIn{from{opacity:0;transform:scale(.8)}to{opacity:1;transform:none}}
+.install-dot:active{transform:scale(.94)}
+@media(min-width:761px){ .install-dot{display:none !important} }
+@media(prefers-reduced-motion:reduce){ .install-dot{animation:none} }
