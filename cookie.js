@@ -46,7 +46,8 @@
     function поднятьПомощницу(надо) {
       var узел = document.querySelector('.asst');
       if (!узел) return;
-      узел.style.marginBottom = надо ? (box.offsetHeight + 16) + 'px' : '';
+      /* именно сдвиг, а не отступ: отступ на этом блоке молча не срабатывал */
+      узел.style.transform = надо ? 'translateY(-' + (box.offsetHeight + 16) + 'px)' : '';
     }
 
     function close(){
