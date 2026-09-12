@@ -27,8 +27,8 @@
     box.setAttribute('aria-label', 'Уведомление о файлах cookie');
 
     var p = document.createElement('p');
-    p.innerHTML = 'Мы используем файлы cookie, чтобы сайт работал корректно и чтобы понимать, ' +
-      'какие разделы вам интересны. Подробнее — в <a href="politika.html">политике конфиденциальности</a>.';
+    p.innerHTML = 'Мы используем файлы cookie, чтобы сайт работал корректно и\u00a0чтобы понимать, ' +
+      'какие разделы вам интересны. Подробнее\u00a0— в\u00a0<a href="politika.html">политике конфиденциальности</a>.';
 
     var yes = document.createElement('button');
     yes.className = 'btn btn-gold btn-sm';

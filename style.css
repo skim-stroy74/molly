@@ -1383,3 +1383,28 @@ body.zoom-open{overflow:hidden}
   .bq-name{font-size:15px}
   .bq-desc{font-size:13px}
 }
+
+/* ---------- набор текста ----------
+   Браузер сам не оставит одинокое слово в последней строке и разложит
+   заголовок ровными строками. Работает поверх неразрывных пробелов,
+   которые держат при себе предлоги. */
+h1, h2, h3, .lead, .sec-head p{text-wrap:balance}
+p, li, .bq-desc, .mi-desc{text-wrap:pretty}
+
+/* ---------- то, за что цепляется взгляд ----------
+   Гость читает афишу по диагонали. Время, цена входа и просьба
+   забронировать — то, ради чего он и открыл страницу. */
+.mark{
+  color:var(--cream);font-weight:700;
+  background:linear-gradient(180deg,transparent 62%,rgba(200,164,90,.28) 62%);
+  padding:0 2px;
+}
+.mark-amber{color:var(--brass-bright);font-weight:700}
+
+/* подпись разработчика — мелко, в тон подвала, без выпячивания */
+.ftr-author{
+  margin-top:18px;padding-top:16px;border-top:1px solid var(--line-soft);
+  font-size:12.5px;color:rgba(163,176,159,.65);line-height:1.7;
+}
+.ftr-author a{color:rgba(200,164,90,.75);text-decoration:none;border-bottom:1px solid transparent}
+.ftr-author a:hover{color:var(--brass-bright);border-bottom-color:currentColor}
