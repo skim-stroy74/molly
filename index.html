@@ -941,7 +941,11 @@
   /* афиша и концерты: прячем прошедшие даты,
      чтобы сайт не протухал сам собой */
   (function(){
-    var today=new Date(); today.setHours(0,0,0,0);
+      /* Дату считаем по Магнитогорску (UTC+5), а не по часам гостя: иначе
+     у человека из другого пояса событие пропадало бы из афиши на день
+     раньше или висело лишний день. */
+  function времяПаба(){ var d=new Date(); return new Date(d.getTime()+(d.getTimezoneOffset()+300)*60000); }
+  var today=времяПаба(); today.setHours(0,0,0,0);
     function clean(boxId, itemSel, emptyId){
       var box=document.getElementById(boxId);
       if(!box)return;

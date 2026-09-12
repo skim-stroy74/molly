@@ -92,8 +92,17 @@
      заведение ещё открыто «со вчера». */
   var CLOSE = { 0: 2, 1: 2, 2: 2, 3: 2, 4: 2, 5: 5, 6: 5 };
 
+  /* Часы паба считаем по Магнитогорску, а не по часам гостя. Иначе
+     человек из Москвы в 16:00 видел бы «закрыто, откроемся в 18:00»,
+     хотя в пабе уже вечер и двери открыты. Магнитогорск живёт по
+     екатеринбургскому времени, UTC+5 круглый год, перевода часов нет. */
+  function времяПаба() {
+    var d = new Date();
+    return new Date(d.getTime() + (d.getTimezoneOffset() + 300) * 60000);
+  }
+
   function openState(now) {
-    now = now || new Date();
+    now = now || времяПаба();
     var d = now.getDay(), h = now.getHours() + now.getMinutes() / 60;
     var prev = (d + 6) % 7;
     if (h >= 18)             return { open: true,  closes: CLOSE[d] };
@@ -122,7 +131,7 @@
   }
 
   function eventsOn(dayOffset) {
-    var t = day0(new Date());
+    var t = day0(времяПаба());
     t.setDate(t.getDate() + dayOffset);
     return EVENTS.filter(function (e) {
       if (!e.from || !e.until) return false;
