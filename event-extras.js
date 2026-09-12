@@ -6,7 +6,7 @@
 (function () {
   var PUB = 'Паб «Молли»';
   var ADDR = 'Магнитогорск, ул. Завенягина, 8а';
-  var PHONE = '+7 (3519) 45-37-37';
+  var PHONE = '+7 (912) 805-37-37';
 
   var items = document.querySelectorAll('.bill-item');
   if (!items.length) return;

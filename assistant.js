@@ -16,7 +16,7 @@
 (function () {
   'use strict';
 
-  var TEL  = '+73519453737',
+  var TEL  = '+79128053737',
       VK   = 'https://vk.com/molly174',
       BOOK = 'https://416936.restoplace.ws',
       MAP  = 'https://yandex.ru/maps/?text=Магнитогорск, Завенягина, 8а';
@@ -45,7 +45,7 @@
       localStorage.setItem(k, v);
     } catch (e) { return null; }
   }
-  var CALL = '<a href="tel:' + TEL + '">45-37-37</a>';
+  var CALL = '<a href="tel:' + TEL + '">912 805-37-37</a>';
 
   /* ---------- знания со страницы ---------- */
 
@@ -528,7 +528,7 @@
     var cb = document.createElement('button');
     cb.type = 'button';
     cb.className = 'call';
-    cb.textContent = 'Позвонить 45-37-37';
+    cb.textContent = 'Позвонить 912 805-37-37';
     cb.addEventListener('click', function () { track('call', 'кнопка звонка'); window.location.href = 'tel:' + TEL; });
     chips.appendChild(cb);
   }
@@ -717,7 +717,7 @@
     }, 450);
   }
 
-  function hideTeaser() { teaser.classList.remove('on'); store('molly_teaser', String(Date.now())); }
+  function hideTeaser() { teaser.classList.remove('on'); }
   function openPanel() {
     hideTeaser();
     panel.classList.remove('mini');   /* открываем всегда развёрнутой */
@@ -768,25 +768,14 @@
     if (e.key === 'Escape' && panel.classList.contains('on')) closePanel();
   });
 
-  /* Молли здоровается сама, как хостес у входа: облачком, а не окном —
-     окно закрывает собой страницу, гость ещё ничего не увидел, а его уже
+  /* Молли здоровается при каждом заходе — облачком, а не окном: окно
+     закрывает собой страницу, гость ещё ничего не увидел, а его уже
      заслонили. Облачко висит, пока его не закроют или не тронут.
 
-     Закрыл — уважаем и сутки не лезем. Но именно сутки, а не навсегда:
-     иначе человек, один раз смахнувший облачко, больше никогда бы
-     не узнал, что тут есть кому задать вопрос. */
-  var СУТКИ = 24 * 60 * 60 * 1000;
-
-  function свежаяОтметка(ключ) {
-    var t = +store(ключ) || 0;
-    return t > 1 && (Date.now() - t) < СУТКИ;
-  }
-
-  if (!свежаяОтметка('molly_teaser')) {
-    setTimeout(function () {
-      if (!panel.classList.contains('on')) teaser.classList.add('on');
-    }, 1200);
-  } else if (asstDot) {
-    asstDot.style.display = 'none';
-  }
+     Закрытие действует только на текущую страницу: обновил или зашёл
+     снова — Молли снова здоровается. Так у заведения всегда есть первое
+     слово, а у гостя — возможность это слово смахнуть. */
+  setTimeout(function () {
+    if (!panel.classList.contains('on')) teaser.classList.add('on');
+  }, 1200);
 })();

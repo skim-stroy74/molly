@@ -41,7 +41,7 @@
       <a href="foto.html">Фото</a>
       <a href="index.html#contacts">Контакты</a>
     </nav>
-    <a href="tel:+73519453737" class="hdr-phone">45-37-37</a>
+    <a href="tel:+79128053737" class="hdr-phone">912 805-37-37</a>
     <a href="index.html#book" class="btn btn-gold btn-sm">Забронировать</a>
     <button class="burger" id="burger" aria-label="Меню" aria-expanded="false"><i></i><i></i><i></i></button>
   </div>
@@ -112,7 +112,7 @@
         <p class="calc-note" id="note"></p>
 
         <div class="calc-acts">
-          <a href="tel:+73519453737" class="btn btn-gold">Забронировать стол</a>
+          <a href="tel:+79128053737" class="btn btn-gold">Забронировать стол</a>
           <button type="button" class="btn btn-ghost" id="copy">Скопировать заказ</button>
           <a href="index.html#menu" class="btn btn-ghost">Всё меню</a>
         </div>
@@ -152,7 +152,7 @@
         </div>
 
         <div class="calc-acts">
-          <a href="tel:+73519453737" class="btn btn-gold">Забронировать стол</a>
+          <a href="tel:+79128053737" class="btn btn-gold">Забронировать стол</a>
           <button type="button" class="btn btn-ghost" id="selfCopy">Скопировать счёт</button>
         </div>
         <p class="calc-msg" id="selfMsg"></p>
@@ -178,7 +178,7 @@
       </nav>
     </div>
     <div class="ftr-bot">
-      <div>Irish Pub Molly · Магнитогорск, Завенягина, 8а · <a href="tel:+73519453737">45-37-37</a></div>
+      <div>Irish Pub Molly · Магнитогорск, Завенягина, 8а · <a href="tel:+79128053737">912 805-37-37</a></div>
       <div style="display:flex;align-items:center;gap:14px">
         <span class="age">18+</span>
         <span>Чрезмерное употребление алкоголя вредит вашему здоровью</span>
@@ -517,7 +517,7 @@
       return ч[0] + (кол > 1 ? ' × ' + кол : '') + ' — ' + money(цена * кол);
     }).join('\n');
     текст += '\n\nИтого: ' + money(сумма) + ' · по ' + money(Math.round(сумма / selfPeople)) + ' с человека';
-    текст += '\nПаб «Молли», Магнитогорск, Завенягина 8а · +7 (3519) 45-37-37';
+    текст += '\nПаб «Молли», Магнитогорск, Завенягина 8а · +7 (912) 805-37-37';
 
     var msg = document.getElementById('selfMsg');
     if (navigator.clipboard && navigator.clipboard.writeText){
