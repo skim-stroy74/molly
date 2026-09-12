@@ -40,9 +40,19 @@
     no.type = 'button';
     no.textContent = 'Только необходимые';
 
+    /* Пока баннер висит, он занимает низ экрана — а помощница живёт там же.
+       Поднимаем её ровно на высоту баннера: считаем по факту, поэтому
+       подходит любому экрану и любой длине текста. */
+    function поднятьПомощницу(надо) {
+      var узел = document.querySelector('.asst');
+      if (!узел) return;
+      узел.style.marginBottom = надо ? (box.offsetHeight + 16) + 'px' : '';
+    }
+
     function close(){
       box.classList.remove('on');
       document.body.classList.remove('cookie-open');
+      поднятьПомощницу(false);
     }
 
     yes.addEventListener('click', function () {
@@ -61,6 +71,7 @@
     setTimeout(function () {
       box.classList.add('on');
       document.body.classList.add('cookie-open');
+      поднятьПомощницу(true);
     }, 1200);
   }
 
