@@ -159,6 +159,14 @@
       </aside>
     </div>
 
+
+    <!-- Итог всегда на виду: без него человек тыкает блюда и не понимает,
+         куда они уходят и где «посчитать». Счёт лежит под длинным меню,
+         на телефоне его просто не видно. -->
+    <div class="self-bar" id="selfBar" hidden>
+      <div class="sb-txt"><b id="sbCount">0 позиций</b><span id="sbSum">0 ₽</span></div>
+      <button type="button" class="btn btn-gold btn-sm" id="sbGo">Показать счёт</button>
+    </div>
   </div>
 </section>
 
@@ -422,6 +430,7 @@
       список.innerHTML = '';
       пусто.hidden = false;
       document.getElementById('selfTotal').textContent = '—';
+      обновитьПолосу(0, 0);
       document.getElementById('selfEach').textContent = '—';
       return;
     }
@@ -442,12 +451,34 @@
     }).join('');
 
     document.getElementById('selfTotal').textContent = money(сумма);
+    обновитьПолосу(строки.length, сумма);
     document.getElementById('selfEach').textContent  = money(Math.round(сумма / selfPeople));
   }
 
   /* Обновляем одну нажатую кнопку, а не весь список: иначе при каждом
      клике список перерисовывается и прокрутка прыгает в начало —
      человек теряет место, где выбирал. */
+
+  /* Полоса снизу: сколько выбрано и на какую сумму. Нажатие уводит
+     к счёту — иначе гость не находит, где «подытожить». */
+  function обновитьПолосу(сколько, сумма){
+    var бар = document.getElementById('selfBar');
+    if (!бар) return;
+    if (!сколько) { бар.hidden = true; return; }
+    бар.hidden = false;
+    /* полоса появляется позже баннера о cookie — если он ещё висит,
+       сразу встаём над ним, иначе перекроем друг друга */
+    var баннер = document.querySelector('.cookie.on');
+    бар.style.transform = баннер ? 'translateY(-' + (баннер.offsetHeight + 16) + 'px)' : '';
+    document.getElementById('sbCount').textContent =
+      сколько + ' ' + (сколько === 1 ? 'позиция' : (сколько < 5 ? 'позиции' : 'позиций'));
+    document.getElementById('sbSum').textContent = money(сумма);
+  }
+
+  document.getElementById('sbGo').addEventListener('click', function(){
+    document.querySelector('.self-bill').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
   function обновитьКнопку(k){
     var кн = [].filter.call(document.querySelectorAll('.self-item'), function(b){
       return b.getAttribute('data-key') === k;

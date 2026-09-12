@@ -1323,3 +1323,28 @@ body.zoom-open{overflow:hidden}
 .install-dot:active{transform:scale(.94)}
 @media(min-width:761px){ .install-dot{display:none !important} }
 @media(prefers-reduced-motion:reduce){ .install-dot{animation:none} }
+
+/* ---------- полоса итога в ручной сборке ----------
+   Гость тыкает блюда в длинном списке, а счёт лежит под ним — на телефоне
+   его не видно, и кажется, что выбор никуда не идёт. Полоса держит сумму
+   на виду и уводит к счёту по нажатию. */
+.self-bar{
+  position:fixed;left:12px;right:12px;bottom:12px;z-index:96;
+  display:flex;align-items:center;gap:14px;
+  padding:12px 14px 12px 18px;border-radius:14px;
+  background:rgba(18,35,24,.97);border:1px solid var(--brass);
+  box-shadow:0 16px 40px rgba(0,0,0,.5);
+  animation:barIn .3s ease both;
+}
+.sb-txt{flex:1;min-width:0;line-height:1.3}
+.sb-txt b{display:block;font-size:14px;color:var(--muted);font-weight:400}
+.sb-txt span{
+  display:block;font-family:var(--serif);font-size:20px;color:var(--brass-bright);
+  font-variant-numeric:tabular-nums;
+}
+.self-bar .btn{flex:none}
+/* только прозрачность: сдвиг здесь занят — им полоса встаёт над баннером cookie */
+@keyframes barIn{from{opacity:0}to{opacity:1}}
+/* на широком экране счёт и так виден справа — полоса не нужна */
+@media(min-width:861px){ .self-bar{display:none} }
+@media(prefers-reduced-motion:reduce){ .self-bar{animation:none} }

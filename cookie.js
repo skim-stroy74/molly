@@ -44,10 +44,11 @@
        Поднимаем её ровно на высоту баннера: считаем по факту, поэтому
        подходит любому экрану и любой длине текста. */
     function поднятьПомощницу(надо) {
-      var узел = document.querySelector('.asst');
-      if (!узел) return;
+      var узлы = document.querySelectorAll('.asst, .self-bar');
+      if (!узлы.length) return;
       /* именно сдвиг, а не отступ: отступ на этом блоке молча не срабатывал */
-      узел.style.transform = надо ? 'translateY(-' + (box.offsetHeight + 16) + 'px)' : '';
+      var сдвиг = надо ? 'translateY(-' + (box.offsetHeight + 16) + 'px)' : '';
+      [].forEach.call(узлы, function (n) { n.style.transform = сдвиг; });
     }
 
     function close(){
