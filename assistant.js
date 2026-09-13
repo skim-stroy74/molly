@@ -594,7 +594,8 @@
   var STEPS = [
     { key: 'when',   q: 'Хорошо, соберу заявку. <b>На какое число и время?</b><br><span style="font-size:13px;color:#7d8a7a">Например: 18 октября, 20:00</span>' },
     { key: 'guests', q: '<b>Сколько будет гостей?</b>' },
-    { key: 'name',   q: '<b>На чьё имя записать?</b>' }
+    { key: 'name',   q: '<b>На чьё имя записать?</b>' },
+    { key: 'phone',  q: '<b>По какому номеру с вами связаться?</b><br><span style="font-size:13px;color:#7d8a7a">Администратор перезвонит и подтвердит бронь</span>' }
   ];
 
   function startRequest() {
@@ -617,7 +618,8 @@
     var d = flow.data;
     flow = null;
     var msg = 'Здравствуйте! Хочу забронировать стол в пабе «Молли».\n' +
-              'Когда: ' + d.when + '\nГостей: ' + d.guests + '\nИмя: ' + d.name;
+              'Когда: ' + d.when + '\nГостей: ' + d.guests + '\nИмя: ' + d.name +
+              (d.phone ? '\nТелефон: ' + d.phone : '');
     track('request', 'заявка на бронь');
 
     var dots = typing();
@@ -630,11 +632,48 @@
       var row = document.createElement('div');
       row.className = 'req-acts';
       row.innerHTML =
+        (AI_URL ? '<button class="req-btn req-send" type="button" id="reqSend">Отправить администратору</button>' : '') +
         '<a class="req-btn" href="tel:' + TEL + '">Позвонить</a>' +
         '<a class="req-btn" href="' + VK + '" target="_blank" rel="noopener">Написать в ВК</a>' +
         '<button class="req-btn" type="button" id="reqCopy">Скопировать</button>';
       box.appendChild(row);
       toBottom();
+
+
+      /* Заявка уходит администратору в ВКонтакте через посредника.
+         Кнопки «позвонить» и «написать» остаются: если отправка не удалась,
+         у гостя есть привычный путь. */
+      var кнОтпр = document.getElementById('reqSend');
+      if (кнОтпр) кнОтпр.addEventListener('click', function () {
+        var кн = this;
+        кн.disabled = true;
+        кн.textContent = 'Отправляю…';
+        fetch(AI_URL.replace(/\/+$/, '') + '/request', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json; charset=utf-8' },
+          body: JSON.stringify(d)
+        })
+          .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+          .then(function (res) {
+            if (res.ok && res.j && res.j.ok) {
+              кн.textContent = 'Заявка отправлена';
+              кн.classList.add('req-done');
+              say('Передала администратору — он свяжется с вами и подтвердит бронь. ' +
+                  'Если нужно быстрее, звоните: ' + CALL + '.');
+              track('request-sent', 'заявка отправлена');
+            } else {
+              кн.disabled = false;
+              кн.textContent = 'Отправить ещё раз';
+              say('Не получилось отправить. Позвоните, пожалуйста: ' + CALL +
+                  ' — или напишите <a href="' + VK + '" target="_blank" rel="noopener">во ВКонтакте</a>.');
+            }
+          })
+          .catch(function () {
+            кн.disabled = false;
+            кн.textContent = 'Отправить ещё раз';
+            say('Связь подвела. Позвоните, пожалуйста: ' + CALL + '.');
+          });
+      });
 
       document.getElementById('reqCopy').addEventListener('click', function () {
         var btn = this;

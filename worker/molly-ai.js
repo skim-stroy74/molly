@@ -313,6 +313,82 @@ function pickContext(book, question) {
     .filter(Boolean).join('\n\n');
 }
 
+
+/* ---------- заявка на бронь уходит в ВКонтакте ----------
+
+   Сообщество паба пишет администратору личным сообщением. Гость заполнил
+   форму у помощницы — уведомление приходит через секунду, и администратор
+   перезванивает, пока человек ещё думает про бронь.
+
+   Переменные в панели Cloudflare:
+     VK_TOKEN — ключ доступа сообщества с правом «Сообщения сообщества» (секрет)
+     VK_TO    — кому слать: номер страницы администратора или id беседы
+
+   ВКонтакте по умолчанию запрещает сообществам писать людям: получатель
+   один раз нажимает «Разрешить сообщения» на странице сообщества. */
+
+const VK_API = 'https://api.vk.com/method/messages.send';
+const VK_V   = '5.199';
+
+function заявкаТекстом(d) {
+  const строки = ['Новая заявка с сайта', ''];
+  if (d.when)   строки.push('Когда: ' + d.when);
+  if (d.guests) строки.push('Гостей: ' + d.guests);
+  if (d.name)   строки.push('Имя: ' + d.name);
+  if (d.phone)  строки.push('Телефон: ' + d.phone);
+  if (d.note)   строки.push('Пожелания: ' + d.note);
+  return строки.join('\n');
+}
+
+async function отправитьВVK(env, текст) {
+  if (!env.VK_TOKEN || !env.VK_TO) return { ok: false, error: 'ВКонтакте не настроен' };
+
+  const params = new URLSearchParams({
+    access_token: env.VK_TOKEN,
+    v: VK_V,
+    random_id: String(Date.now() % 2147483647),
+    message: текст
+  });
+  /* отрицательный номер — беседа, обычный — страница человека */
+  const кому = String(env.VK_TO).trim();
+  if (кому.startsWith('-') || кому.startsWith('2000')) params.set('peer_id', кому);
+  else params.set('user_id', кому);
+
+  try {
+    const res = await fetch(VK_API, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: params.toString()
+    });
+    const j = await res.json();
+    if (j.error) {
+      /* 901 — получатель не разрешил сообщения от сообщества */
+      const подсказка = j.error.error_code === 901
+        ? 'получатель не разрешил сообщения от сообщества'
+        : j.error.error_msg;
+      return { ok: false, error: подсказка, code: j.error.error_code };
+    }
+    return { ok: true, id: j.response };
+  } catch (e) {
+    return { ok: false, error: String(e && e.message || e).slice(0, 200) };
+  }
+}
+
+/* Заявки храним и у себя: если уведомление проглядели или ВКонтакте
+   сбойнул, заявка не пропадёт — её видно в сводке. */
+async function сохранитьЗаявку(env, d, доставлена) {
+  if (!env.STATS) return;
+  const id = Date.now() + '-' + Math.random().toString(36).slice(2, 7);
+  try {
+    await env.STATS.put('req:' + id, JSON.stringify({
+      when: d.when || '', guests: d.guests || '', name: d.name || '',
+      phone: d.phone || '', note: d.note || '',
+      ok: !!доставлена,
+      d: new Date().toISOString().slice(0, 16).replace('T', ' ')
+    }), { expirationTtl: 90 * 24 * 60 * 60 });
+  } catch (e) { /* учёт не должен мешать заявке */ }
+}
+
 /* ---------- страховка от выдуманных цен ----------
 
    Просить модель «не выдумывай» недостаточно: на вопрос про глинтвейн
@@ -392,6 +468,18 @@ export default {
 
     let data;
     try { data = await request.json(); } catch (e) { return reply({ error: 'плохой json' }, 400, head); }
+
+    /* Заявка на бронь: уходит администратору в ВКонтакте. */
+    if (new URL(request.url).pathname === '/request') {
+      if (!data || !(data.when || data.name || data.phone)) {
+        return reply({ error: 'пустая заявка' }, 400, head);
+      }
+      const текст = заявкаТекстом(data);
+      const итог = await отправитьВVK(env, текст);
+      await сохранитьЗаявку(env, data, итог.ok);
+      if (!итог.ok) return reply({ error: итог.error }, 502, head);
+      return reply({ ok: true }, 200, head);
+    }
 
     const question = String(data.q || '').trim().slice(0, MAX_QUESTION);
     if (!question) return reply({ error: 'пустой вопрос' }, 400, head);

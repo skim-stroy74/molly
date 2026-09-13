@@ -1408,3 +1408,9 @@ p, li, .bq-desc, .mi-desc{text-wrap:pretty}
 }
 .ftr-author a{color:rgba(200,164,90,.75);text-decoration:none;border-bottom:1px solid transparent}
 .ftr-author a:hover{color:var(--brass-bright);border-bottom-color:currentColor}
+
+/* кнопка отправки заявки — главная среди прочих */
+.req-btn.req-send{background:var(--brass);border-color:var(--brass);color:#14200f;font-weight:700}
+.req-btn.req-send:hover{background:var(--brass-bright);border-color:var(--brass-bright)}
+.req-btn.req-send:disabled{opacity:.7;cursor:default}
+.req-btn.req-done{background:transparent;border-color:rgba(95,191,106,.5);color:#8fd39a}
