@@ -45,7 +45,7 @@
       localStorage.setItem(k, v);
     } catch (e) { return null; }
   }
-  var CALL = '<a href="tel:' + TEL + '">912 805-37-37</a>';
+  var CALL = '<a href="tel:' + TEL + '">+7 (912) 805-37-37</a>';
 
   /* ---------- знания со страницы ---------- */
 
@@ -528,7 +528,7 @@
     var cb = document.createElement('button');
     cb.type = 'button';
     cb.className = 'call';
-    cb.textContent = 'Позвонить 912 805-37-37';
+    cb.textContent = 'Позвонить +7 (912) 805-37-37';
     cb.addEventListener('click', function () { track('call', 'кнопка звонка'); window.location.href = 'tel:' + TEL; });
     chips.appendChild(cb);
   }
