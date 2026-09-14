@@ -100,8 +100,15 @@
     кружок.className = 'install-dot';
     кружок.setAttribute('aria-label', 'Поставить Молли на экран «Домой»');
     кружок.title = 'Поставить на экран «Домой»';
-    кружок.innerHTML = '<img src="images/icon-192.png" alt="" width="30" height="30">';
-    document.body.appendChild(кружок);
+    кружок.innerHTML = '<img src="images/icon-192.png" alt="" width="26" height="26">';
+
+    /* Место кружка — в шапке, слева от трёх полосок: гость ищет кнопки
+       там, а не поверх текста. Если шапки почему-то нет, остаётся
+       прежнее поведение, чтобы кнопка не пропала совсем. */
+    var полоски = document.getElementById('burger');
+    if (полоски && полоски.parentNode) полоски.parentNode.insertBefore(кружок, полоски);
+    else document.body.appendChild(кружок);
+
     setTimeout(function () { кружок.classList.add('on'); }, 600);
 
     кружок.addEventListener('click', function () {

@@ -1293,31 +1293,32 @@ body.zoom-open{overflow:hidden}
 
 @media(prefers-reduced-motion:reduce){ .asst{transition:none} }
 
-/* ---------- кружок «поставить приложение» (только телефон) ----------
-   Плашка внизу показывается один раз и уходит навсегда. Кружок остаётся:
+/* ---------- кнопка «поставить приложение» (только телефон) ----------
+   Плашка внизу показывается один раз и уходит навсегда. Кнопка остаётся:
    человек может поставить приложение когда созреет, а не когда мы спросили.
-   Слева вверху под шапкой — там ничего не перекрывает. */
+   Стоит в шапке слева от трёх полосок — там гость и ищет кнопки. */
 .install-dot{
-  position:fixed;left:12px;top:104px;z-index:95;display:none;
-  width:52px;height:52px;border-radius:50%;cursor:pointer;padding:0;
+  flex:none;margin-left:auto;display:none;position:relative;
+  width:44px;height:44px;border-radius:50%;cursor:pointer;padding:0;
   background:linear-gradient(150deg,#1c3222,#101d14);
   border:1px solid var(--brass);
-  box-shadow:0 10px 28px rgba(0,0,0,.5);
   align-items:center;justify-content:center;
   animation:dotIn .4s ease both;
 }
 .install-dot.on{display:flex}
-.install-dot img{width:30px;height:30px;border-radius:7px}
+.install-dot img{width:26px;height:26px;border-radius:6px}
+/* три полоски рядом: отступ вместо прижатия к правому краю */
+.install-dot + .burger{margin-left:0}
 /* стрелка вниз — общепонятный знак «установить» */
 .install-dot::after{
-  content:"";position:absolute;right:-2px;bottom:-2px;
-  width:20px;height:20px;border-radius:50%;
+  content:"";position:absolute;right:-1px;bottom:-1px;
+  width:17px;height:17px;border-radius:50%;
   background:var(--brass);
-  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 3v12m0 0l-4-4m4 4l4-4M5 21h14' stroke='%23000' stroke-width='2.4' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/14px no-repeat,
+  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 3v12m0 0l-4-4m4 4l4-4M5 21h14' stroke='%23000' stroke-width='2.4' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/12px no-repeat,
           linear-gradient(#000,#000);
   -webkit-mask-composite:source-in;
-          mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 3v12m0 0l-4-4m4 4l4-4M5 21h14' stroke='%23000' stroke-width='2.4' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/14px no-repeat;
-  box-shadow:0 2px 8px rgba(0,0,0,.4);
+          mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 3v12m0 0l-4-4m4 4l4-4M5 21h14' stroke='%23000' stroke-width='2.4' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/12px no-repeat;
+  box-shadow:0 1px 5px rgba(0,0,0,.45);
 }
 @keyframes dotIn{from{opacity:0;transform:scale(.8)}to{opacity:1;transform:none}}
 .install-dot:active{transform:scale(.94)}
@@ -1462,3 +1463,16 @@ p, li, .bq-desc, .mi-desc{text-wrap:pretty}
    ни по дефису. Неразрывные пробелы внутри номера уже стоят, это страхует
    от разрыва по «805-37-37». */
 a[href^="tel:"]{white-space:nowrap}
+
+/* ---------- узкая шапка на телефоне ----------
+   В шапке прибавилась кнопка установки, и на узких экранах (360 px и уже —
+   а это половина Android) строка перестала помещаться. Поджимаем отступы,
+   а на самых узких — длинную подпись кнопки меняем на короткую. */
+.lbl-tight{display:none}
+@media(max-width:420px){
+  .hdr .wrap{gap:10px;padding-left:16px;padding-right:16px}
+}
+@media(max-width:349px){
+  .lbl-wide{display:none}
+  .lbl-tight{display:inline}
+}
