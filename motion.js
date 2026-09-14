@@ -34,6 +34,36 @@
     [].forEach.call(фоны, function(el){ bio.observe(el); });
   })();
 
+  /* --- 0б. Отложенные картинки ---
+     У тега img есть своя ленивая загрузка, но браузер иногда так и не
+     берётся за кадр, даже когда тот уже на экране: галерея банкетов
+     стояла пустой зелёной сеткой. Поэтому подстраховываем наблюдателем —
+     когда кадр подходит к экрану, снимаем с него отложенность, и он
+     грузится сразу. Без скрипта остаётся штатное поведение браузера. */
+  (function(){
+    var кадры = document.querySelectorAll('img[loading="lazy"]');
+    if (!кадры.length) return;
+
+    function разбудить(img){
+      if (img.dataset.woke) return;
+      img.dataset.woke = '1';
+      img.loading = 'eager';
+      /* перезапись src сдвигает с места кадры, застрявшие в ожидании */
+      if (!img.complete) img.src = img.src;
+    }
+
+    if (!('IntersectionObserver' in window)) {
+      [].forEach.call(кадры, разбудить);
+      return;
+    }
+    var iio = new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if (e.isIntersecting) { разбудить(e.target); iio.unobserve(e.target); }
+      });
+    }, { rootMargin: '600px' });      /* экран с запасом: успевает до показа */
+    [].forEach.call(кадры, function(img){ iio.observe(img); });
+  })();
+
   /* --- 1. Готовим сетки к появлению по очереди ---
      Контейнер перестаёт появляться целиком, вместо него
      по одной проявляются карточки внутри. */

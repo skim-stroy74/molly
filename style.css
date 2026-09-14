@@ -1476,3 +1476,7 @@ a[href^="tel:"]{white-space:nowrap}
   .lbl-wide{display:none}
   .lbl-tight{display:inline}
 }
+
+/* Пункты меню не переносятся по словам: «Собрать вечер» вставало в две
+   строки и ломало ровную линию шапки. */
+.nav a{white-space:nowrap}
