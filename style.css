@@ -1495,3 +1495,16 @@ a[href^="tel:"]{white-space:nowrap}
    чтобы меню по-прежнему укладывалось в одну строку на ноутбуках. */
 @media(max-width:1340px){ .nav{gap:18px} }
 @media(max-width:1060px){ .nav{gap:11px;font-size:14px} }
+
+/* ---------- первый экран: смена кадров ----------
+   Слои лежат ПОД затемняющими градиентами (у .hero-bg они нарисованы
+   псевдоэлементами, а отрицательный z-index уводит слой за них) — иначе
+   фото перекрыло бы затемнение и заголовок стало бы не прочитать.
+   Переход долгий: это смена настроения, а не анимация. */
+.hero-slide{
+  position:absolute;inset:0;z-index:-1;
+  background-position:center;background-size:cover;background-repeat:no-repeat;
+  opacity:0;transition:opacity 1.6s ease;
+}
+.hero-slide.on{opacity:1}
+@media(prefers-reduced-motion:reduce){ .hero-slide{display:none} }
