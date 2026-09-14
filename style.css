@@ -1414,3 +1414,12 @@ p, li, .bq-desc, .mi-desc{text-wrap:pretty}
 .req-btn.req-send:hover{background:var(--brass-bright);border-color:var(--brass-bright)}
 .req-btn.req-send:disabled{opacity:.7;cursor:default}
 .req-btn.req-done{background:transparent;border-color:rgba(95,191,106,.5);color:#8fd39a}
+
+/* ---------- банкеты: фото едут вместе с меню ----------
+   Меню выросло до 24 позиций, а колонка с фотографиями осталась короткой —
+   слева получалась пустота в пол-экрана. Прижимаем галерею к верху колонки,
+   и она идёт рядом с текстом, пока он не кончится. */
+@media(min-width:961px){
+  .banq{align-items:start}
+  .banq > .rv:first-child{position:sticky;top:96px}
+}
