@@ -1421,5 +1421,39 @@ p, li, .bq-desc, .mi-desc{text-wrap:pretty}
    и она идёт рядом с текстом, пока он не кончится. */
 @media(min-width:961px){
   .banq{align-items:start}
-  .banq > .rv:first-child{position:sticky;top:96px}
+}
+
+/* ---------- фотографии крупнее ----------
+   Мелкие карточки в два ряда терялись на фоне длинного меню. Отдаём фото
+   больше половины ширины, первый кадр — во всю ширину колонки: компания
+   за накрытым столом и есть главный довод для заказчика банкета. */
+@media(min-width:961px){
+  .banq{grid-template-columns:1.25fr .95fr;gap:46px}
+}
+.banq-gal{gap:14px}
+/* Ритм сетки: каждый третий кадр — во всю ширину колонки, между ними пары. */
+.banq-gal .shot:nth-child(3n+1){grid-column:1/-1;aspect-ratio:3/2}
+/* На телефоне колонки идут друг за другом, пустоты нет — показываем семь
+   кадров, чтобы не растягивать страницу на пол-экрана прокрутки. */
+@media(max-width:700px){
+  .banq-gal .shot:nth-child(n+8){display:none}
+}
+
+/* Рядом с меню на 24 позиции галерея должна кончаться одновременно с текстом,
+   иначе с одной из сторон остаётся зелёная пустота. Парные кадры всегда
+   вертикальные, а широкий кадр тем приземистее, чем шире колонка — это и
+   держит обе колонки вровень на всех размерах экрана. */
+@media(min-width:961px){
+  .banq-gal .shot:nth-child(3n+2),
+  .banq-gal .shot:nth-child(3n){aspect-ratio:3/4}
+  .banq-gal .shot:nth-child(3n+1){aspect-ratio:1}
+}
+@media(min-width:1050px){ .banq-gal .shot:nth-child(3n+1){aspect-ratio:5/4} }
+@media(min-width:1147px){ .banq-gal .shot:nth-child(3n+1){aspect-ratio:3/2} }
+@media(min-width:1211px){ .banq-gal .shot:nth-child(3n+1){aspect-ratio:5/3} }
+
+/* ---------- то же для остальных галерей сайта ---------- */
+.gal{gap:14px}
+@media(min-width:961px){
+  .about-grid,.photo-grid{gap:40px}
 }
