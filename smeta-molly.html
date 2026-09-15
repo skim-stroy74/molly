@@ -130,6 +130,37 @@
     font-variant-numeric:tabular-nums;
   }
 
+  /* ---------- подытог и скидка ----------
+     Полную стоимость показываем отдельной строкой: заказчик должен видеть,
+     сколько работа стоит и сколько ему уступили. Скидка, которую не видно,
+     скидкой не воспринимается. */
+  .subtotal{
+    margin-top:26px;
+    padding:18px 26px 16px;
+    border:1px solid var(--line-soft);
+    border-bottom:none;
+    display:flex;
+    flex-direction:column;
+    gap:9px;
+  }
+  .sub-row{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    gap:16px;
+    font-size:15px;
+    color:var(--muted);
+  }
+  .sub-row b{
+    font-family:var(--serif);
+    font-size:19px;
+    color:var(--cream);
+    white-space:nowrap;
+    font-variant-numeric:tabular-nums;
+  }
+  .sub-off b{color:var(--brass-bright)}
+  .subtotal + .total{margin-top:0}
+
   /* ---------- итог ---------- */
   .total{
     display:flex;
@@ -269,9 +300,9 @@
   </header>
 
   <dl class="facts">
-    <div><dt>Дата</dt><dd>14 сентября 2026</dd></div>
-    <div><dt>Позиций в смете</dt><dd>11</dd></div>
-    <div><dt>Стоимость</dt><dd>70 000 ₽</dd></div>
+    <div><dt>Дата</dt><dd>16 сентября 2026</dd></div>
+    <div><dt>Позиций в смете</dt><dd>12</dd></div>
+    <div><dt>Стоимость</dt><dd>50 000 ₽</dd></div>
       </dl>
 
   <h2>Состав работ</h2>
@@ -379,14 +410,34 @@
         <div class="sum">2 000 ₽</div>
       </div>
 
+      <div class="row">
+        <div class="num">12</div>
+        <div class="what">
+          <b>Свой адрес в интернете</b>
+          <span>Подключение домена pub-molly.ru, защищённое соединение, перенос всех адресов внутри сайта, карта для поисковиков и перенаправление со старого адреса, чтобы прежние ссылки не пропали.</span>
+        </div>
+        <div class="sum">4 000 ₽</div>
+      </div>
+
     </div>
+
+  <div class="subtotal">
+    <div class="sub-row">
+      <span>Стоимость работ по перечню</span>
+      <b>74 000 ₽</b>
+    </div>
+    <div class="sub-row sub-off">
+      <span>Скидка крёстному</span>
+      <b>−24 000 ₽</b>
+    </div>
+  </div>
 
   <div class="total">
     <div class="total-l">
-      Итого
+      К оплате
       <span>Работы сданы полностью, оплата по факту приёмки</span>
     </div>
-    <div class="total-r">70 000 ₽</div>
+    <div class="total-r">50 000 ₽</div>
   </div>
 
   <div class="two">
