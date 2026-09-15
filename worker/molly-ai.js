@@ -363,9 +363,14 @@ async function отправитьВVK(env, текст) {
     random_id: String(Date.now() % 2147483647),
     message: текст
   });
-  /* отрицательный номер — беседа, обычный — страница человека */
+  /* Кому слать. Через запятую можно перечислить несколько человек —
+     тогда заявку получают все сразу, и уведомление не зависит от того,
+     заглянул ли один конкретный человек в телефон.
+     Отрицательный номер или начинающийся с 2000 — беседа. */
   const кому = String(env.VK_TO).trim();
-  if (кому.startsWith('-') || кому.startsWith('2000')) params.set('peer_id', кому);
+  const списком = кому.includes(',');
+  if (списком) params.set('user_ids', кому.replace(/\s+/g, ''));
+  else if (кому.startsWith('-') || кому.startsWith('2000')) params.set('peer_id', кому);
   else params.set('user_id', кому);
 
   try {
@@ -381,6 +386,28 @@ async function отправитьВVK(env, текст) {
         ? 'получатель не разрешил сообщения от сообщества'
         : j.error.error_msg;
       return { ok: false, error: подсказка, code: j.error.error_code };
+    }
+    /* При отправке списком ВКонтакте отвечает массивом: по записи на
+       каждого получателя, у неотправленных — своя ошибка. Считаем заявку
+       доставленной, если её получил хоть кто-то: паб узнал о брони.
+       Но недоставленных называем — это повод разобраться. */
+    if (Array.isArray(j.response)) {
+      const дошло = j.response.filter(r => !r.error);
+      const нет = j.response.filter(r => r.error);
+      if (!дошло.length) {
+        const первая = нет[0] && нет[0].error;
+        return {
+          ok: false,
+          error: (первая && первая.code === 901)
+            ? 'ни один получатель не разрешил сообщения от сообщества'
+            : ((первая && первая.description) || 'не доставлено никому')
+        };
+      }
+      return {
+        ok: true,
+        id: дошло.map(r => r.message_id),
+        недоставлено: нет.map(r => r.peer_id)
+      };
     }
     return { ok: true, id: j.response };
   } catch (e) {
