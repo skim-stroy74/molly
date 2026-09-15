@@ -415,6 +415,37 @@ async function отправитьВVK(env, текст) {
   }
 }
 
+/* Какие беседы видит сообщество и под какими номерами.
+   Номер беседы = 2000000000 + её порядковый номер; именно его ждёт VK_TO.
+   В новом мессенджере ВКонтакте этот номер не показывают нигде, поэтому
+   спрашиваем у самого ВКонтакте. */
+async function беседыСообщества(env) {
+  if (!env.VK_TOKEN) return { error: 'ключ сообщества не задан' };
+
+  const адрес = 'https://api.vk.com/method/messages.getConversations'
+              + '?count=200&v=' + VK_V + '&access_token=' + encodeURIComponent(env.VK_TOKEN);
+  try {
+    const res = await fetch(адрес);
+    const j = await res.json();
+    if (j.error) return { error: j.error.error_msg, code: j.error.error_code };
+
+    const беседы = (j.response && j.response.items || [])
+      .map(x => x.conversation)
+      .filter(c => c && c.peer && c.peer.type === 'chat')
+      .map(c => ({
+        номер: c.peer.id,
+        название: (c.chat_settings && c.chat_settings.title) || 'без названия',
+        участников: (c.chat_settings && c.chat_settings.members_count) || null
+      }));
+
+    return беседы.length
+      ? { беседы, подсказка: 'Номер нужной беседы впишите в VK_TO' }
+      : { беседы: [], подсказка: 'Сообщество ни в одной беседе не состоит. Добавьте его участником в чат.' };
+  } catch (e) {
+    return { error: String(e && e.message || e).slice(0, 200) };
+  }
+}
+
 /* Заявки храним и у себя: если уведомление проглядели или ВКонтакте
    сбойнул, заявка не пропадёт — её видно в сводке. */
 async function сохранитьЗаявку(env, d, доставлена) {
@@ -498,6 +529,18 @@ export default {
         return reply({ error: 'нужен ключ' }, 403, head);
       }
       return reply(await сводка(env), 200, head);
+    }
+
+    /* Список бесед, в которых состоит сообщество, вместе с их номерами.
+       Нужен один раз при настройке: номер беседы в новом мессенджере
+       ВКонтакте нигде не показывается, а без него некуда слать заявки.
+       Под тем же ключом, что и сводка — наружу это отдавать незачем. */
+    if (request.method === 'GET' && new URL(request.url).pathname === '/vk-chats') {
+      const ключ = new URL(request.url).searchParams.get('key');
+      if (!env.STATS_KEY || ключ !== env.STATS_KEY) {
+        return reply({ error: 'нужен ключ' }, 403, head);
+      }
+      return reply(await беседыСообщества(env), 200, head);
     }
 
     if (request.method !== 'POST') return reply({ error: 'only POST' }, 405, head);
