@@ -44,6 +44,7 @@
         <div class="rep-num"><b id="nAll">—</b><span>вопросов за месяц</span></div>
         <div class="rep-num"><b id="nMiss">—</b><span>осталось без ответа</span></div>
         <div class="rep-num"><b id="nDays">—</b><span>дней с вопросами</span></div>
+        <div class="rep-num"><b id="nReq">—</b><span>заявок на бронь</span></div>
       </div>
 
       <div class="rep-cols">
@@ -56,6 +57,13 @@
           <p class="rep-hint">Вот это и стоит добавить на сайт или в справочник.</p>
           <ol class="rep-list" id="miss"></ol>
         </div>
+      </div>
+
+      <div class="rep-box">
+        <h2>Заявки на бронь</h2>
+        <p class="rep-hint">Уведомление в ВКонтакте можно проглядеть — здесь заявки лежат три месяца.
+           Тут есть телефоны гостей: страница не для посторонних.</p>
+        <ol class="rep-list rep-reqs" id="reqs"></ol>
       </div>
 
       <div class="rep-box">
@@ -100,6 +108,35 @@
     });
   }
 
+  /* Заявки писали гости: имя, телефон и пожелания вставляем текстом,
+     а не разметкой. Недоставленные помечаем — их надо разобрать руками. */
+  function заявки(список){
+    var box = document.getElementById('reqs');
+    if (!список.length){
+      box.innerHTML = '<li class="rep-empty">Заявок пока не было.</li>';
+      return;
+    }
+    box.innerHTML = список.map(function(з){
+      return '<li class="rep-req' + (з.ok ? '' : ' rep-req-bad') + '">' +
+        '<div class="rr-head"><b class="rr-name"></b><span class="rr-date"></span></div>' +
+        '<div class="rr-body"></div>' +
+        (з.ok ? '' : '<div class="rr-warn">Уведомление не ушло — свяжитесь сами</div>') +
+        '</li>';
+    }).join('');
+
+    [].forEach.call(box.querySelectorAll('.rep-req'), function(el, i){
+      var з = список[i];
+      el.querySelector('.rr-name').textContent = з.name || 'Без имени';
+      el.querySelector('.rr-date').textContent = з.d || '';
+      var части = [];
+      if (з.when)   части.push('Когда: ' + з.when);
+      if (з.guests) части.push('Гостей: ' + з.guests);
+      if (з.phone)  части.push('Телефон: ' + з.phone);
+      if (з.note)   части.push('Пожелания: ' + з.note);
+      el.querySelector('.rr-body').textContent = части.join(' · ');
+    });
+  }
+
   function рисовать(d){
     document.getElementById('nAll').textContent  = число(d.всего);
     document.getElementById('nMiss').textContent = число(d.неответила);
@@ -107,6 +144,9 @@
 
     строки('top',  d.частые  || [], false);
     строки('miss', d.промахи || [], true);
+
+    заявки(d.заявки || []);
+    document.getElementById('nReq').textContent = число((d.заявки||[]).length);
 
     var дни = d.поДням || [];
     var макс = дни.reduce(function(m,x){ return Math.max(m, x.сколько); }, 1);

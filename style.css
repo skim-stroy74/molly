@@ -1508,3 +1508,22 @@ a[href^="tel:"]{white-space:nowrap}
 }
 .hero-slide.on{opacity:1}
 @media(prefers-reduced-motion:reduce){ .hero-slide{display:none} }
+
+/* ---------- заявки на бронь в отчёте ----------
+   Заявка — не строка статистики, а дело: имя, телефон, когда ждут гостя.
+   Поэтому не список с числом справа, а карточка. Недоставленные
+   помечаем: по ним надо звонить самим. */
+.rep-reqs{list-style:none;counter-reset:none;margin:12px 0 0;padding:0;display:grid;gap:10px}
+/* перебиваем общий стиль списка отчёта: там строка в одну линию с номером,
+   а заявка — карточка в несколько строк */
+.rep-reqs li.rep-req{
+  display:block;padding:12px 14px;border:1px solid var(--line-soft);
+  border-radius:10px;background:rgba(255,255,255,.02);
+}
+.rep-reqs li.rep-req::before{content:none}
+.rr-head{display:flex;justify-content:space-between;gap:12px;align-items:baseline}
+.rr-name{color:var(--cream);font-size:15px}
+.rr-date{color:var(--muted);font-size:12px;white-space:nowrap}
+.rr-body{margin-top:5px;color:var(--muted);font-size:13.5px;line-height:1.5}
+.rep-req-bad{border-color:rgba(214,120,80,.5)}
+.rr-warn{margin-top:7px;font-size:12.5px;color:#e08a5e}
