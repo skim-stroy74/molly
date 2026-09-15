@@ -29,7 +29,13 @@ const home = base.endsWith('/') ? base : base + '/';
 const site = home.replace(/^https?:\/\//, '').replace(/\/$/, '');
 
 /* служебные страницы: адрес им прописываем, в карту сайта не кладём */
-const SKIP_IN_SITEMAP = ['priglashenie.html'];
+const SKIP_IN_SITEMAP = ['priglashenie.html', 'otchet.html', 'smeta-molly.html'];
+
+/* Страницы, закрытые от поисковиков навсегда, а не до сдачи.
+   В отчёте лежат имена и телефоны гостей, в смете — цены для заказчика.
+   Ключ --live снимает запрет индексации с черновика; этих двух он
+   касаться не должен ни при каких обстоятельствах. */
+const ВСЕГДА_СКРЫТЫ = ['otchet.html', 'smeta-molly.html'];
 
 const DRAFT_MARK = '<!-- ЧЕРНОВИК: снять перед сдачей -->';
 const NOINDEX = '<meta name="robots" content="noindex, nofollow">';
@@ -64,7 +70,10 @@ for (const page of pages) {
 
   /* черновик прячем от поисковиков, готовый сайт открываем */
   const hasNoindex = html.includes(NOINDEX);
-  if (live && hasNoindex) {
+  const скрытаНавсегда = ВСЕГДА_СКРЫТЫ.includes(page);
+  if (скрытаНавсегда) {
+    /* запрет индексации не трогаем ни в ту, ни в другую сторону */
+  } else if (live && hasNoindex) {
     html = html.replace(/[ \t]*<!--\s*ЧЕРНОВИК[\s\S]*?-->\r?\n/g, '');
     html = html.replace(new RegExp('[ \\t]*' + NOINDEX.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\r?\\n', 'g'), '');
   } else if (!live && !hasNoindex) {
