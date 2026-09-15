@@ -205,6 +205,39 @@
     font-variant-numeric:tabular-nums;
   }
 
+  /* ---------- реквизиты ----------
+     Отдельным блоком в конце: заказчик прочитал смету, согласился —
+     и тут же видит, куда платить, без отдельного сообщения. */
+  .pay{
+    margin-top:26px;
+    padding:20px 26px;
+    border:1px solid var(--line);
+    background:var(--panel);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+    flex-wrap:wrap;
+  }
+  .pay .kind{color:var(--brass)}
+  .pay p{font-size:15px;color:var(--muted);margin-top:4px}
+  .pay-r{text-align:right}
+  .pay-r a{
+    display:block;
+    font-family:var(--serif);
+    font-size:clamp(20px,4vw,25px);
+    color:var(--brass-bright);
+    text-decoration:none;
+    white-space:nowrap;
+    font-variant-numeric:tabular-nums;
+  }
+  .pay-r a:hover{text-decoration:underline}
+  .pay-r span{display:block;font-size:13.5px;color:var(--muted);margin-top:4px}
+  @media(max-width:560px){
+    .pay{flex-direction:column;align-items:flex-start}
+    .pay-r{text-align:left}
+  }
+
   .tail{
     margin-top:46px;
     padding-top:22px;
@@ -454,6 +487,17 @@
     </section>
 
   
+
+  <section class="pay">
+    <div class="pay-l">
+      <div class="kind">Оплата</div>
+      <p>Перевод по номеру телефона, Сбербанк</p>
+    </div>
+    <div class="pay-r">
+      <a href="tel:+79933128788">+7 (993) 312-87-88</a>
+      <span>Чугунов Владислав Максимович</span>
+    </div>
+  </section>
 
   <div class="tail">
     <span>Смета действительна до 11 октября 2026 года</span>
