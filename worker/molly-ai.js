@@ -429,18 +429,36 @@ async function беседыСообщества(env) {
     const j = await res.json();
     if (j.error) return { error: j.error.error_msg, code: j.error.error_code };
 
-    const беседы = (j.response && j.response.items || [])
-      .map(x => x.conversation)
-      .filter(c => c && c.peer && c.peer.type === 'chat')
+    const все = (j.response && j.response.items || []).map(x => x.conversation).filter(Boolean);
+
+    const беседы = все
+      .filter(c => c.peer && c.peer.type === 'chat')
       .map(c => ({
         номер: c.peer.id,
         название: (c.chat_settings && c.chat_settings.title) || 'без названия',
         участников: (c.chat_settings && c.chat_settings.members_count) || null
       }));
 
-    return беседы.length
-      ? { беседы, подсказка: 'Номер нужной беседы впишите в VK_TO' }
-      : { беседы: [], подсказка: 'Сообщество ни в одной беседе не состоит. Добавьте его участником в чат.' };
+    /* Пустой список сам по себе ничего не объясняет: то ли бесед нет,
+       то ли ВКонтакте вообще ничего не отдал. Показываем, что он прислал:
+       сколько всего диалогов и какие они по типу. */
+    const поТипам = {};
+    for (const c of все) {
+      const т = (c.peer && c.peer.type) || 'неизвестно';
+      поТипам[т] = (поТипам[т] || 0) + 1;
+    }
+
+    return {
+      беседы,
+      всегоДиалогов: все.length,
+      поТипам,
+      счётчикВК: (j.response && j.response.count),
+      подсказка: беседы.length
+        ? 'Номер нужной беседы впишите в VK_TO'
+        : (все.length
+            ? 'Диалоги видны, но бесед среди них нет — ВКонтакте не отдаёт чаты по ключу сообщества.'
+            : 'ВКонтакте не отдал ни одного диалога. Похоже, ключу не хватает прав.')
+    };
   } catch (e) {
     return { error: String(e && e.message || e).slice(0, 200) };
   }
