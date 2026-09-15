@@ -627,15 +627,15 @@
       dots.remove();
       var box = add('msg-bot',
         'Готово, вот заявка:' +
-        '<div class="req" id="reqText">' + esc(msg).replace(/\n/g, '<br>') + '</div>' +
+        '<div class="req">' + esc(msg).replace(/\n/g, '<br>') + '</div>' +
         'Отправьте её администратору — так быстрее всего.');
       var row = document.createElement('div');
       row.className = 'req-acts';
       row.innerHTML =
-        (AI_URL ? '<button class="req-btn req-send" type="button" id="reqSend">Отправить администратору</button>' : '') +
+        (AI_URL ? '<button class="req-btn req-send" type="button">Отправить администратору</button>' : '') +
         '<a class="req-btn" href="tel:' + TEL + '">Позвонить</a>' +
         '<a class="req-btn" href="' + VK + '" target="_blank" rel="noopener">Написать в ВК</a>' +
-        '<button class="req-btn" type="button" id="reqCopy">Скопировать</button>';
+        '<button class="req-btn req-copy" type="button">Скопировать</button>';
       box.appendChild(row);
       toBottom();
 
@@ -643,7 +643,10 @@
       /* Заявка уходит администратору в ВКонтакте через посредника.
          Кнопки «позвонить» и «написать» остаются: если отправка не удалась,
          у гостя есть привычный путь. */
-      var кнОтпр = document.getElementById('reqSend');
+      /* Кнопки ищем внутри этой карточки. Раньше искали по всей странице
+         по одинаковому id — и при второй заявке обработчик доставался
+         первой, уже отправленной карточке, а новые кнопки не работали. */
+      var кнОтпр = row.querySelector('.req-send');
       if (кнОтпр) кнОтпр.addEventListener('click', function () {
         var кн = this;
         кн.disabled = true;
@@ -675,7 +678,7 @@
           });
       });
 
-      document.getElementById('reqCopy').addEventListener('click', function () {
+      row.querySelector('.req-copy').addEventListener('click', function () {
         var btn = this;
         function done(ok) { btn.textContent = ok ? 'Скопировано' : 'Выделите текст'; }
         if (navigator.clipboard && navigator.clipboard.writeText) {
