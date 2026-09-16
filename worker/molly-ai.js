@@ -367,11 +367,13 @@ async function отправитьВVK(env, текст) {
      тогда заявку получают все сразу, и уведомление не зависит от того,
      заглянул ли один конкретный человек в телефон.
      Отрицательный номер или начинающийся с 2000 — беседа. */
-  const кому = String(env.VK_TO).trim();
-  const списком = кому.includes(',');
-  if (списком) params.set('user_ids', кому.replace(/\s+/g, ''));
-  else if (кому.startsWith('-') || кому.startsWith('2000')) params.set('peer_id', кому);
-  else params.set('user_id', кому);
+  /* Адресуемся через peer_id: для человека это его номер страницы,
+     для беседы — 2000000000 плюс её номер. Прежние user_id и user_ids
+     ВКонтакте объявил устаревшими начиная с версии 5.138, и на 5.199
+     список получателей через user_ids уже отклоняется. */
+  const кому = String(env.VK_TO).trim().replace(/\s+/g, '');
+  if (кому.includes(',')) params.set('peer_ids', кому);
+  else params.set('peer_id', кому);
 
   try {
     const res = await fetch(VK_API, {
