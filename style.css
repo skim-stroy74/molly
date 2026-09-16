@@ -1559,3 +1559,13 @@ a[href^="tel:"]{white-space:nowrap}
 body.cookie-open .mess{bottom:190px}
 @media(max-width:700px){ body.cookie-open .mess{bottom:260px} }
 @media(prefers-reduced-motion:reduce){ .mess-a{transition:none} }
+
+/* Кнопка MAX пока без ссылки: у мессенджера нет адресов по номеру,
+   нужна личная ссылка владельца. Показываем приглушённой и не делаем
+   вид, что по ней можно нажать. */
+.mess-a.is-off{
+  opacity:.45;
+  cursor:default;
+  pointer-events:none;
+}
+.mess-max:not(.is-off):hover{color:#7c6cff;border-color:rgba(124,108,255,.55)}
