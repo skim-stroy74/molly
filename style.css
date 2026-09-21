@@ -1901,16 +1901,38 @@ body.ng .ng-head h1[data-cut] .ch{
 /* Кнопка возврата на обычный сайт: заметная, но не спорящая с бронью.
    Наверху первого экрана — чтобы человек, пришедший по ссылке из афиши,
    сразу видел выход, а не искал его в меню. */
+/* Кнопка возврата держится на экране всю страницу: гость мог зайти
+   сразу на новогоднюю ссылку из переписки и не подозревать, что у паба
+   есть обычный сайт. Ссылка мелким шрифтом в самом верху этого не решает —
+   её не видно уже со второго экрана. Справа внизу: слева сидят кружки
+   мессенджеров. */
 .ng-back{
-  display:inline-flex;align-items:center;
-  margin-bottom:16px;padding:7px 14px;
-  border:1px solid var(--line);border-radius:999px;
-  background:rgba(255,255,255,.04);
-  color:var(--muted);font-size:13.5px;
-  transition:color .2s,border-color .2s,background .2s;
+  position:fixed;right:24px;bottom:24px;z-index:60;
+  display:inline-flex;align-items:center;gap:8px;
+  padding:12px 20px;
+  border:1px solid var(--brass);border-radius:999px;
+  background:rgba(10,26,46,.94);
+  backdrop-filter:blur(6px);
+  color:var(--cream);font-size:15.5px;line-height:1;
+  box-shadow:0 12px 30px rgba(0,0,0,.5);
+  transition:color .2s,border-color .2s,background .2s,transform .2s;
 }
-.ng-back:hover{color:var(--cream);border-color:var(--brass);background:rgba(127,180,239,.1)}
+.ng-back span{color:var(--brass-bright);font-size:17px}
+.ng-back:hover{
+  color:#fff;border-color:var(--brass-bright);
+  background:rgba(22,52,88,.96);transform:translateY(-2px);
+}
 .ng-back:focus-visible{outline:2px solid var(--brass);outline-offset:3px}
+@media(max-width:700px){
+  .ng-back{right:16px;bottom:16px;padding:11px 17px;font-size:14.5px}
+}
+/* пока баннер о cookie закрывает низ экрана — поднимаем над ним, как кружки */
+body.cookie-open .ng-back{bottom:190px}
+@media(max-width:700px){ body.cookie-open .ng-back{bottom:260px} }
+@media(prefers-reduced-motion:reduce){ .ng-back{transition:none} .ng-back:hover{transform:none} }
+/* Освобождаем подвал: плавающая кнопка не должна ложиться на строку
+   с предупреждением о вреде алкоголя — её обязаны видеть целиком. */
+body.ng .ftr{padding-bottom:96px}
 
 /* ---------- Дед Мороз рядом с программой вечера ----------
    Кадр показываем целиком, 2:3 как в исходнике: обрезать нечего.
