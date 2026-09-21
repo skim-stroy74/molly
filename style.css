@@ -1913,11 +1913,11 @@ body.ng .ng-head h1[data-cut] .ch{
 .ng-back:focus-visible{outline:2px solid var(--brass);outline-offset:3px}
 
 /* ---------- Дед Мороз рядом с программой вечера ----------
-   Кадр показываем целиком, 3:4 как в исходнике: обрезать нечего.
+   Кадр показываем целиком, 2:3 как в исходнике: обрезать нечего.
    Кружка на стойке — это интерьер зала, а не реклама напитка:
    ни марки, ни цены, ни призыва в кадре нет. */
 .ng-prog-photo{
-  aspect-ratio:3/4;overflow:hidden;border-radius:3px;
+  aspect-ratio:2/3;overflow:hidden;border-radius:3px;
   border:1px solid var(--line);
   box-shadow:0 16px 34px rgba(0,0,0,.45);
 }
