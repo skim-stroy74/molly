@@ -1635,16 +1635,130 @@ body.cookie-open .mess{bottom:190px}
    Сезонный пункт: с октября по декабрь он главный, поэтому стоит первым
    и подсвечен. После праздников строку с ним убрать — дело одной минуты. */
 .nav a.nav-ng{
-  color:#e8544f;position:relative;
+  color:#8fc4ff;position:relative;
 }
 .nav a.nav-ng::after{
   content:"";position:absolute;left:0;right:0;bottom:-3px;height:1px;
-  background:linear-gradient(90deg,transparent,#e8544f,transparent);
+  background:linear-gradient(90deg,transparent,#8fc4ff,transparent);
 }
 .nav a.nav-ng:hover{color:var(--cream)}
 
+/* Кнопка зимняя: синий лёд, а сверху лежит снег — белая шапка
+   с неровным нижним краем, как сугроб на карнизе. Рисуем тенями,
+   картинка ради этого не нужна. */
 .btn-ng{
-  background:linear-gradient(140deg,#c4433f,#8f2f2c);
-  color:#fff5ef;border:1px solid rgba(255,220,200,.35);
+  position:relative;
+  background:linear-gradient(160deg,#2f6fbe,#1b4a8c);
+  color:#f2f8ff;border:1px solid rgba(169,210,255,.45);
+  padding-top:16px;
+  overflow:visible;
 }
-.btn-ng:hover{background:linear-gradient(140deg,#d24d48,#a03734)}
+.btn-ng:hover{background:linear-gradient(160deg,#3a82d6,#215aa6)}
+.btn-ng::before{
+  content:"";position:absolute;left:-1px;right:-1px;top:-4px;height:13px;
+  background:#f7fbff;
+  border-radius:8px 8px 4px 4px;
+  /* неровный низ: сугроб не бывает по линейке */
+  clip-path:polygon(
+    0 0,100% 0,100% 62%,
+    92% 78%,84% 60%,74% 82%,64% 64%,54% 86%,44% 66%,34% 84%,24% 62%,14% 80%,6% 60%,0 76%
+  );
+  box-shadow:0 2px 5px rgba(10,26,46,.45);
+}
+/* сосульки-капли по краям шапки */
+.btn-ng::after{
+  content:"";position:absolute;top:6px;left:18%;width:4px;height:9px;
+  background:#f7fbff;border-radius:0 0 3px 3px;opacity:.9;
+}
+
+/* ================= ЗИМА НА НОВОГОДНЕЙ СТРАНИЦЕ =================
+   Только эта страница: метка .ng на теле переключает палитру с паба
+   на зимнюю, остальной сайт остаётся прежним. Цвета не заменяются
+   поштучно, а переопределяются переменными — поэтому подхватывают
+   и меню, и карточки, и подвал, ничего не забыв. */
+body.ng{
+  --ink:#050d18;
+  --bg:#0a1a2e;
+  --bg-2:#0d2440;
+  --panel:#122c4a;
+  --line:rgba(148,197,255,.26);
+  --line-soft:rgba(226,240,255,.12);
+  --cream:#eaf3ff;
+  --muted:#9db6d4;
+  --brass:#7fb4ef;
+  --brass-bright:#a9d2ff;
+  --amber:#5e9fe0;
+  background:var(--bg);
+}
+/* «деревянные» полосы на зимней странице — синий лёд, а не дуб */
+body.ng .sec.wood{background:linear-gradient(180deg,var(--bg-2),var(--bg))}
+
+/* ---------- гирлянда под шапкой ----------
+   Рисуется точками, а не картинкой: страница и так тяжёлая от меню,
+   лишний файл ради украшения — плохая сделка. */
+.ng-garland{
+  position:sticky;top:74px;z-index:65;height:22px;pointer-events:none;
+  /* Полоса непрозрачная: липкая гирлянда висит поверх страницы, и без
+     фона текст проезжает сквозь огоньки. */
+  background:
+    radial-gradient(circle at 14px 9px,#ffd86b 0 3px,transparent 4px),
+    radial-gradient(circle at 42px 13px,#8ff0b5 0 3px,transparent 4px),
+    radial-gradient(circle at 70px 8px,#ff9b8a 0 3px,transparent 4px),
+    radial-gradient(circle at 98px 14px,#a9d2ff 0 3px,transparent 4px),
+    linear-gradient(180deg,#081628,#0a1a2e);
+  background-size:112px 22px,112px 22px,112px 22px,112px 22px,100% 100%;
+  border-bottom:1px solid rgba(148,197,255,.14);
+  filter:drop-shadow(0 0 6px rgba(169,210,255,.55));
+  animation:гирлянда 4s steps(1) infinite;
+}
+@keyframes гирлянда{
+  0%,100%{opacity:1}
+  50%{opacity:.55}
+}
+.hdr.small ~ .ng-garland{top:62px}
+
+/* ---------- снег на первом экране ---------- */
+.ng-hero{position:relative;overflow:hidden}
+.ng-snow{
+  position:absolute;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(circle at 12% 18%,rgba(255,255,255,.55) 0 1.6px,transparent 2px),
+    radial-gradient(circle at 78% 32%,rgba(255,255,255,.45) 0 2px,transparent 2.6px),
+    radial-gradient(circle at 44% 66%,rgba(255,255,255,.4) 0 1.4px,transparent 2px),
+    radial-gradient(circle at 90% 78%,rgba(255,255,255,.5) 0 1.8px,transparent 2.4px),
+    radial-gradient(circle at 28% 88%,rgba(255,255,255,.35) 0 1.5px,transparent 2px);
+  background-size:260px 260px;
+  animation:снегопад 22s linear infinite;
+}
+@keyframes снегопад{
+  from{background-position:0 -260px,0 -260px,0 -260px,0 -260px,0 -260px}
+  to{background-position:0 260px,-40px 260px,30px 260px,-20px 260px,50px 260px}
+}
+.ng-hero .wrap{position:relative;z-index:1}
+
+/* ---------- ёлочка перед заголовками разделов ---------- */
+body.ng .sec-head .eyebrow::before{
+  content:"";display:inline-block;vertical-align:-1px;margin-right:8px;
+  width:10px;height:12px;background:#6fbf8c;
+  clip-path:polygon(50% 0,100% 62%,66% 62%,66% 100%,34% 100%,34% 62%,0 62%);
+}
+
+/* заголовок первого экрана — морозный, а не латунный */
+body.ng .ng-head h1{
+  background:linear-gradient(180deg,#ffffff,#a9d2ff 62%,#6ea8e6);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+/* цена и «тридцать первое» остаются самыми яркими на странице */
+body.ng .ng-price{border-color:var(--brass);box-shadow:0 0 34px rgba(127,180,239,.18)}
+
+@media(prefers-reduced-motion:reduce){
+  .ng-garland,.ng-snow{animation:none}
+}
+
+/* Шапка и подвал держат цвет числом, а не переменной — поэтому зимнюю
+   палитру сами не подхватывают. Перекрашиваем отдельно. */
+body.ng .hdr{background:rgba(8,22,40,.86);border-bottom-color:rgba(148,197,255,.18)}
+body.ng .hdr.small{background:rgba(6,18,34,.95)}
+body.ng .ftr{background:var(--ink)}
+/* на зимней странице сезонный пункт уже не нужно выделять — вокруг и так зима */
+body.ng .nav a.nav-ng{color:var(--cream)}

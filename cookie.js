@@ -17,8 +17,16 @@
     if (window.mollyAnalytics) { try { window.mollyAnalytics(); } catch (e) {} }
   }
 
-  if (saved() === 'yes') { startAnalytics(); return; }
-  if (saved() === 'no') { return; }
+  /* Кто ещё ждёт освобождения низа экрана — помощница. Сообщаем ей
+     отдельным событием: по разметке этого не прочитать, баннер остаётся
+     в теле страницы и после закрытия. */
+  function сообщить() {
+    document.body.classList.add('cookie-done');
+    try { document.dispatchEvent(new CustomEvent('molly:cookie')); } catch (e) {}
+  }
+
+  if (saved() === 'yes') { startAnalytics(); сообщить(); return; }
+  if (saved() === 'no') { сообщить(); return; }
 
   function build() {
     var box = document.createElement('div');
@@ -55,6 +63,7 @@
       box.classList.remove('on');
       document.body.classList.remove('cookie-open');
       поднятьПомощницу(false);
+      сообщить();
     }
 
     yes.addEventListener('click', function () {
