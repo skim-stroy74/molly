@@ -1913,21 +1913,18 @@ body.ng .ng-head h1[data-cut] .ch{
 .ng-back:focus-visible{outline:2px solid var(--brass);outline-offset:3px}
 
 /* ---------- Дед Мороз рядом с программой вечера ----------
-   Кадрируем портретно и по правому краю: так в кадр попадает вывеска
-   паба, а кружка на стойке и меловая доска со списком настоек
-   остаются за рамкой. Рекламировать алкоголь на сайте нельзя. */
+   Кадр показываем целиком, 3:4 как в исходнике: обрезать нечего.
+   Кружка на стойке — это интерьер зала, а не реклама напитка:
+   ни марки, ни цены, ни призыва в кадре нет. */
 .ng-prog-photo{
-  aspect-ratio:3/5;min-height:340px;overflow:hidden;border-radius:3px;
+  aspect-ratio:3/4;overflow:hidden;border-radius:3px;
   border:1px solid var(--line);
   box-shadow:0 16px 34px rgba(0,0,0,.45);
 }
 .ng-prog-photo img{
-  width:100%;height:100%;object-fit:cover;object-position:100% 45%;
+  width:100%;height:100%;object-fit:cover;object-position:center;
   display:block;
 }
-/* На телефоне кадр не кладём поперёк: горизонтальная рамка шире
-   исходника, и тогда в неё возвращается вся левая часть — кружка
-   и доска. Вместо этого сужаем сам столбик. */
 @media(max-width:1099px){
-  .ng-prog-photo{max-width:260px;margin:0 auto}
+  .ng-prog-photo{max-width:420px;margin:0 auto}
 }
