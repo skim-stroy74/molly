@@ -1872,7 +1872,7 @@ body.ng .nav a.nav-ng{color:var(--cream)}
   transform:translateY(.34em);
   transition:opacity .34s ease,transform .34s cubic-bezier(.2,.75,.25,1);
 }
-.js [data-type].in .ch{opacity:1;transform:none}
+.js [data-type].typed .ch{opacity:1;transform:none}
 /* сам заголовок уже виден: иначе буквы всплывали бы дважды —
    и блоком, и поштучно */
 .js [data-type]{opacity:1;transform:none}
@@ -1890,3 +1890,17 @@ body.ng .ng-head h1[data-cut] .ch{
   -webkit-background-clip:text;background-clip:text;
   color:transparent;
 }
+
+/* Кнопка возврата на обычный сайт: заметная, но не спорящая с бронью.
+   Наверху первого экрана — чтобы человек, пришедший по ссылке из афиши,
+   сразу видел выход, а не искал его в меню. */
+.ng-back{
+  display:inline-flex;align-items:center;
+  margin-bottom:16px;padding:7px 14px;
+  border:1px solid var(--line);border-radius:999px;
+  background:rgba(255,255,255,.04);
+  color:var(--muted);font-size:13.5px;
+  transition:color .2s,border-color .2s,background .2s;
+}
+.ng-back:hover{color:var(--cream);border-color:var(--brass);background:rgba(127,180,239,.1)}
+.ng-back:focus-visible{outline:2px solid var(--brass);outline-offset:3px}
