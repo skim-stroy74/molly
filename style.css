@@ -1861,3 +1861,32 @@ body.ng .nav a.nav-ng{color:var(--cream)}
 @media(min-width:1100px){
   .ng-side .ng-prog{grid-template-columns:repeat(2,1fr)}
 }
+
+/* ---------- набор заголовков по буквам ----------
+   Слово не разрывается: буквы режутся внутри него, а само слово
+   держится как целое, иначе строка переносилась бы посреди слова. */
+.js [data-type] .w{white-space:nowrap}
+.js [data-type] .ch{
+  display:inline-block;
+  opacity:0;
+  transform:translateY(.34em);
+  transition:opacity .34s ease,transform .34s cubic-bezier(.2,.75,.25,1);
+}
+.js [data-type].in .ch{opacity:1;transform:none}
+/* сам заголовок уже виден: иначе буквы всплывали бы дважды —
+   и блоком, и поштучно */
+.js [data-type]{opacity:1;transform:none}
+
+@media(prefers-reduced-motion:reduce){
+  .js [data-type] .ch{opacity:1;transform:none;transition:none}
+}
+
+/* Морозный градиент заголовка обрезается по буквам. Когда заголовок
+   разрезан на ячейки, обрезать нечего — красим каждую букву отдельно.
+   Градиент вертикальный, буквы одной высоты, поэтому глазу разницы нет. */
+body.ng .ng-head h1[data-cut]{background:none}
+body.ng .ng-head h1[data-cut] .ch{
+  background:linear-gradient(180deg,#ffffff,#a9d2ff 62%,#6ea8e6);
+  -webkit-background-clip:text;background-clip:text;
+  color:transparent;
+}
