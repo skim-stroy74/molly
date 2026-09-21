@@ -1762,3 +1762,7 @@ body.ng .hdr.small{background:rgba(6,18,34,.95)}
 body.ng .ftr{background:var(--ink)}
 /* на зимней странице сезонный пункт уже не нужно выделять — вокруг и так зима */
 body.ng .nav a.nav-ng{color:var(--cream)}
+
+/* Зимний логотип отдаётся через picture: где webp не понимают — покажется
+   обычный зелёный, а не пустая рамка. Обёртка не должна ломать строку шапки. */
+.logo picture{display:flex;flex:none}
