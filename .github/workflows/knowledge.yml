@@ -1,0 +1,47 @@
+# Ежедневно пересобирает базу знаний помощницы.
+#
+# Зачем: сборщик отбрасывает прошедшие события, но делает это в момент
+# запуска. Если афишу месяц не трогать, помощница продолжит звать людей
+# на концерт, который уже был. Сама страница прячет прошедшее скриптом
+# в браузере, а справочник — обычный текстовый файл, его надо перезаписать.
+#
+# Коммит делается только когда файл реально изменился, чтобы не плодить
+# пустые коммиты каждый день.
+
+name: База знаний
+
+on:
+  schedule:
+    # 01:00 UTC — 06:00 по Магнитогорску, задолго до открытия паба
+    - cron: '0 1 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  # Имя задачи только латиницей — кириллицу GitHub Actions здесь не принимает
+  rebuild:
+    name: Пересобрать справочник
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Собрать справочник
+        run: node tools/build-knowledge.js
+
+      - name: Закоммитить, если изменилось
+        run: |
+          if git diff --quiet -- data/; then
+            echo "Прошедших событий не прибавилось — коммитить нечего."
+            exit 0
+          fi
+          git config user.name  'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/
+          git commit -m 'База знаний: отброшены прошедшие события'
+          git push
