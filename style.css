@@ -1313,26 +1313,22 @@ body.zoom-open{overflow:hidden}
 .install-dot{
   flex:none;margin-left:auto;display:none;position:relative;
   width:44px;height:44px;border-radius:50%;cursor:pointer;padding:0;
-  background:linear-gradient(150deg,#1c3222,#101d14);
+  /* Заливка нейтральная, а не зелёная: зелёный был прошит цветом и на
+     новогодней синей шапке смотрелся заплаткой. Теперь кружок живёт
+     по теме страницы, как и три полоски рядом. */
+  background:rgba(255,255,255,.035);
   border:1px solid var(--brass);
   align-items:center;justify-content:center;
   animation:dotIn .4s ease both;
 }
 .install-dot.on{display:flex}
-.install-dot img{width:26px;height:26px;border-radius:6px}
+/* Внутри кружка — знак установки, а не эмблема паба: эмблема уже стоит
+   в этой же строке слева. Раньше были обе сразу, да ещё значок установки
+   висел отдельным кружком у края и налезал на границу. */
+.install-dot{color:var(--brass-bright)}
+.install-dot svg{display:block;width:21px;height:21px}
 /* три полоски рядом: отступ вместо прижатия к правому краю */
 .install-dot + .burger{margin-left:0}
-/* стрелка вниз — общепонятный знак «установить» */
-.install-dot::after{
-  content:"";position:absolute;right:-1px;bottom:-1px;
-  width:17px;height:17px;border-radius:50%;
-  background:var(--brass);
-  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 3v12m0 0l-4-4m4 4l4-4M5 21h14' stroke='%23000' stroke-width='2.4' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/12px no-repeat,
-          linear-gradient(#000,#000);
-  -webkit-mask-composite:source-in;
-          mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 3v12m0 0l-4-4m4 4l4-4M5 21h14' stroke='%23000' stroke-width='2.4' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/12px no-repeat;
-  box-shadow:0 1px 5px rgba(0,0,0,.45);
-}
 @keyframes dotIn{from{opacity:0;transform:scale(.8)}to{opacity:1;transform:none}}
 .install-dot:active{transform:scale(.94)}
 @media(min-width:761px){ .install-dot{display:none !important} }
