@@ -358,6 +358,13 @@ h3{font-size:22px;line-height:1.25}
 .way .ic{width:42px;height:42px;border-radius:50%;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--brass);flex:none;font-size:19px}
 .way b{display:block;font-size:16px;font-weight:600}
 .way span{font-size:13.5px;color:var(--muted)}
+/* Текстовой половине карточки разрешаем ужиматься: без min-width:0
+   она держит ширину самого длинного слова («Онлайн-бронирование»)
+   и распирает карточку шире экрана. Само слово при нехватке места
+   переносится — лучше перенос, чем горизонтальная прокрутка. */
+.way>span:not(.ic){min-width:0}
+.way b,.way span{overflow-wrap:break-word}
+.way b{white-space:normal}
 
 /* ---------- контакты ---------- */
 .cont{display:grid;grid-template-columns:.85fr 1.15fr;gap:52px;align-items:start}
@@ -470,7 +477,10 @@ h3{font-size:22px;line-height:1.25}
 /* ---------- адаптив ---------- */
 @media(max-width:960px){
   .prog,.menu-grid{grid-template-columns:1fr 1fr}
-  .about,.banq,.book,.cont{grid-template-columns:1fr;gap:40px}
+  /* minmax(0,1fr), а не просто 1fr: «1fr» разрешает колонке раздуться
+     до самого длинного неразрывного куска внутри. На телефоне из-за
+     этого карточки брони уезжали за край экрана. */
+  .about,.banq,.book,.cont{grid-template-columns:minmax(0,1fr);gap:40px}
   .gal{grid-template-columns:repeat(2,1fr)}
   .gal>*:first-child{grid-column:span 2;grid-row:auto;aspect-ratio:16/10}
   .book{padding:40px 28px}
@@ -1102,9 +1112,12 @@ h3{font-size:22px;line-height:1.25}
 .js .rv-left.in,
 .js .rv-right.in{transform:none}
 
-/* На узком экране боковой заезд создаёт горизонтальную прокрутку,
-   поэтому на телефоне оставляем привычное движение снизу. */
-@media(max-width:760px){
+/* Боковой заезд создаёт горизонтальную прокрутку, поэтому на узком
+   экране оставляем привычное движение снизу. Порог — 960px, как у самой
+   вёрстки: с этой ширины блоки встают в одну колонку во всю ширину,
+   и заезд на 34px вбок вылезает за край. Раньше тут стояло 760px,
+   и в промежутке 761–960 полоса прокрутки всё равно появлялась. */
+@media(max-width:960px){
   .js .rv-left,.js .rv-right{transform:translateY(22px)}
 }
 
@@ -1462,7 +1475,12 @@ p, li, .bq-desc, .mi-desc{text-wrap:pretty}
 /* Номер телефона не должен разламываться переносом строки — ни по пробелу,
    ни по дефису. Неразрывные пробелы внутри номера уже стоят, это страхует
    от разрыва по «805-37-37». */
-a[href^="tel:"]{white-space:nowrap}
+/* Номер не должен разрываться посреди строки. Но правило цепляло и
+   карточку брони: она сама — ссылка tel:, и запрет переноса доставался
+   всему её тексту. Подпись «Звоните с 18:00 — ответит администратор»
+   переноситься не могла и уезжала за край экрана. Запрещаем перенос
+   только тем ссылкам, которые сами и есть номер. */
+a[href^="tel:"]:not(.way){white-space:nowrap}
 
 /* ---------- узкая шапка на телефоне ----------
    В шапке прибавилась кнопка установки, и на узких экранах (360 px и уже —
@@ -1471,6 +1489,13 @@ a[href^="tel:"]{white-space:nowrap}
 .lbl-tight{display:none}
 @media(max-width:420px){
   .hdr .wrap{gap:10px;padding-left:16px;padding-right:16px}
+}
+/* «Позвонить +7 (912) 805-37-37» в одну строку не влезает в узкий экран
+   и тянет за собой прокрутку вбок. Разрешаем перенос — он случится
+   только после слова «Позвонить»: внутри номера стоят неразрывные
+   пробелы, разорвать его не получится. */
+@media(max-width:380px){
+  .btn[href^="tel:"]:not(.way){white-space:normal;text-align:center}
 }
 @media(max-width:349px){
   .lbl-wide{display:none}
