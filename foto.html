@@ -51,12 +51,23 @@
 <section class="sec wood">
   <div class="wrap">
     <div class="sec-head rv">
-      <div class="eyebrow">Фотоотчёты</div>
-      <h2 data-type>Ищите себя на фото</h2>
-      <p class="lead">После каждых выходных выкладываем снимки с вечера. Найдите себя, заберите кадр и отправьте друзьям — а лучше приходите вместе в следующий раз.</p>
+      <div class="eyebrow">Фотографии</div>
+      <h2 data-type>Посмотрите, как у нас</h2>
+      <p class="lead">Интерьер — чтобы знать, куда идёте: залы, бар, кабинки, сцена и бильярд. Отчёты с вечеров — чтобы найти себя на снимках и позвать друзей в следующий раз.</p>
     </div>
 
     <div class="albums rv" id="albums">
+      <button class="album" data-album="interer" data-count="16" data-ext="webp" data-credit="Съёмка — интерьерный фотограф Лев Абросимов">
+        <span class="album-pic">
+          <img src="images/albums/interer/01-t.webp" loading="lazy" width="480" height="320" alt="Интерьер паба Молли: главный зал">
+          <span class="album-count">16 фото</span>
+        </span>
+        <span class="album-txt">
+          <span class="when">Съёмка октября 2026</span>
+          <h3>Интерьер Молли</h3>
+          <p>Главный зал, бар, кабинки, сцена и бильярд — как у нас всё устроено</p>
+        </span>
+      </button>
       <button class="album" data-album="vechera" data-count="13">
         <span class="album-pic">
           <img src="images/albums/vechera/01-t.jpg" loading="lazy" width="480" height="320" alt="Вечера в пабе Молли">
@@ -85,6 +96,7 @@
       <div class="eyebrow"><a href="#" id="backToAlbums" style="color:var(--brass)">← ко всем альбомам</a></div>
       <h2 id="albumTitle">Вечера в Молли</h2>
       <p class="lead" id="albumSub">Нажмите на снимок, чтобы открыть его целиком.</p>
+      <p class="lead" id="albumCredit" hidden style="font-size:14px;margin-top:-10px"></p>
     </div>
     <div class="shots" id="shots"></div>
   </div>
@@ -179,27 +191,35 @@
 
   function pad(n){return n<10?'0'+n:''+n}
 
-  function openAlbum(slug,count,title){
+  /* Расширение берём из разметки: старый альбом снят на jpg,
+     интерьерная съёмка отдана в webp — вдвое легче при том же виде. */
+  function openAlbum(slug,count,title,ext,подпись){
+    ext=ext||'jpg';
     current=[];
     shots.innerHTML='';
     for(var i=1;i<=count;i++){
       var base='images/albums/'+slug+'/'+pad(i);
-      current.push(base+'.jpg');
+      current.push(base+'.'+ext);
       var b=document.createElement('button');
       b.type='button';
       b.setAttribute('aria-label','Открыть фото '+i);
-      b.innerHTML='<img src="'+base+'-t.jpg" loading="lazy" width="480" height="320" alt="Фото '+i+' из альбома «'+title+'»">';
+      b.innerHTML='<img src="'+base+'-t.'+ext+'" loading="lazy" width="480" height="320" alt="Фото '+i+' из альбома «'+title+'»">';
       (function(n){b.addEventListener('click',function(){show(n)})})(i-1);
       shots.appendChild(b);
     }
     document.getElementById('albumTitle').textContent=title;
+    /* Съёмку делал профессионал — указываем авторство: так принято,
+       и так у паба не будет вопросов о правах на снимки. */
+    var кредит=document.getElementById('albumCredit');
+    if(подпись){ кредит.textContent=подпись; кредит.hidden=false; }
+    else { кредит.hidden=true; }
     view.hidden=false;
     view.scrollIntoView({behavior:'smooth'});
   }
 
   [].forEach.call(albumsBox.querySelectorAll('.album'),function(a){
     a.addEventListener('click',function(){
-      openAlbum(a.dataset.album, +a.dataset.count, a.querySelector('h3').textContent);
+      openAlbum(a.dataset.album, +a.dataset.count, a.querySelector('h3').textContent, a.dataset.ext, a.dataset.credit);
     });
   });
 
