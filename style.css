@@ -1,3 +1,13 @@
+/* Первая по порядку ссылка на странице: с клавиатуры Tab попадает
+   на неё и позволяет перепрыгнуть шапку. Мышью её не видно. */
+.skip{
+  position:absolute;left:-9999px;top:0;z-index:200;
+  padding:12px 20px;border-radius:0 0 4px 0;
+  background:var(--brass);color:#14100a;font-weight:600;
+}
+.skip:focus{left:0}
+main:focus{outline:none}
+
 /* ================= ШРИФТ =================
    Bitter — брусковая антиква с кириллицей, лицензия SIL OFL (fonts/OFL.txt).
    Лежит рядом с сайтом: без обращений к сторонним серверам,
@@ -384,13 +394,30 @@ h3{font-size:22px;line-height:1.25}
 .socials a:hover{background:var(--brass);color:#14100a;transform:translateY(-3px)}
 .map{border:1px solid var(--line-soft);border-radius:3px;overflow:hidden;height:440px;filter:grayscale(.35) contrast(1.05)}
 .map iframe{width:100%;height:100%;border:0;display:block}
+/* Пока карта не загружена, на её месте адрес и кнопка. Блок держит ту же
+   высоту, чтобы страница не прыгала, когда карта появится. */
+.map-stub{
+  height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:14px;padding:28px;text-align:center;background:var(--panel);
+}
+.map-stub p{margin:0;color:var(--muted);font-size:15px;line-height:1.6}
+.map-stub b{color:var(--cream);font-size:17px}
+.map-why{font-size:13.5px;max-width:34ch}
+.map-alt{font-size:13.5px}
+.map-alt a{color:var(--brass-bright);text-decoration:underline;text-underline-offset:3px}
+/* Серый фильтр нужен самой карте, но заглушку он делает тусклой. */
+.map:has(.map-stub){filter:none}
 
 /* ---------- подвал ---------- */
 .ftr{background:var(--ink);border-top:1px solid var(--line-soft);padding:56px 0 30px;font-size:14.5px}
 .ftr-top{display:flex;justify-content:space-between;gap:40px;flex-wrap:wrap;padding-bottom:34px;border-bottom:1px solid var(--line-soft)}
 .ftr-nav{display:flex;gap:30px;flex-wrap:wrap;color:var(--muted)}
 .ftr-nav a:hover{color:var(--brass-bright)}
-.ftr-bot{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;padding-top:24px;color:#6f7d6c;font-size:13px}
+/* Кнопки согласия одного веса: ни одна не должна выглядеть
+   предпочтительной, иначе выбор перестаёт быть свободным. */
+.cookie-btn{min-width:170px;justify-content:center}
+.ftr-legal{color:var(--muted);font-size:12.5px;letter-spacing:.02em}
+.ftr-bot{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;padding-top:24px;color:#8b9a87;font-size:13px}
 .age{border:1px solid var(--line);border-radius:50%;width:38px;height:38px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--brass);flex:none}
 
 @media(max-width:760px){
@@ -619,6 +646,16 @@ h3{font-size:22px;line-height:1.25}
   margin:10px 0;padding:12px 14px;background:var(--bg);border:1px solid var(--line-soft);
   border-left:2px solid var(--brass);border-radius:0 3px 3px 0;font-size:14px;line-height:1.55;color:var(--cream);
 }
+/* Галочка согласия перед отправкой заявки: имя и телефон уходят
+   администратору, и без явного согласия это делать нельзя. */
+.req-consent{
+  display:flex;gap:9px;align-items:flex-start;
+  margin:12px 0 2px;font-size:12.5px;line-height:1.45;color:var(--muted);cursor:pointer;
+}
+.req-consent input{margin-top:2px;flex:none;width:15px;height:15px;accent-color:var(--brass)}
+.req-consent a{color:var(--brass-bright);text-decoration:underline;text-underline-offset:2px}
+.req-btn[disabled]{opacity:.45;cursor:not-allowed}
+.req-btn[disabled]:hover{transform:none}
 .req-acts{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
 .req-btn{
   border:1px solid var(--line);background:rgba(200,164,90,.07);color:var(--cream);

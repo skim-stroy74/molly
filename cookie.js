@@ -38,13 +38,16 @@
     p.innerHTML = 'Мы используем файлы cookie, чтобы сайт работал корректно и\u00a0чтобы понимать, ' +
       'какие разделы вам интересны. Подробнее\u00a0— в\u00a0<a href="politika.html">политике конфиденциальности</a>.';
 
+    /* Обе кнопки одинаковые. Раньше «Принять» была золотой и бросалась
+       в глаза, а отказ выглядел второстепенным — это подталкивание
+       к согласию, а согласие должно быть свободным. */
     var yes = document.createElement('button');
-    yes.className = 'btn btn-gold btn-sm';
+    yes.className = 'btn btn-ghost btn-sm cookie-btn';
     yes.type = 'button';
-    yes.textContent = 'Принять';
+    yes.textContent = 'Принять все';
 
     var no = document.createElement('button');
-    no.className = 'btn btn-ghost btn-sm';
+    no.className = 'btn btn-ghost btn-sm cookie-btn';
     no.type = 'button';
     no.textContent = 'Только необходимые';
 

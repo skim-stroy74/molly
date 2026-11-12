@@ -629,10 +629,24 @@
         'Готово, вот заявка:' +
         '<div class="req">' + esc(msg).replace(/\n/g, '<br>') + '</div>' +
         'Отправьте её администратору — так быстрее всего.');
+      /* Имя и телефон — персональные данные. Отправлять их администратору
+         без явного согласия нельзя, поэтому кнопка отправки включается
+         только после галочки. Позвонить и написать в ВК можно и без неё:
+         там человек передаёт данные сам, а не мы за него. */
+      if (AI_URL) {
+        var согл = document.createElement('label');
+        согл.className = 'req-consent';
+        согл.innerHTML =
+          '<input type="checkbox" class="req-ok">' +
+          '<span>Согласен на обработку имени и телефона для оформления брони — ' +
+          '<a href="politika.html" target="_blank" rel="noopener">политика конфиденциальности</a></span>';
+        box.appendChild(согл);
+      }
+
       var row = document.createElement('div');
       row.className = 'req-acts';
       row.innerHTML =
-        (AI_URL ? '<button class="req-btn req-send" type="button">Отправить администратору</button>' : '') +
+        (AI_URL ? '<button class="req-btn req-send" type="button" disabled>Отправить администратору</button>' : '') +
         '<a class="req-btn" href="tel:' + TEL + '">Позвонить</a>' +
         '<a class="req-btn" href="' + VK + '" target="_blank" rel="noopener">Написать в ВК</a>' +
         '<button class="req-btn req-copy" type="button">Скопировать</button>';
@@ -646,7 +660,12 @@
       /* Кнопки ищем внутри этой карточки. Раньше искали по всей странице
          по одинаковому id — и при второй заявке обработчик доставался
          первой, уже отправленной карточке, а новые кнопки не работали. */
+      var галка = box.querySelector('.req-ok');
       var кнОтпр = row.querySelector('.req-send');
+      if (галка && кнОтпр) галка.addEventListener('change', function () {
+        кнОтпр.disabled = !this.checked;
+      });
+      
       if (кнОтпр) кнОтпр.addEventListener('click', function () {
         var кн = this;
         кн.disabled = true;

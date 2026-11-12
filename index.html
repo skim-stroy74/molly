@@ -67,6 +67,7 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<a class="skip" href="#main">Перейти к содержимому</a>
 
 
 <!-- ================= ШАПКА ================= -->
@@ -90,6 +91,8 @@
     <button class="burger" id="burger" aria-label="Меню" aria-expanded="false"><i></i><i></i><i></i></button>
   </div>
 </header>
+
+<main id="main" tabindex="-1">
 
 <!-- ================= ГЕРОЙ ================= -->
 <section class="hero" id="hero">
@@ -997,14 +1000,24 @@
           </div>
         </dl>
       </div>
-      <div class="map rv rv-right">
-        <iframe src="https://yandex.ru/map-widget/v1/?text=%D0%9C%D0%B0%D0%B3%D0%BD%D0%B8%D1%82%D0%BE%D0%B3%D0%BE%D1%80%D1%81%D0%BA%2C%20%D1%83%D0%BB%D0%B8%D1%86%D0%B0%20%D0%97%D0%B0%D0%B2%D0%B5%D0%BD%D1%8F%D0%B3%D0%B8%D0%BD%D0%B0%2C%208%D0%B0&z=17" loading="lazy" title="Карта: Магнитогорск, Завенягина, 8а"></iframe>
+      <!-- Карта подгружается только после согласия на cookie либо по нажатию:
+           виджет Яндекса ставит свои cookie, и грузить его до ответа на баннер
+           значит спрашивать разрешение уже после того, как всё произошло. -->
+      <div class="map rv rv-right" id="map" data-map="https://yandex.ru/map-widget/v1/?text=%D0%9C%D0%B0%D0%B3%D0%BD%D0%B8%D1%82%D0%BE%D0%B3%D0%BE%D1%80%D1%81%D0%BA%2C%20%D1%83%D0%BB%D0%B8%D1%86%D0%B0%20%D0%97%D0%B0%D0%B2%D0%B5%D0%BD%D1%8F%D0%B3%D0%B8%D0%BD%D0%B0%2C%208%D0%B0&z=17">
+        <div class="map-stub">
+          <p><b>Магнитогорск, Завенягина, 8а</b><br>Второй этаж</p>
+          <p class="map-why">Карту показывает Яндекс — он ставит свои файлы cookie.</p>
+          <button type="button" class="btn btn-gold btn-sm" data-map-go>Показать карту</button>
+          <p class="map-alt"><a href="https://yandex.ru/maps/org/molly/112075546151/" target="_blank" rel="noopener">Открыть в Яндекс Картах</a> · <a href="https://2gis.ru/magnitogorsk/firm/70000001029562483" target="_blank" rel="noopener">в 2ГИС</a></p>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- ================= ПОДВАЛ ================= -->
+</main>
+
 <footer class="ftr">
   <div class="wrap">
     <div class="ftr-top">
@@ -1020,6 +1033,7 @@
       </nav>
     </div>
     <div class="ftr-bot">
+      <div class="ftr-legal">ООО «Веста» · ИНН 7455001280 · ОГРН 1107455001280</div>
       <div>Irish Pub Molly · Магнитогорск, Завенягина, 8а · <a href="tel:+79128053737">+7 (912) 805-37-37</a></div>
       <div style="display:flex;align-items:center;gap:14px">
         <span class="age">18+</span>
@@ -1182,6 +1196,7 @@
 <script src="zoom.js" defer></script>
 <script src="anons.js" defer></script>
 <script src="cookie.js" defer></script>
+<script src="karta.js" defer></script>
 <script src="type.js" defer></script>
 <script src="install.js" defer></script>
 </body>
