@@ -2012,3 +2012,57 @@ body.ng .ftr{padding-bottom:96px}
 @media(max-width:1099px){
   .ng-prog-photo{max-width:420px;margin:0 auto}
 }
+
+/* ---------- новогоднее оформление главной ----------
+   Весь налёт висит на одном классе ny у тела страницы: убрали класс —
+   убрали гирлянду и снег разом, по стилям лазить не надо.
+
+   Нарочно скромно. Главная — круглогодичное лицо паба, и если
+   развесить на ней столько же, сколько на новогодней странице,
+   в январе придётся переделывать полсайта. */
+
+/* Гирлянда растёт из самой шапки, а не висит отдельной полосой:
+   шапка при прокрутке ужимается с 74 до 62 пикселей, и любая
+   привязка к числу разъехалась бы. Так она приклеена к низу шапки
+   при любой её высоте. */
+body.ny .hdr::after{
+  content:"";position:absolute;left:0;right:0;top:100%;
+  height:16px;pointer-events:none;
+  background:
+    radial-gradient(circle at 16px 7px,#e0bc74 0 2.5px,transparent 3.4px),
+    radial-gradient(circle at 48px 10px,#d9664a 0 2.5px,transparent 3.4px),
+    radial-gradient(circle at 80px 6px,#8fbf7a 0 2.5px,transparent 3.4px),
+    radial-gradient(circle at 112px 11px,#d98b2b 0 2.5px,transparent 3.4px),
+    linear-gradient(180deg,rgba(10,18,9,.92),rgba(10,18,9,0));
+  background-size:128px 16px,128px 16px,128px 16px,128px 16px,100% 100%;
+  filter:drop-shadow(0 0 5px rgba(224,188,116,.5));
+  animation:огоньки 4s steps(1) infinite;
+}
+@keyframes огоньки{
+  0%,100%{opacity:1}
+  50%{opacity:.6}
+}
+
+/* Снег только на первом экране. Лежит под затемняющими градиентами
+   .hero-bg, поэтому текст поверх него читается как читался. */
+body.ny .ny-snow{
+  position:absolute;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(circle at 14% 20%,rgba(255,255,255,.4) 0 1.5px,transparent 2px),
+    radial-gradient(circle at 72% 30%,rgba(255,255,255,.32) 0 1.8px,transparent 2.4px),
+    radial-gradient(circle at 40% 64%,rgba(255,255,255,.3) 0 1.3px,transparent 1.9px),
+    radial-gradient(circle at 88% 76%,rgba(255,255,255,.36) 0 1.6px,transparent 2.2px),
+    radial-gradient(circle at 24% 86%,rgba(255,255,255,.26) 0 1.4px,transparent 2px);
+  background-size:300px 300px;
+  animation:снежок 26s linear infinite;
+}
+@keyframes снежок{
+  from{background-position:0 -300px,0 -300px,0 -300px,0 -300px,0 -300px}
+  to{background-position:0 300px,-40px 300px,30px 300px,-20px 300px,50px 300px}
+}
+
+/* «Меньше движения» в системе — огоньки не мигают, снег не идёт. */
+@media(prefers-reduced-motion:reduce){
+  body.ny .hdr::after{animation:none}
+  body.ny .ny-snow{animation:none;opacity:.5}
+}
