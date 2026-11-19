@@ -41,14 +41,22 @@
   кнопка.className = 'mess-a sneg-кнопка';
   (гнездо || document.body).appendChild(кнопка);
 
+  /* Шестилучевая снежинка с ёлочкой на каждом луче — та, которую
+     все и представляют. Рисуем сами: присланная картинка оказалась
+     платным стоком с водяными знаками, ставить её на сайт нельзя,
+     а форма снежинки ничья. Луч задан один и повёрнут шесть раз. */
   function снежинка(включено) {
-    /* Перечёркнутая снежинка, когда снег выключен. */
-    return '<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false">' +
-      '<g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round">' +
-      '<path d="M12 3v18M4.2 7.5l15.6 9M19.8 7.5l-15.6 9"/>' +
-      '<path d="M12 6.6 9.9 4.5M12 6.6l2.1-2.1M12 17.4l-2.1 2.1M12 17.4l2.1 2.1"/>' +
-      '</g>' +
-      (включено ? '' : '<path d="M4 20 20 4" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/>') +
+    var луч =
+      '<path d="M12 12V2.5"/>' +
+      '<path d="M12 5.3 14.7 2.6M12 5.3 9.3 2.6"/>' +
+      '<path d="M12 8.9 13.9 7M12 8.9 10.1 7"/>';
+    var лучи = '';
+    for (var угол = 0; угол < 360; угол += 60) {
+      лучи += '<g transform="rotate(' + угол + ' 12 12)">' + луч + '</g>';
+    }
+    return '<svg viewBox="0 0 24 24" width="23" height="23" aria-hidden="true" focusable="false">' +
+      '<g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round">' + лучи + '</g>' +
+      (включено ? '' : '<path d="M4 20 20 4" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" fill="none"/>') +
       '</svg>';
   }
 

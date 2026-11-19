@@ -2077,3 +2077,35 @@ body.ng .hdr::after{display:none}
 @media(prefers-reduced-motion:reduce){
   body.ny .hdr::after{animation:none}
   }
+
+/* ---------- схема зала ----------
+   Стоит перед бронированием: решение «какой стол» принимают там же,
+   где бронируют. Главное здесь — предупредить, что из закрытых
+   VIP-зон не видно сцену: в самой системе брони все столы одинаково
+   зелёные, и гость узнаёт об этом уже за столом. */
+/* minmax(0,…), а не голые доли: картинка схемы широкая, и обычный
+   1.35fr раздувался под её ширину, а колонка с текстом схлопывалась
+   до одного слова в строке. */
+.zal{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr);gap:38px;align-items:center}
+.zal-pic{background:#dfe6dc;padding:0;border-radius:3px;cursor:zoom-in}
+.zal-pic img{width:100%;height:auto;display:block}
+
+.zal-legend{list-style:none;display:flex;flex-direction:column;gap:16px;margin:0 0 20px}
+.zal-legend li{
+  display:grid;grid-template-columns:16px 1fr;gap:12px;align-items:start;
+  color:var(--muted);font-size:14.5px;line-height:1.55;
+}
+.zal-legend b{color:var(--cream);font-weight:600}
+/* квадратик цвета вместо слова «красный»: так понятнее и короче */
+.zal-legend i{width:16px;height:16px;border-radius:3px;margin-top:3px;display:block}
+.zal-vip{background:#e8352a}
+.zal-open{background:#7fc49a}
+
+.zal-note{color:var(--muted);font-size:13.5px;line-height:1.6;margin-bottom:22px}
+.zal-cta{display:flex;gap:12px;flex-wrap:wrap}
+
+/* На узком экране схема идёт первой и во всю ширину: зал вытянутый,
+   в колонке рядом с текстом номера столов стали бы нечитаемыми. */
+@media(max-width:900px){
+  .zal{grid-template-columns:minmax(0,1fr);gap:26px}
+}
