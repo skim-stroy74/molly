@@ -2038,31 +2038,42 @@ body.ny .hdr::after{
   filter:drop-shadow(0 0 5px rgba(224,188,116,.5));
   animation:огоньки 4s steps(1) infinite;
 }
+/* У новогодней страницы гирлянда своя, синяя и отдельной полосой.
+   Общую из шапки там гасим, иначе висят две сразу. */
+body.ng .hdr::after{display:none}
 @keyframes огоньки{
   0%,100%{opacity:1}
   50%{opacity:.6}
 }
 
-/* Снег только на первом экране. Лежит под затемняющими градиентами
-   .hero-bg, поэтому текст поверх него читается как читался. */
-body.ny .ny-snow{
-  position:absolute;inset:0;pointer-events:none;z-index:0;
+/* Снег на всю страницу, прибит к окну: привязанный к первому экрану
+   он кончался бы вместе с шапкой при прокрутке. Сквозь слой ничего
+   не нажимается, поэтому он не мешает ни ссылкам, ни кнопкам. */
+.sneg{
+  position:fixed;inset:0;pointer-events:none;z-index:40;
+  opacity:0;transition:opacity .4s ease;
   background:
-    radial-gradient(circle at 14% 20%,rgba(255,255,255,.4) 0 1.5px,transparent 2px),
-    radial-gradient(circle at 72% 30%,rgba(255,255,255,.32) 0 1.8px,transparent 2.4px),
+    radial-gradient(circle at 14% 20%,rgba(255,255,255,.42) 0 1.5px,transparent 2px),
+    radial-gradient(circle at 72% 30%,rgba(255,255,255,.34) 0 1.8px,transparent 2.4px),
     radial-gradient(circle at 40% 64%,rgba(255,255,255,.3) 0 1.3px,transparent 1.9px),
-    radial-gradient(circle at 88% 76%,rgba(255,255,255,.36) 0 1.6px,transparent 2.2px),
-    radial-gradient(circle at 24% 86%,rgba(255,255,255,.26) 0 1.4px,transparent 2px);
+    radial-gradient(circle at 88% 76%,rgba(255,255,255,.38) 0 1.6px,transparent 2.2px),
+    radial-gradient(circle at 24% 86%,rgba(255,255,255,.28) 0 1.4px,transparent 2px);
   background-size:300px 300px;
-  animation:снежок 26s linear infinite;
 }
+.sneg.on{opacity:1;animation:снежок 26s linear infinite}
 @keyframes снежок{
   from{background-position:0 -300px,0 -300px,0 -300px,0 -300px,0 -300px}
   to{background-position:0 300px,-40px 300px,30px 300px,-20px 300px,50px 300px}
+}
+/* Кнопка снега живёт среди кружков мессенджеров и повторяет их форму. */
+.sneg-кнопка{
+  border:1px solid var(--line);cursor:pointer;padding:0;
+  background:rgba(255,255,255,.06);color:var(--cream);
+}
+.sneg-кнопка:hover{border-color:var(--brass);color:#fff}
 }
 
 /* «Меньше движения» в системе — огоньки не мигают, снег не идёт. */
 @media(prefers-reduced-motion:reduce){
   body.ny .hdr::after{animation:none}
-  body.ny .ny-snow{animation:none;opacity:.5}
-}
+  }
